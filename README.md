@@ -62,7 +62,51 @@ Google 发布了他们自己的浏览器，加入这场战争。轻量，快，�
 
 ## 早期的前端
 早期受制于浏览器以及技术、兼容性等问题，导致网页的显示效果非常的“丑陋”，前端的工作也是非常简单，说是前端，其实只是一个模板工程师，编写页面模板，然后让后端负责渲染。所以在互联网早期，前端工程师这个职位可以说是不存在，通常由后端或者是美工来兼任。
+
+
 ![1](https://github.com/woai3c/Front-end-development-process/blob/master/imgs/zq1.jpg)
 ![2](https://github.com/woai3c/Front-end-development-process/blob/master/imgs/zq2.png)
 
-像这种古老的设计风格，在一些政府网站还是能看到的
+像这种古老的设计风格，现在在一些政府网站还是能看到的
+
+### 后端MVC的开发模式
+当时的网站开发，采用的是后端MVC模式
+* Model（模型层）：提供/保存数据
+* Controller（控制层）：数据处理，实现业务逻辑
+* View（视图层）：展示数据，提供用户界面
+前端只是后端 MVC 的 V
+
+当用户访问网站时，会向后台发送一个请求，后台接收到请求，生成静态HTML页面，发送到浏览器。
+比如JSP
+```
+<html>
+<head><title>Hello World</title></head>
+<body>
+Hello World!<br/>
+<%
+out.println("Your IP address is " + request.getRemoteAddr());
+%>
+</body>
+</html>
+```
+![jsp](https://github.com/woai3c/Front-end-development-process/blob/master/imgs/jsp_hello_world.jpg)
+
+## Ajax
+Ajax 技术诞生，改变了一切。前端不再是后端的模板，可以独立得到各种数据。<br>
+Ajax 是一种在无需重新加载整个网页的情况下，能够更新部分网页的技术。<br>
+通过在后台与服务器进行少量数据交换，Ajax 可以使网页实现异步更新。这意味着可以在不重新加载整个网页的情况下，对网页的某部分进行更新。<br>
+
+#### 举个例子：用户注册
+如果仔细观察一个表单的提交，你就会发现，一旦用户点击“提交”按钮，表单开始提交，浏览器就会刷新页面，然后在新页面里告诉你操作是成功了还是失败了。如果不幸由于网络太慢或者其他原因，就会得到一个404页面。<br>
+这就是Web的运作原理：一次HTTP请求对应一个页面。<br>
+如果要让用户留在当前页面中，同时发出新的HTTP请求，就可以使用Ajax发送这个新请求，接收到数据后，再用JavaScript更新页面，这样一来，用户就感觉自己仍然停留在当前页面，但是数据却可以不断地更新。<br>
+
+2004年：最早大规模使用AJAX的就是Gmail，Gmail的页面在首次加载后，剩下的所有数据都依赖于AJAX来更新。
+
+## Web 2.0
+Ajax 技术促成了 Web 2.0 的诞生。
+Web 1.0：静态网页，纯内容展示
+Web 2.0：动态网页，富交互，前端数据处理
+
+至此，前端早期的发展史就介绍完了，当时对于前端的要求并不高，只要掌握html css js和一个jquery就足够开发网页了
+
