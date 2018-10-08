@@ -53,3 +53,16 @@ Firefox 1.0 推出。早在 Beta 测试期间就积累了大量人气的 Firefox
 IE6 发布后的第六年，迫于 Firefox 的压力，微软匆匆推出 IE7 应战，吸取了 Firefox 的一些设计思想，如标签式浏览，反钓鱼等。但这款浏览器现在看来并不成功。<br>
 2008年，Google 携 Chrome 参战<br>
 Google 发布了他们自己的浏览器，加入这场战争。轻量，快，异常的稳固让这款浏览器成为不可轻视的一个对手。<br>
+
+#### 浏览器现状
+![浏览器现状](https://github.com/woai3c/Front-end-development-process/blob/master/imgs/llq.jpg)
+
+#### 浏览器内核
+![浏览器内核](https://github.com/woai3c/Front-end-development-process/blob/master/imgs/llq2.jpg)
+
+## 早期的前端
+早期受制于浏览器以及技术、兼容性等问题，导致网页的显示效果非常的“丑陋”，前端的工作也是非常简单，说是前端，其实只是一个模板工程师，编写页面模板，然后让后端负责渲染。所以在互联网早期，前端工程师这个职位可以说是不存在，通常由后端或者是美工来兼任。
+![早期网站页面1](https://github.com/woai3c/Front-end-development-process/blob/master/imgs/zq1.jpg)
+![早期网站页面2](https://github.com/woai3c/Front-end-development-process/blob/master/imgs/zq2.jpg)
+
+
