@@ -9,7 +9,7 @@
 * CSS
 * JavaScript
 
-#### HTML
+### HTML
 >HTML（超文本标记语言——HyperText Markup Language）是构成 Web 世界的基石。HTML是一种基础技术，常与CSS、JavaScript一起被众多网站用于设计令人赏心悦目的网页、网页应用程序以及移动应用程序的用户界面。<br>
 超文本标记语言（第一版）——在1993年6月作为互联网工程工作小组（IETF）工作草案发布（并非标准）：<br>
 HTML 2.0——1995年11月作为RFC 1866发布，在RFC 2854于2000年6月发布之后被宣布已经过时<br>
@@ -18,11 +18,11 @@ HTML 4.0——1997年12月18日，W3C推荐标准<br>
 HTML 4.01（微小改进）——1999年12月24日，W3C推荐标准<br>
 HTML 5——2014年10月28日，W3C推荐标准<br>
 
-#### CSS
+### CSS
 >层叠样式表(英文全称：Cascading Style Sheets)是一种用来表现HTML（标准通用标记语言的一个应用）或XML（标准通用标记语言的一个子集）等文件样式的计算机语言。CSS不仅可以静态地修饰网页，还可以配合各种脚本语言动态地对网页各元素进行格式化。<br>
 CSS 能够对网页中元素位置的排版进行像素级精确控制，支持几乎所有的字体字号样式，拥有对网页对象和模型样式编辑的能力。
 
-#### JavaScript
+### JavaScript
 >JavaScript一种直译式脚本语言，是一种动态类型、弱类型、基于原型的语言，内置支持类型。它的解释器被称为JavaScript引擎，为浏览器的一部分，广泛用于客户端的脚本语言，最早是在HTML（标准通用标记语言下的一个应用）网页上使用，用来给HTML网页增加动态功能。
 
 ## 前端的发展离不开浏览器的发展
@@ -54,10 +54,10 @@ IE6 发布后的第六年，迫于 Firefox 的压力，微软匆匆推出 IE7 �
 2008年，Google 携 Chrome 参战<br>
 Google 发布了他们自己的浏览器，加入这场战争。轻量，快，异常的稳固让这款浏览器成为不可轻视的一个对手。<br>
 
-#### 浏览器现状
+### 浏览器现状
 ![浏览器现状](https://github.com/woai3c/Front-end-development-process/blob/master/imgs/llq.jpg)
 
-#### 浏览器内核
+### 浏览器内核
 ![浏览器内核](https://github.com/woai3c/Front-end-development-process/blob/master/imgs/llq2.jpg)
 
 ## 早期的前端
@@ -70,6 +70,7 @@ Google 发布了他们自己的浏览器，加入这场战争。轻量，快，�
 像这种古老的设计风格，现在已经很难看到了
 
 ### 后端MVC的开发模式
+***
 当时的网站开发，采用的是后端MVC模式
 * Model（模型层）：提供/保存数据
 * Controller（控制层）：数据处理，实现业务逻辑
@@ -92,6 +93,7 @@ out.println("Your IP address is " + request.getRemoteAddr());
 ![jsp](https://github.com/woai3c/Front-end-development-process/blob/master/imgs/jsp_hello_world.jpg)
 
 ### Ajax
+***
 Ajax技术诞生，改变了一切。前端不再是后端的模板，可以独立得到各种数据。<br>
 Ajax是一种在无需重新加载整个网页的情况下，能够更新部分网页的技术。<br>
 通过在后台与服务器进行少量数据交换，Ajax可以使网页实现异步更新。这意味着可以在不重新加载整个网页的情况下，对网页的某部分进行更新。<br>
@@ -104,6 +106,7 @@ Ajax是一种在无需重新加载整个网页的情况下，能够更新部分�
 2004年：最早大规模使用AJAX的就是Gmail，Gmail的页面在首次加载后，剩下的所有数据都依赖于AJAX来更新。
 
 ### Web 2.0
+***
 Ajax技术促成了 Web 2.0 的诞生。<br>
 Web 1.0：静态网页，纯内容展示<br>
 Web 2.0：动态网页，富交互，前端数据处理<br>
@@ -127,6 +130,7 @@ JavaScript已经发展到ES9，但是常用的还是ES5和ES6<br>
 所以，对于前端的要求也越来越高，特别是近几年框架、技术、工具呈爆发式发展，前端变化特别快！
 
 ### MVVM
+***
 MVVM最早由微软提出来，它借鉴了桌面应用程序的MVC思想，在前端页面中，把Model用纯JavaScript对象表示，View负责显示，两者做到了最大限度的分离
 把Model和View关联起来的就是ViewModel。<br>
 ViewModel负责把Model的数据同步到View显示出来，还负责把View的修改同步回Model<br>
@@ -178,26 +182,32 @@ person.age = 51;
 ![mvvm2](https://github.com/woai3c/mini-vue/blob/master/imgs/mvvm.jpg)
 
 ### 三大MVVM框架
+***
 * Vue
 * React
 * Angular
 
 #### Vue
+***
 Vue框架诞生于2014年，其作者为中国人——尤雨溪，也是新人最容易入手的框架之一，不同于React和Angular,其中文文档也便于大家阅读和学习。
 
 #### React
+***
 React起源于Facebook的内部项目，因为该公司对市场上所有JavaScript MVC框架，都不满意，就决定自己写一套，用来架设Instagram的网站。做出来以后，发现这套东西很好用，就在2013年5月开源了。
 
 #### Angular
+***
 Angular是谷歌开发的 Web 框架，具有优越的性能和绝佳的跨平台性。通常结合TypeScript开发，也可以使用JavaScript或Dart，提供了无缝升级的过渡方案。于2016年9月正式发布。
 
 目前国内使用人数最多、最火的框架是Vue
 
 ### webpack
+***
 如今对于每一个前端工程师来说，webpack已经成为了一项基础技能，它基本上包办了本地开发、编译压缩、性能优化的所有工作。<br>
 它的诞生意味着一整套工程化体系开始普及，并且让前端开发彻底告别了以前刀耕火种的时代。现在webpack之于前端开发，正如同gcc/g++之于C/C++，是一个无论如何都绕不开的工具。
 
 ### TypeScript(TS)
+***
 TypeScript 是 Microsoft 开发和维护的一种面向对象的编程语言。它是JavaScript的超集，包含了JavaScript的所有元素，可以载入JavaScript代码运行，并扩展了JavaScript的语法。
 TypeScript 具有以下特点：
 
@@ -207,6 +217,7 @@ TypeScript 具有以下特点：
 在开发大型项目时使用TS更有优势
 
 ### NodeJs
+***
 Node.js是一个Javascript运行环境(runtime environment)，发布于2009年5月，由Ryan Dahl开发，实质是对Chrome V8引擎进行了封装。Node.js对一些特殊用例进行优化，提供替代的API，使得V8在非浏览器环境下运行得更好。严格的来说，Node.js其实是一个后端语言。
 
 特点：
