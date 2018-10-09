@@ -65,7 +65,6 @@ Google 发布了他们自己的浏览器，加入这场战争。轻量，快，�
 
 
 ![1](https://github.com/woai3c/Front-end-development-process/blob/master/imgs/zq1.jpg)
-![2](https://github.com/woai3c/Front-end-development-process/blob/master/imgs/zq2.png)
 
 像这种古老的设计风格，现在已经很难看到了
 
