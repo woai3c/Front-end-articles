@@ -112,17 +112,37 @@ Web 2.0：动态网页，富交互，前端数据处理
 
 ## 新时代的前端
 到目前为止
-HTML已经发展到5.0的版本<br>
-CSS已经发展到3.0版本<br>
+HTML已经发展到HTML5<br>
+CSS已经发展到CSS3.0<br>
 JavaScript已经发展到ES9，但是常用的还是ES5和ES6<br>
 现代的标准浏览器基本已经支持HTML5 CSS3 ES6的绝大部分特性<br>
 
+#### 浏览器市场份额
 ![浏览器市场份额](https://github.com/woai3c/Front-end-development-process/blob/master/imgs/share.jpg)
 
 由于IE的不思上进，导致市场份额越来越少，现在几乎是现代标准浏览器的天下。<br>
 所以前端开发一个网页几乎不需要考虑兼容性（特殊情况除外）<br>
 
-得益于前端技术和浏览器的发展，现在的网页能展示越来越丰富的内容了，比如各种动画效果 网页游戏 数据缓存等等
-所以，对于前端的要求也越来越高 
+得益于前端技术和浏览器的发展，现在的网页能展示越来越丰富的内容了，比如各种动画效果 网页游戏 数据缓存等等<br>
+所以，对于前端的要求也越来越高，特别是近几年前端框架、技术、工具呈爆发式发展，前端变化特别快！
+
+#### 三大流行框架
+* Vue
+* React
+* Angular
+
+#### 前端构建工具
+* webpack
+
+#### TypeScript(TS)
+TypeScript 是 Microsoft 开发和维护的一种面向对象的编程语言。它是 JavaScript 的超集，包含了 JavaScript 的所有元素，可以载入 JavaScript 代码运行，并扩展了 JavaScript 的语法。
+TypeScript 具有以下特点：
+
+* TypeScript 是 Microsoft 推出的开源语言，使用 Apache 授权协议
+* TypeScript 增加了静态类型、类、模块、接口和类型注解
+
+在开发大型项目时使用TS更有优势
+
+#### 现在的前端能做什么？
 
 参考资料：http://software.cnw.com.cn/software-application/htm2009/20091013_183968.shtml
