@@ -69,7 +69,7 @@ Google 发布了他们自己的浏览器，加入这场战争。轻量，快，�
 
 像这种古老的设计风格，现在已经很难看到了
 
-## 后端MVC的开发模式
+### 后端MVC的开发模式
 当时的网站开发，采用的是后端MVC模式
 * Model（模型层）：提供/保存数据
 * Controller（控制层）：数据处理，实现业务逻辑
@@ -91,7 +91,7 @@ out.println("Your IP address is " + request.getRemoteAddr());
 ```
 ![jsp](https://github.com/woai3c/Front-end-development-process/blob/master/imgs/jsp_hello_world.jpg)
 
-## Ajax
+### Ajax
 Ajax技术诞生，改变了一切。前端不再是后端的模板，可以独立得到各种数据。<br>
 Ajax是一种在无需重新加载整个网页的情况下，能够更新部分网页的技术。<br>
 通过在后台与服务器进行少量数据交换，Ajax可以使网页实现异步更新。这意味着可以在不重新加载整个网页的情况下，对网页的某部分进行更新。<br>
@@ -103,24 +103,159 @@ Ajax是一种在无需重新加载整个网页的情况下，能够更新部分�
 
 2004年：最早大规模使用AJAX的就是Gmail，Gmail的页面在首次加载后，剩下的所有数据都依赖于AJAX来更新。
 
-## Web 2.0
-Ajax技术促成了 Web 2.0 的诞生。
-Web 1.0：静态网页，纯内容展示
-Web 2.0：动态网页，富交互，前端数据处理
+### Web 2.0
+Ajax技术促成了 Web 2.0 的诞生。<br>
+Web 1.0：静态网页，纯内容展示<br>
+Web 2.0：动态网页，富交互，前端数据处理<br>
 
 至此，前端早期的发展史就介绍完了，当时对于前端的要求并不高，只要掌握html css js和一个jquery就足够开发网页了
 
 ## 新时代的前端
 到目前为止
-HTML已经发展到5.0的版本
-CSS已经发展到3.0版本
-JavaScript已经发展到ES9，但是常用的还是ES5和ES6
-现代的标准浏览器基本已经支持HTML5 CSS3 ES6的绝大部分特性
+HTML已经发展到HTML5<br>
+CSS已经发展到CSS3.0<br>
+JavaScript已经发展到ES9，但是常用的还是ES5和ES6<br>
+现代标准浏览器(遵循W3C标准的浏览器)基本已经支持HTML5 CSS3 ES6的大部分特性<br>
 
-由于IE的不思上进，导致市场份额越来越少，现在几乎是现代标准浏览器的天下。
-所以前端开发一个网页几乎不需要考虑兼容性（特殊情况除外）
+### 浏览器市场份额(2018.9)
+![浏览器市场份额](https://github.com/woai3c/Front-end-development-process/blob/master/imgs/share.jpg)
 
-得益于前端技术和浏览器的发展，现在的网页能展示越来越丰富的内容了，比如各种动画效果 网页游戏 数据缓存等等
-所以，对于前端的要求也越来越高 
+由于IE的不思上进，导致市场份额越来越少，现在几乎是现代标准浏览器的天下。<br>
+所以前端开发一个网页几乎不需要考虑IE兼容性<br>
+
+得益于前端技术和浏览器的发展，现在的网页能展示越来越丰富的内容了，比如动画 游戏 画图等等<br>
+所以，对于前端的要求也越来越高，特别是近几年框架、技术、工具呈爆发式发展，前端变化特别快！
+
+### MVVM
+MVVM最早由微软提出来，它借鉴了桌面应用程序的MVC思想，在前端页面中，把Model用纯JavaScript对象表示，View负责显示，两者做到了最大限度的分离
+把Model和View关联起来的就是ViewModel。<br>
+ViewModel负责把Model的数据同步到View显示出来，还负责把View的修改同步回Model<br>
+View 和 Model 之间的同步工作完全是自动的，无需人为干涉<br>
+因此开发者只需关注业务逻辑，不需要手动操作DOM, 不需要关注数据状态的同步问题，复杂的数据状态维护完全由 MVVM 来统一管理<br>
+一个MVVM框架和jQuery操作DOM相比有什么区别？
+我们先看用jQuery实现的修改两个DOM节点的例子：
+```
+<!-- HTML -->
+<p>Hello, <span id="name">Bart</span>!</p>
+<p>You are <span id="age">12</span>.</p>
+
+Hello, Bart!
+
+You are 12.
+```
+用jQuery修改name和age节点的内容：
+```
+var name = 'Homer';
+var age = 51;
+
+$('#name').text(name);
+$('#age').text(age);
+```
+
+如果我们使用MVVM框架来实现同样的功能，我们首先并不关心DOM的结构，而是关心数据如何存储。最简单的数据存储方式是使用JavaScript对象：
+```
+var person = {
+    name: 'Bart',
+    age: 12
+}
+```
+我们把变量person看作Model，把HTML某些DOM节点看作View，并假定它们之间被关联起来了。
+
+要把显示的name从Bart改为Homer，把显示的age从12改为51，我们并不操作DOM，而是直接修改JavaScript对象：
+```
+person.name = 'Homer';
+person.age = 51;
+```
+
+执行上面的代码，我们惊讶地发现，改变JavaScript对象的状态，会导致DOM结构作出对应的变化！这让我们的关注点从如何操作DOM变成了如何更新JavaScript对象的状态，而操作JavaScript对象比DOM简单多了！
+
+这就是MVVM的设计思想：关注Model的变化，让MVVM框架去自动更新DOM的状态，从而把开发者从操作DOM的繁琐步骤中解脱出来！
+
+![mvvm1](https://github.com/woai3c/Front-end-development-process/blob/master/imgs/mvvm.jpg)
+![mvvm2](https://github.com/woai3c/mini-vue/blob/master/imgs/mvvm.jpg)
+
+### 三大MVVM框架
+* Vue
+* React
+* Angular
+
+#### Vue
+Vue框架诞生于2014年，其作者为中国人——尤雨溪，也是新人最容易入手的框架之一，不同于React和Angular,其中文文档也便于大家阅读和学习。
+
+#### React
+React起源于Facebook的内部项目，因为该公司对市场上所有JavaScript MVC框架，都不满意，就决定自己写一套，用来架设Instagram的网站。做出来以后，发现这套东西很好用，就在2013年5月开源了。
+
+#### Angular
+Angular是谷歌开发的 Web 框架，具有优越的性能和绝佳的跨平台性。通常结合TypeScript开发，也可以使用JavaScript或Dart，提供了无缝升级的过渡方案。于2016年9月正式发布。
+
+目前国内使用人数最多、最火的框架是Vue
+
+### webpack
+如今对于每一个前端工程师来说，webpack已经成为了一项基础技能，它基本上包办了本地开发、编译压缩、性能优化的所有工作。<br>
+它的诞生意味着一整套工程化体系开始普及，并且让前端开发彻底告别了以前刀耕火种的时代。现在webpack之于前端开发，正如同gcc/g++之于C/C++，是一个无论如何都绕不开的工具。
+
+### TypeScript(TS)
+TypeScript 是 Microsoft 开发和维护的一种面向对象的编程语言。它是JavaScript的超集，包含了JavaScript的所有元素，可以载入JavaScript代码运行，并扩展了JavaScript的语法。
+TypeScript 具有以下特点：
+
+* TypeScript是Microsoft推出的开源语言，使用Apache授权协议
+* TypeScript增加了静态类型、类、模块、接口和类型注解
+
+在开发大型项目时使用TS更有优势
+
+### NodeJs
+Node.js是一个Javascript运行环境(runtime environment)，发布于2009年5月，由Ryan Dahl开发，实质是对Chrome V8引擎进行了封装。Node.js对一些特殊用例进行优化，提供替代的API，使得V8在非浏览器环境下运行得更好。严格的来说，Node.js其实是一个后端语言。
+
+特点：
+* 单线程
+* 非阻塞IO
+* 事件驱动
+* V8引擎
+
+### 现在的前端能做什么？
+* 游戏开发(Egret Layabox coco2d-js)
+* web开发(pc 移动端设备)
+* webApp开发(Dcloud RN weex ionic)
+* 图形开发WebGl(three.js)
+* 小程序/快应用
+* 后端(nodejs)
+* 桌面应用(electron)
+* 嵌入式开发(Ruff)
+
+## 前端的未来
+现在基于Web的前端技术，将演变为未来所有软件的通用的GUI解决方案。
+所以前端有可能会变成一名端工程师。
+* PC端
+* 手机端
+* TV端
+* VR端
+...
+
+## 一名合格的前端需要掌握哪些技能
+* photoshop切图(必修)
+* html css js(特别是html5 css3 es6)(必修)
+* 三大前端框架至少精通一个(必修)
+* nodejs(选修)
+* 自动化构建工具webpack(必修)
+* http协议(必修)
+* 浏览器渲染流程及原理(必修)
+* TypeScript(选修)
+
+## 技能会过时 计算机基础知识不会过时
+* 算法
+* 编译原理
+
+建议学习编译原理和算法这两门课程<br>
+算法的好处相信大家都懂 在这里简单说一下<br>
+懂算法的人善于计算时空复杂度，相当于在你做事情前，懂得怎么去衡量效率和开销
+
+编译原理：将源语言转化为目标语言,也就是将一门语言转化为另一门语言
+
+### 编译原理在前端中的应用
+* babel
+* TypeScript
+* Vue的VNode 
+...
 
 参考资料：http://software.cnw.com.cn/software-application/htm2009/20091013_183968.shtml
+参考资料：https://github.com/ruanyf/jstraining/blob/master/docs/history.md
