@@ -132,6 +132,10 @@ MVVM最早由微软提出来，它借鉴了桌面应用程序的MVC思想，在�
 ViewModel负责把Model的数据同步到View显示出来，还负责把View的修改同步回Model<br>
 View 和 Model 之间的同步工作完全是自动的，无需人为干涉<br>
 因此开发者只需关注业务逻辑，不需要手动操作DOM, 不需要关注数据状态的同步问题，复杂的数据状态维护完全由 MVVM 来统一管理<br>
+
+![mvvm1](https://github.com/woai3c/Front-end-development-process/blob/master/imgs/mvvm.jpg)
+
+
 一个MVVM框架和jQuery操作DOM相比有什么区别？
 我们先看用jQuery实现的修改两个DOM节点的例子：
 ```
@@ -171,7 +175,6 @@ person.age = 51;
 
 这就是MVVM的设计思想：关注Model的变化，让MVVM框架去自动更新DOM的状态，从而把开发者从操作DOM的繁琐步骤中解脱出来！
 
-![mvvm1](https://github.com/woai3c/Front-end-development-process/blob/master/imgs/mvvm.jpg)
 ![mvvm2](https://github.com/woai3c/mini-vue/blob/master/imgs/mvvm.jpg)
 
 ### 三大MVVM框架
