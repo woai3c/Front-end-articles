@@ -104,9 +104,9 @@ Ajax是一种在无需重新加载整个网页的情况下，能够更新部分�
 2004年：最早大规模使用AJAX的就是Gmail，Gmail的页面在首次加载后，剩下的所有数据都依赖于AJAX来更新。
 
 ### Web 2.0
-Ajax技术促成了 Web 2.0 的诞生。
-Web 1.0：静态网页，纯内容展示
-Web 2.0：动态网页，富交互，前端数据处理
+Ajax技术促成了 Web 2.0 的诞生。<br>
+Web 1.0：静态网页，纯内容展示<br>
+Web 2.0：动态网页，富交互，前端数据处理<br>
 
 至此，前端早期的发展史就介绍完了，当时对于前端的要求并不高，只要掌握html css js和一个jquery就足够开发网页了
 
@@ -258,3 +258,4 @@ Node.js是一个Javascript运行环境(runtime environment)，发布于2009年5�
 ...
 
 参考资料：http://software.cnw.com.cn/software-application/htm2009/20091013_183968.shtml
+参考资料：https://github.com/ruanyf/jstraining/blob/master/docs/history.md
