@@ -229,7 +229,8 @@ Node.js是一个Javascript运行环境(runtime environment)，发布于2009年5�
 * 手机端
 * TV端
 * VR端
-...
+
+......
 
 ## 一名合格的前端需要掌握哪些技能
 * photoshop切图(必修)
@@ -255,7 +256,9 @@ Node.js是一个Javascript运行环境(runtime environment)，发布于2009年5�
 * babel
 * TypeScript
 * Vue的VNode 
-...
 
-参考资料：http://software.cnw.com.cn/software-application/htm2009/20091013_183968.shtml
-参考资料：https://github.com/ruanyf/jstraining/blob/master/docs/history.md
+......
+
+参考资料：http://software.cnw.com.cn/software-application/htm2009/20091013_183968.shtml<br>
+参考资料：https://github.com/ruanyf/jstraining/blob/master/docs/history.md<br>
+参考资料：https://www.liaoxuefeng.com/wiki/001434446689867b27157e896e74d51a89c25cc8b43bdb3000
