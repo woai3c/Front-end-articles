@@ -116,7 +116,9 @@ HTML已经发展到5.0的版本<br>
 CSS已经发展到3.0版本<br>
 JavaScript已经发展到ES9，但是常用的还是ES5和ES6<br>
 现代的标准浏览器基本已经支持HTML5 CSS3 ES6的绝大部分特性<br>
+
 ![浏览器市场份额](https://github.com/woai3c/Front-end-development-process/blob/master/imgs/share.jpg)
+
 由于IE的不思上进，导致市场份额越来越少，现在几乎是现代标准浏览器的天下。<br>
 所以前端开发一个网页几乎不需要考虑兼容性（特殊情况除外）<br>
 
