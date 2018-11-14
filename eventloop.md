@@ -1,3 +1,4 @@
+```
 // eventLoop是一个用作队列的数组
 // （先进，先出）
 var eventLoop = [ ];
@@ -17,3 +18,4 @@ while (true) {
         }
     }
 }
+```
