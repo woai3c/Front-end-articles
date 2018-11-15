@@ -101,4 +101,4 @@ new Promise((resolve, reject) => {
 8. 执行微任务，输出6
 9. 再执行宏任务，输出4
 
-
+[eventloop](https://github.com/woai3c/Front-end-articles/blob/master/imgs/eventloop.svg)
