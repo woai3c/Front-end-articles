@@ -52,7 +52,7 @@ JS主线程，就像是一个while循环，会一直执行下去。在这期间�
 
 ### 微任务
 * Promise
-* MutationObserver
+* MutationObserver（Mutation Observer API 用来监视 DOM 变动）
 * Object.observe()（已废弃）
 
 ### 宏任务
