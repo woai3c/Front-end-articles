@@ -14,8 +14,45 @@
 ## DOM编程
 * 不要频繁修改DOM，因为修改DOM样式会导致重绘(repaint)和重排(reflow)
 * 如果要修改DOM的多个样式可以用cssText一次性将要改的样式写入，或将样式写到class里，再修改DOM的class名称
+```
+const el = document.querySelector('.myDiv')
+el.style.borderLeft = '1px'
+el.style.borderRight = '2px'
+el.style.padding = '5px'
+```
+可以使用如下语句代替
+```
+const el = document.querySelector('.myDiv')
+el.style.cssText = 'border-left: 1px; border-right: 2px; padding: 5px;'
+```
+cssText会覆盖已存在的样式，如果不想覆盖已有样式，可以这样
+```
+el.style.cssText += ';border-left: 1px; border-right: 2px; padding: 5px;'
+```
 * 避免大量使用`:hover`
 * 使用事件委托
+```
+<ul>
+  <li>苹果</li>
+  <li>香蕉</li>
+  <li>凤梨</li>
+</ul>
+
+// good
+document.querySelector('ul').onclick = (event) => {
+  let target = event.target
+  if (target.nodeName === 'LI') {
+    console.log(target.innerHTML)
+  }
+}
+
+// bad
+document.querySelectorAll('li').forEach((e) => {
+  e.onclick = function() {
+    console.log(this.innerHTML)
+  }
+}) 
+```
 
 #### 批量修改DOM
 当你需要批量修改DOM时，可以通过以下步骤减少重绘和重排次数：
@@ -36,6 +73,26 @@
 * 基于函数的迭代`forEach`比一般的循环要慢，如果对运行速度要求很严格，不要使用
 * `if-else` `switch`，条件数量越大，越倾向于使用`switch`
 * 在判断条件多时，可以使用查找表来代替`if-else` `switch`，速度更快
+```
+switch(value) {
+  case 0:
+    return result0
+    break
+  case 1:
+    return result1
+    break
+  case 2:
+    return result2
+    break
+  case 3:
+    return result3
+    break
+
+}
+
+// 可以使用查找表代替
+const results = [result0, result1, result2, result3]
+```
 * 如果遇到栈溢出错误，可以使用迭代来代替递归
 
 ## 字符串
