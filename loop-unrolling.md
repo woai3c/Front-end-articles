@@ -36,14 +36,13 @@ while (num) {
 }
 
 let sum = 0
-let last = new Date()
 let i 
 let len = arry.length
+let last = new Date()
 for (i = 0; i < len; i++) {
 	sum += arry[i]
 }
 let now = new Date()
-
 console.log(now - last)
 
 let newSum = 0
@@ -52,7 +51,7 @@ for (i = 0; i < len; i += 2) {
 	newSum += arry[i] + arry[i + 1]
 }
 now = new Date()
-
 console.log(now - last)
+
 console.log(sum, newSum)
 ```
