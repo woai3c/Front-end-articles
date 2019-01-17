@@ -55,3 +55,6 @@ console.log(now - last)
 
 console.log(sum, newSum)
 ```
+
+#### 参考资料
+[深入理解计算机系统](https://book.douban.com/subject/26912767/)
