@@ -28,30 +28,28 @@ function sum(arry) {
 具有良好空间局部性的程序
 ```
 // 二维数组 
-function sum(arry, rows, cols) {
-	let [i, j, sum] = [0, 0, 0]
+function sum1(arry, rows, cols) {
+	let i, j, sum = 0
 
-	for (; i < rows; i++) {
-		for (; j < cols; j++) {
-			sum += a[i][j]
+	for (i = 0; i < rows; i++) {
+		for (j = 0; j < cols; j++) {
+			sum += arry[i][j]
 		}
 	}
-
 	return sum
 }
 ```
 空间局部性差的程序
 ```
 // 二维数组 
-function sum(arry, rows, cols) {
-	let [i, j, sum] = [0, 0, 0]
+function sum2(arry, rows, cols) {
+	let i, j, sum = 0
 
-	for (; j < rows; j++) {
-		for (; i < cols; i++) {
-			sum += a[i][j]
+	for (j = 0; j < cols; j++) {
+		for (i = 0; i < rows; i++) {
+			sum += arry[i][j]
 		}
 	}
-
 	return sum
 }
 ```
@@ -63,6 +61,71 @@ function sum(arry, rows, cols) {
 数组在内存中是按照行顺序来存放的，结果就是按行顺序来扫描数组的示例得到了步长为rows的引用模式；
 而对于按列顺序来扫描数组的示例来说，其结果是得到一个很好的步长为1的引用模式，具有良好的空间局部性。
 
+### 性能测试
+* 运行环境 <br>
+cpu: i5-7400 <br>
+浏览器: chrome 70.0.3538.110
 
+对一个长度为9000的二维数组（子数组长度也为9000）进行10次空间局部性测试，时间（毫秒）取平均值，结果如下：<br>
+
+所用示例为上述两个空间局部性示例
+
+|按列排序|按行排序|
+|-|-|
+|124|2316|
+
+测试代码
+```
+const arry = []
+let [num, n, cols, rows] = [9000, 9000, 9000, 9000]
+let temp = []
+
+while (num) {
+	while (n) {
+		temp.push(n)
+		n--
+	}
+	arry.push(temp)
+	n = 9000
+	temp = []
+	num--
+}
+
+let last, now, val
+
+last = new Date()
+val = sum1(arry, rows, cols)
+now = new Date()
+console.log(now - last)
+console.log(val)
+
+last = new Date()
+val = sum2(arry, rows, cols)
+now = new Date()
+console.log(now - last)
+console.log(val)
+
+function sum1(arry, rows, cols) {
+	let i, j, sum = 0
+
+	for (i = 0; i < rows; i++) {
+		for (j = 0; j < cols; j++) {
+			sum += arry[i][j]
+		}
+	}
+	return sum
+}
+
+function sum2(arry, rows, cols) {
+	let i, j, sum = 0
+
+	for (j = 0; j < cols; j++) {
+		for (i = 0; i < rows; i++) {
+			sum += arry[i][j]
+		}
+	}
+	return sum
+}
+```
 #### 参考资料
 [深入理解计算机系统](https://book.douban.com/subject/26912767/)
