@@ -40,7 +40,7 @@ div {
 ## 实现
 让我们来亲自实现一个栅格化系统，假设我们要将一行划分为 12 等分，那 1 等分就占有 `100% / 12 = 8.33%` 的宽度。
 
-相应的CSS 可以这样设置：
+相应的 CSS 可以这样设置：
 ```css
 .col1  {width: 8.33%}
 .col2  {width: 16.66%}
@@ -150,9 +150,9 @@ div {
             .col-md10 {width: 83.33%}
             .col-md11 {width: 91.66%}
             .col-md12 {width: 100%}
-	    }
+	}
         /* 针对屏幕分辨率小于1200的 */
-	    @media (max-width: 1199px) {
+	@media (max-width: 1199px) {
             .col-sm1  {width: 8.33%}
             .col-sm2  {width: 16.66%}
             .col-sm3  {width: 25%}
@@ -165,7 +165,7 @@ div {
             .col-sm10 {width: 83.33%}
             .col-sm11 {width: 91.66%}
             .col-sm12 {width: 100%}
-	    }
+	}
     </style>
 </head>
 <body>
