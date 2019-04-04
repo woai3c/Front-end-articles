@@ -185,9 +185,10 @@ div {
 ![grid5](https://github.com/woai3c/Front-end-articles/blob/master/imgs/grid5.jpg)
 
 ![grid6](https://github.com/woai3c/Front-end-articles/blob/master/imgs/grid6.jpg)
+一个栅格化系统就这样实现了。
 
 ## 练习任务
-对于栅格化的介绍就到此结束了，但如果你看完了文章后什么都不做，不到一周，就会把学到的知识忘得七七八八，为了帮助你巩固知识，特地布置了一个小任务。
+对于栅格化的介绍就到此结束了，但如果你看完了文章后什么都不做，不到一周，就会把学到的知识忘得七七八八，为了帮助你巩固知识，特地布置了一个小任务，特地布置了一个小任务，按要求实现如下页面：
 
 #### 图一
 ![grid7](https://github.com/woai3c/Front-end-articles/blob/master/imgs/grid7.jpg)
