@@ -111,6 +111,7 @@ div {
 
 相应用过 bootstrap 栅格系统的都知道，在 bootstrap 栅格化系统中，有一些 `col-md` `col-sm` 属性，它们是干什么用的呢？
 其实，它们都是栅格化系统的 CSS 类名，只是针对了不同的屏幕宽度。
+
 假如我们有这样的一个需求：
 在 PC 上，因为屏幕比较大，我们要求一行显示 4 列的内容。但是在手机上，因为屏幕比较小，要求一行显示 3 列的内容。
 即一个网站同时适配 PC 和手机端，根据不同的端自动调整页面。
@@ -196,5 +197,5 @@ div {
 1. 当页面大于 `768px` 时，页面如图1所示。
 2. 当页面小于等于 `768px` 时， 页面如图2所示。
 
-这里是[答案](https://github.com/woai3c/2016ife-task/blob/master/part1/task8.html)和[在线DEMO](http://htmlpreview.github.io/?https://github.com/woai3c/2016ife-task/blob/master/part1/task8.html)，但是最好先试试能不能自己做出来，如果实现做不出来，再看答案。
+这里是[答案](https://github.com/woai3c/2016ife-task/blob/master/part1/task8.html)和[在线DEMO](http://htmlpreview.github.io/?https://github.com/woai3c/2016ife-task/blob/master/part1/task8.html)，但是最好先试试能不能自己做出来，如果实在做不出来，再看答案。
 
