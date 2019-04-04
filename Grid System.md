@@ -108,6 +108,7 @@ div {
 
 ## 进阶
 结合 `@media` 媒体查询，我们可以做得更多。[@media 详情请看MDN](https://developer.mozilla.org/zh-CN/docs/Web/CSS/@media)
+
 相应用过 bootstrap 栅格系统的都知道，在 bootstrap 栅格化系统中，有一些 `col-md` `col-sm` 属性，它们是干什么用的呢？
 其实，它们都是栅格化系统的 CSS 类名，只是针对了不同的屏幕宽度。
 假如我们有这样的一个需求：
