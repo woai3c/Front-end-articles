@@ -3,7 +3,7 @@
 在一个有限的、固定的平面上，用水平线和垂直线（虚拟的线，“参考线”），将平面划分成有规律的一系列“格子”（虚拟的格子），
 并依托这些格子、或以格子的边线为基准线，来进行有规律的版面布局。
 
-通俗点来说，就是人为的把网页中的一行，等比例划分,比如将一行划分为9等分。然后在每个格子里进行页面开发，这就栅格化。
+通俗点来说，就是人为的把网页中的一行，等比例划分,比如将一行划分为 12 等分。然后在每个格子里进行页面开发，这就栅格化。
 ![grid1](https://github.com/woai3c/Front-end-articles/blob/master/imgs/grid1.jpg)
 ## 原理
 假如在页面里定义了一个 DIV，并设置如下 CSS 属性：
@@ -149,9 +149,9 @@ div {
             .col-md10 {width: 83.33%}
             .col-md11 {width: 91.66%}
             .col-md12 {width: 100%}
-		}
+	}
         /* 针对屏幕分辨率小于1200的 */
-		@media (max-width: 1199px) {
+	@media (max-width: 1199px) {
             .col-sm1  {width: 8.33%}
             .col-sm2  {width: 16.66%}
             .col-sm3  {width: 25%}
@@ -164,7 +164,7 @@ div {
             .col-sm10 {width: 83.33%}
             .col-sm11 {width: 91.66%}
             .col-sm12 {width: 100%}
-		}
+	}
     </style>
 </head>
 <body>
