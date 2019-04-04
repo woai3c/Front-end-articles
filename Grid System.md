@@ -180,7 +180,7 @@ div {
 </body>
 </html>
 ```
-给同一个 DIV，同时设置两个类名。当屏幕 `>=1200px` 时，一行显示 4 列，当屏幕 `<1200px` 时，一行显示3列，而且是浏览器自动调整。
+一个 DIV，同时设置两个类名。当屏幕 `>=1200px` 时，一行显示 4 列，当屏幕 `<1200px` 时，一行显示3列，而且是浏览器自动调整。
 
 ![grid5](https://github.com/woai3c/Front-end-articles/blob/master/imgs/grid5.jpg)
 
