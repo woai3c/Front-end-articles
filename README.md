@@ -10,3 +10,4 @@
 * [程序局部性原理](https://github.com/woai3c/Front-end-articles/blob/master/locality.md)
 
 ## 疑难问题
+* [手机软键盘弹起导致页面变形的一种解决方案](https://github.com/woai3c/Front-end-articles/blob/master/Mobile%20Soft%20Keyboard.md)
