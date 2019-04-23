@@ -18,7 +18,7 @@
 
 我对代码做了扩展，除了支持画笔，还支持喷枪、刷子、橡皮擦功能。
 ### canvas 转成图片
-将 canvas 转在图片，需要用到以下属性：
+将 canvas 转成图片，需要用到以下属性：
 * toDataURL
 
 canvas.toDataURL() 方法返回一个包含图片展示的 data URI 。可以使用 type 参数其类型，默认为 PNG 格式。图片的分辨率为96dpi。
