@@ -24,7 +24,7 @@
 canvas.toDataURL() 方法返回一个包含图片展示的 data URI 。可以使用 type 参数其类型，默认为 PNG 格式。图片的分辨率为96dpi。
 
 ```js
-	const image = new Image()
-	// canvas.toDataURL 返回的是一串Base64编码的URL
-	image.src = canvas.toDataURL("image/png")
+const image = new Image()
+// canvas.toDataURL 返回的是一串Base64编码的URL
+image.src = canvas.toDataURL("image/png")
 ```
