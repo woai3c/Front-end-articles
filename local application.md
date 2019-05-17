@@ -1,7 +1,7 @@
 # 在浏览器调起本地应用的方法
 最近公司有个需求，要求在浏览器中点击某个按钮，自动调起电脑中的一个应用。
 
-首先，将以下代码复制到一个 `reg` 文件，例如 `test.reg`。
+**首先**，将以下代码复制到一个 `reg` 文件，例如 `test.reg`。
 ```
 Windows Registry Editor Version 5.00
 [HKEY_CLASSES_ROOT\ptl]
@@ -18,7 +18,7 @@ Windows Registry Editor Version 5.00
 
 PS：协议，应用可以自由设置
 
-其次，建一个 `html` 文件
+**其次**，建一个 `html` 文件
 ```html
 <!DOCTYPE html>
 <html>
@@ -31,6 +31,9 @@ PS：协议，应用可以自由设置
 </html>
 ```
 `a` 标签里的 `ptl` 就是刚才注册的协议，现在打开浏览器点击 `tim` 将会弹出一个提示，是否打开 `TIM`。
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20190517173813879.png)
+
 点击确定，即可打开 `TIM`，我们可以将提示的勾打上，以后点击 `tim` 就会直接弹出 `TIM`，不会再提示。
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/2019051717391947.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3E0MTEwMjAzODI=,size_16,color_FFFFFF,t_70)
