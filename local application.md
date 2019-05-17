@@ -1,5 +1,6 @@
 # 在浏览器调起本地应用的方法
 最近公司有个需求，要求在浏览器中点击某个按钮，自动调起电脑中的一个应用。
+
 首先，将以下代码复制到一个 `reg` 文件，例如 `test.reg`。
 ```
 Windows Registry Editor Version 5.00
@@ -12,7 +13,9 @@ Windows Registry Editor Version 5.00
 @="D:\\software\\tim\\Bin\\QQScLauncher.exe"
 ```
 这段代码注册了一个 `ptl`  协议，作用是调起电脑中的 `tim` 应用 ，路径是 `D:\\software\\tim\\Bin\\QQScLauncher.exe`。
+
 保存完成后，双击注册。
+
 PS：协议，应用可以自由设置
 
 其次，建一个 `html` 文件
