@@ -16,7 +16,7 @@ Windows Registry Editor Version 5.00
 
 保存完成后，双击注册。
 
-PS：协议，应用可以自由设置
+**PS：协议，应用可以自由设置**
 
 **其次**，建一个 `html` 文件
 ```html
