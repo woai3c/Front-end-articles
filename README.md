@@ -14,3 +14,4 @@
 * [手机软键盘弹起导致页面变形的一种解决方案](https://github.com/woai3c/Front-end-articles/blob/master/Mobile%20Soft%20Keyboard.md)
 * [用canvas实现手写签名功能](https://github.com/woai3c/Front-end-articles/blob/master/Handwritten%20signature.md)
 * [多个请求下 loading 的展示与关闭](https://github.com/woai3c/Front-end-articles/blob/master/control%20loading.md)
+* [Vue 实现前进刷新，后退不刷新的效果](https://github.com/woai3c/Front-end-articles/blob/master/vue%20refresh.md)
