@@ -37,7 +37,7 @@
  ```
  这个 `meta` 属性，可以在详情页中通过 `this.$route.meta.isRefresh` 来读取和设置。
  
- 设置完这个属性，还需求在 `App.vue` 文件里设置 watch 一下 `$route` 属性。
+ 设置完这个属性，还要在 `App.vue` 文件里设置 watch 一下 `$route` 属性。
  ```js
      watch: {
         $route(to, from) {
