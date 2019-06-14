@@ -25,7 +25,7 @@
 ```
 现在弹窗组件的结构已经搭建出来了。
 * 类 `modal-bg`: 遮罩层
-* 类 `modal-container`: 内容层
+* 类 `modal-container`: 内容层容器
 * 类 `modal-header`: 内容层头部
 * 类 `modal-main`: 内容层主体部分（用来展示内容）
 * 类 `modal-footer`: 内容层脚部
