@@ -128,8 +128,8 @@ export default {
 ### 功能
 看起来这个简单的弹窗组件真的是非常简单，我们可以在此基础上适当的增加一些功能，例如：拖拽。
 
-一个弹窗组件要想移动，得绑定三个函数，分别是 `mousedown`、`mousemove`、`mouseup`。
-* `mousedown` 用来获取鼠标点击时弹窗当时的坐标
+一个弹窗组件的拖拽一般通过三个事件来控制，分别是 `mousedown`、`mousemove`、`mouseup`。
+* `mousedown` 用来获取鼠标点击时弹窗的坐标
 * `mousemove` 用来计算鼠标移动时弹窗的坐标
 * `mouseup` 取消弹窗的移动
 
