@@ -188,7 +188,7 @@ export default {
 ```html
 <template>
 	<div class="modal-bg" v-show="show" @mouseup="cancelMove">
-        <div class="modal-container" :class="position">
+        <div class="modal-container">
             <div class="modal-header" @mousedown="setStartingPoint" @mousemove="modalMove" @mouseup="cancelMove">
                 {{ title }}
             </div>
@@ -215,10 +215,6 @@ export default {
         title: {
             type: String,
             default: ''
-        },
-        position: {
-            type: String,
-            default: 'center'
         },
     },
     data() {
@@ -278,21 +274,9 @@ export default {
     border-radius: 10px;
     overflow: hidden;
     position: fixed;
-}
-.center {
     top: 50%;
     left: 50%;
     transform: translate(-50%,-50%);
-}
-.top {
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-}
-.left {
-    top: 50%;
-    left: 210px;
-    transform: translateY(-50%);
 }
 .modal-header {
     height: 56px;
