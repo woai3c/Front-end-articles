@@ -204,7 +204,7 @@ export default {
 </template>
 ```
 ```js
-<script scoped>
+<script>
 export default {
     name: 'modal',
     props: {
@@ -259,7 +259,7 @@ export default {
 ```
 
 ```css
-<style>
+<style scoped>
 .modal-bg {
     position: fixed;
     top: 0;
