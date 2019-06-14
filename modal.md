@@ -184,7 +184,9 @@ export default {
     }
 ```
 通过这些新增的代码，这个弹窗就具有了拖拽的功能。
+
 最后附上这个弹窗组件的完整代码
+
 ```html
 <template>
 	<div class="modal-bg" v-show="show" @mouseup="cancelMove">
