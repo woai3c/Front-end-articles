@@ -7,7 +7,7 @@
 
 ```html
 <template>
-	<div class="modal-bg" v-show="show">
+    <div class="modal-bg" v-show="show">
         <div class="modal-container">
             <div class="modal-header">
                 {{ title }}
@@ -30,9 +30,9 @@
 * 类 `modal-main`: 内容层主体部分（用来展示内容）
 * 类 `modal-footer`: 内容层脚部
 * 属性 `v-show`: 控制弹窗的展示与关闭
+* 属性 `title`: 标题
 * 方法 `hideModal`: 点击取消的回调函数
 * 方法 `submit`: 点击确认的回调函数
-* 属性 `title`: 标题
 * 插槽 `slot`: 用来展示内容
 
 定义完 HTML 结构，还得定义组件的 `props` 属性，用来接收父组件的传参，以方便在父组件通过属性来控制弹窗。
@@ -107,7 +107,7 @@ export default {
 现在市面上的 UI 库特别多，所以一些通用的组件样式不建议自己写，直接用现成的就好。在这个组件上，我们可以使用 element-ui，改造后变成这样。
 ```html
 <template>
-	<div class="modal-bg" v-show="show">
+    <div class="modal-bg" v-show="show">
         <div class="modal-container">
             <div class="modal-header">
                 {{ title }}
@@ -136,7 +136,7 @@ export default {
 先来看代码。
 ```html
 <template>
-	<div class="modal-bg" v-show="show" @mouseup="cancelMove">
+    <div class="modal-bg" v-show="show" @mouseup="cancelMove">
         <div class="modal-container" :class="position">
             <div class="modal-header" @mousedown="setStartingPoint" @mousemove="modalMove" @mouseup="cancelMove">
                 {{ title }}
@@ -152,7 +152,7 @@ export default {
     </div>
 </template>
 ```
-在弹窗的头部增加了三个事件 `mousedown`、`mousemove`、`mouseup`，用来控制弹窗移动。
+在弹窗的头部增加了三个事件 `mousedown`、`mousemove`、`mouseup`，用来控制弹窗移动（点击弹窗头部进行拖拽）。
 ```js
     data() {
         return {
@@ -185,7 +185,7 @@ export default {
 ```
 通过这些新增的代码，这个弹窗就具有了拖拽的功能。
 最后附上这个弹窗组件的完整代码
-```
+```html
 <template>
 	<div class="modal-bg" v-show="show" @mouseup="cancelMove">
         <div class="modal-container" :class="position">
@@ -202,7 +202,8 @@ export default {
         </div>
     </div>
 </template>
-
+```
+```js
 <script scoped>
 export default {
     name: 'modal',
@@ -259,7 +260,9 @@ export default {
     }
 }
 </script>
+```
 
+```css
 <style>
 .modal-bg {
     position: fixed;
