@@ -100,6 +100,7 @@ export default {
 }
 ```
 把子组件要求的两个属性和两个方法都写上，现在来看看这个弹窗的效果。
+![img](https://img-blog.csdnimg.cn/20190614144642191.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3E0MTEwMjAzODI=,size_16,color_FFFFFF,t_70)
 一个简单的弹窗组件就这样完成了。
 
 ## 改进
