@@ -302,8 +302,6 @@ export default {
 }
 .modal-main {
     padding: 15px 40px;
-    font-size: 12px;
-    color: #444;
 }
 </style>
 
