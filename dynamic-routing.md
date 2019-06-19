@@ -133,11 +133,79 @@ accordion :open-names="openMenus" :active-name="currentPage" @on-open-change="me
 ```
 代码不用看得太仔细，理解原理即可，其实就是通过三次 `v-for` 不停的对子数组进行循环，生成三级菜单。
 
-动态菜单已经实现了，再来看看动态路由怎么实现。
+动态菜单这样就可以实现了。
 
-首先，要把所有的页面路由都列出来，再用后台返回来的数据动态匹配，能匹配上的就把路由加上，不能匹配上的就不加。
+再来看看动态路由，因为上面已经说过了用 `addRoutes` 来实现，现在看看具体怎么做。
 
-到底怎么做呢？还是对后台数据进行多次 `for` 循环来读取数据。
+首先，要把项目所有的页面路由都列出来，再用后台返回来的数据动态匹配，能匹配上的就把路由加上，不能匹配上的就不加。
+最后把这个新生成的路由数据用 `addRoutes` 添加到路由表里。
+```js
+const asyncRoutes = {
+    'home': {
+        path: 'home',
+        name: 'home',
+        component: () => import('../views/Home.vue')
+    },
+    't1': {
+        path: 't1',
+        name: 't1',
+        component: () => import('../views/T1.vue')
+    },
+    'password': {
+        path: 'password',
+        name: 'password',
+        component: () => import('../views/Password.vue')
+    },
+    'msg': {
+        path: 'msg',
+        name: 'msg',
+        component: () => import('../views/Msg.vue')
+    },
+    'userinfo': {
+        path: 'userinfo',
+        name: 'userinfo',
+        component: () => import('../views/UserInfo.vue')
+    }
+}
+// 将菜单信息转成对应的路由信息 动态添加
+function menusToRoutes(data) {
+    const result = []
+    const children = []
+
+    result.push({
+        path: '/',
+        component: () => import('../components/Index.vue'),
+        children,
+    })
+
+    data.forEach(item => {
+        generateRoutes(children, item)
+    })
+
+    children.push({
+        path: 'error',
+        name: 'error',
+        component: () => import('../components/Error.vue')
+    })
+
+    // 最后添加404页面 否则会在登陆成功后跳到404页面
+    result.push(
+        {path: '*', redirect: '/error'},
+    )
+
+    return result
+}
+
+function generateRoutes(children, item) {
+    if (item.name) {
+        children.push(asyncRoutes[item.name])
+    } else if (item.children) {
+        item.children.forEach(e => {
+            generateRoutes(children, e)
+        })
+    }
+}
+```
 
 所有的代码实现，我都放在 [github](https://github.com/woai3c/vue-admin-template) 上，动态菜单的实现放在这个项目下的 `src/components/Index.vue`、`src/permission.js` 和 `src/utils/index.js`下
 
