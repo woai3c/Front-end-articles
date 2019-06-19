@@ -134,7 +134,9 @@ accordion :open-names="openMenus" :active-name="currentPage" @on-open-change="me
 代码不用看得太仔细，理解原理即可，其实就是通过三次 `v-for` 不停的对子数组进行循环，生成三级菜单。
 
 动态菜单已经实现了，再来看看动态路由怎么实现。
+
 首先，要把所有的页面路由都列出来，再用后台返回来的数据动态匹配，能匹配上的就把路由加上，不能匹配上的就不加。
+
 到底怎么做呢？还是对后台数据进行多次 `for` 循环来读取数据。
 
 所有的代码实现，我都放在 [github](https://github.com/woai3c/vue-admin-template) 上，动态菜单的实现放在这个项目下的 `src/components/Index.vue`、`src/permission.js` 和 `src/utils/index.js`下
