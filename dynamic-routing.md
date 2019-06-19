@@ -135,7 +135,7 @@ accordion :open-names="openMenus" :active-name="currentPage" @on-open-change="me
 
 动态菜单这样就可以实现了。
 
-再来看看动态路由，因为上面已经说过了用 `addRoutes` 来实现，现在看看具体怎么做。
+**动态路由**，因为上面已经说过了用 `addRoutes` 来实现，现在看看具体怎么做。
 
 首先，要把项目所有的页面路由都列出来，再用后台返回来的数据动态匹配，能匹配上的就把路由加上，不能匹配上的就不加。
 最后把这个新生成的路由数据用 `addRoutes` 添加到路由表里。
