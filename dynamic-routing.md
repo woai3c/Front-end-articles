@@ -167,6 +167,10 @@ const asyncRoutes = {
         component: () => import('../views/UserInfo.vue')
     }
 }
+
+// 传入后台数据 生成路由表
+menusToRoutes(menusData)
+
 // 将菜单信息转成对应的路由信息 动态添加
 function menusToRoutes(data) {
     const result = []
