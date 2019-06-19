@@ -5,7 +5,7 @@
 * [栅格化系统的原理以及实现](https://github.com/woai3c/Front-end-articles/blob/master/Grid%20System.md)
 * [在浏览器调起本地应用的方法](https://github.com/woai3c/Front-end-articles/blob/master/local%20application.md)
 * [开发一个简单的 Vue 弹窗组件](https://github.com/woai3c/Front-end-articles/blob/master/modal.md)
-
+* [Vue 动态添加路由及生成菜单](https://github.com/woai3c/Front-end-articles/blob/master/dynamic-routing.md)
 ## 性能优化
 * [JavaScript性能优化](https://github.com/woai3c/Front-end-articles/blob/master/javascript-optimization.md)
 * [优化循环的方法-循环展开](https://github.com/woai3c/Front-end-articles/blob/master/loop-unrolling.md)
