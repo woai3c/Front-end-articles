@@ -52,7 +52,7 @@ router.addRoutes([
 
 ### 动态生成菜单
 假设后台返回来的数据长这样
-```json
+```js
 // 左侧菜单栏数据
 menuItems: [
     {
