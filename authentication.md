@@ -41,6 +41,7 @@ routes: [
 // 假设角色有两种：admin 和 user
 // 这里是从后台获取的用户角色
 const role = 'user'
+// 在进入一个页面前会触发 router.beforeEach 事件
 router.beforeEach((to, from, next) => {
     if (to.meta.roles.includes(role)) {
         next()
