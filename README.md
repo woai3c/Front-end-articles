@@ -21,3 +21,4 @@
 * [Vue 改变数据，页面不刷新的问题](https://github.com/woai3c/Front-end-articles/blob/master/vue-page-not-refresh.md)
 * [开发一个简单的 Vue 弹窗组件](https://github.com/woai3c/Front-end-articles/blob/master/modal.md)
 * [Vue 动态添加路由及生成菜单](https://github.com/woai3c/Front-end-articles/blob/master/dynamic-routing.md)
+* [Vue 页面权限控制和登陆验证](https://github.com/woai3c/Front-end-articles/blob/master/authentication.md)
