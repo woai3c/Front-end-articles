@@ -73,3 +73,5 @@ router.beforeEach((to, from, next) => {
     }
 })
 ```
+
+上述所有实现，都可以在我的[vue轻量级后台管理系统基础模板](https://github.com/woai3c/vue-admin-template)项目里找到
