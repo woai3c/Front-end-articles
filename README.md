@@ -3,7 +3,7 @@
 * [事件循环](https://github.com/woai3c/Front-end-articles/blob/master/eventloop.md)
 * [如何编写高质量代码](https://github.com/woai3c/Front-end-articles/blob/master/high-quality-code.md)
 * [栅格化系统的原理以及实现](https://github.com/woai3c/Front-end-articles/blob/master/Grid%20System.md)
-* [await vs return vs return await](https://github.com/woai3c/Front-end-articles/blob/master/async-await.md)
+* [await VS return VS return await](https://github.com/woai3c/Front-end-articles/blob/master/async-await.md)
 
 ## 性能优化
 * [JavaScript性能优化](https://github.com/woai3c/Front-end-articles/blob/master/javascript-optimization.md)
