@@ -10,7 +10,7 @@ db.user.insert({
 })
 ```
 用来保存文章数据的表/集合为 `myBlogArticles`, 这个也是自己命名的，可以在代码中自己修改。
-注意：在 `windows` 中安装数据库，一定要按照教程安装。
+注意：在 `windows` 中安装数据库，一定要按照[教程](https://www.runoob.com/mongodb/mongodb-window-install.html)安装。
 
 ## 项目相关文档
 * [多个请求下 loading 的展示与关闭](https://github.com/woai3c/Front-end-articles/blob/master/control%20loading.md)
