@@ -18,3 +18,11 @@ import { test } from './test'
 // or
 const { test } = require('./test')
 ```
+## 项目相关文档
+* [多个请求下 loading 的展示与关闭](https://github.com/woai3c/Front-end-articles/blob/master/control%20loading.md)
+* [Vue 实现前进刷新，后退不刷新的效果](https://github.com/woai3c/Front-end-articles/blob/master/vue%20refresh.md)
+* [Vue 页面权限控制和登陆验证](https://github.com/woai3c/Front-end-articles/blob/master/authentication.md)
+* [用 node 搭建个人博客（一）：代码热更新](https://github.com/woai3c/Front-end-articles/blob/master/node-blog1.md)
+* [用 node 搭建个人博客（三）：token](https://github.com/woai3c/Front-end-articles/blob/master/node-blog3.md)
+* [用 node 搭建个人博客（四）：评论功能](https://github.com/woai3c/Front-end-articles/blob/master/node-blog4.md)
+* [用 node 搭建个人博客（五）：数据库](https://github.com/woai3c/Front-end-articles/blob/master/node-blog5.md)
