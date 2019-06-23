@@ -46,6 +46,7 @@ module.exports = merge(webpackBaseConfig, {
 ```
 这样就可以通过 node 来开启前端代码热更新了。
 
+## 项目相关文档
 * [多个请求下 loading 的展示与关闭](https://github.com/woai3c/Front-end-articles/blob/master/control%20loading.md)
 * [Vue 实现前进刷新，后退不刷新的效果](https://github.com/woai3c/Front-end-articles/blob/master/vue%20refresh.md)
 * [Vue 页面权限控制和登陆验证](https://github.com/woai3c/Front-end-articles/blob/master/authentication.md)
