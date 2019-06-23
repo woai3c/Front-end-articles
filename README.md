@@ -24,4 +24,5 @@
 * [Vue 页面权限控制和登陆验证](https://github.com/woai3c/Front-end-articles/blob/master/authentication.md)
 
 ## Node
-[用 node 搭建个人博客（一）：代码热更新](https://github.com/woai3c/Front-end-articles/blob/master/node-blog1.md)
+* [用 node 搭建个人博客（一）：代码热更新](https://github.com/woai3c/Front-end-articles/blob/master/node-blog1.md)
+* [用 node 搭建个人博客（二）：导出模块同时兼容 import 和 require](https://github.com/woai3c/Front-end-articles/blob/master/node-blog2.md)
