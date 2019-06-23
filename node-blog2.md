@@ -1,5 +1,5 @@
 # 用 node 搭建个人博客（二）：导出模块同时兼容 import 和 require
-一般在项目里使用 es6 的 `export` 语法导出模块，只能用 es6 的 `import` 来引入，如果使用 `require` 就会报错。
+一般在项目里使用 es6 的 `export` 语法导出模块，引入只能用 es6 的 `import`，如果使用 `require` 就会报错。
 
 如果要同时兼容 `require` 和 `import`，则需要使用 `module.exports` 导出模块。
 
