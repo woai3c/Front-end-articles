@@ -137,9 +137,9 @@ export default {
 先来看代码。
 ```html
 <template>
-    <div class="modal-bg" v-show="show" @mouseup="cancelMove">
+    <div class="modal-bg" v-show="show" @mousemove="modalMove" @mouseup="cancelMove">
         <div class="modal-container" :class="position">
-            <div class="modal-header" @mousedown="setStartingPoint" @mousemove="modalMove" @mouseup="cancelMove">
+            <div class="modal-header" @mousedown="setStartingPoint">
                 {{ title }}
             </div>
             <div class="modal-main">
@@ -153,7 +153,7 @@ export default {
     </div>
 </template>
 ```
-在弹窗的头部增加了三个事件 `mousedown`、`mousemove`、`mouseup`，用来控制弹窗移动（点击弹窗头部进行拖拽）。
+在弹窗上增加了三个事件 `mousedown`、`mousemove`、`mouseup`，用来控制弹窗移动（点击弹窗头部进行拖拽）。
 ```js
     data() {
         return {
@@ -190,9 +190,9 @@ export default {
 
 ```html
 <template>
-	<div class="modal-bg" v-show="show" @mouseup="cancelMove">
+	<div class="modal-bg" v-show="show" @mousemove="modalMove" @mouseup="cancelMove">
         <div class="modal-container">
-            <div class="modal-header" @mousedown="setStartingPoint" @mousemove="modalMove" @mouseup="cancelMove">
+            <div class="modal-header" @mousedown="setStartingPoint">
                 {{ title }}
             </div>
             <div class="modal-main">
