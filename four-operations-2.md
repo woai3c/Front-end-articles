@@ -1,10 +1,8 @@
 ## 编译原理实战入门：用 JavaScript 写一个简单的四则运算编译器（二）语法分析
 ### 四则运算的语法规则（语法规则是分层的）
-x* 表示 x 出现零次或多次
-
-x|y 表示 x 或 y 将出现
-
-() 圆括号，用于语言构词的分组
+1. x* 表示 x 出现零次或多次
+2. x | y 表示 x 或 y 将出现
+3. ( ) 圆括号，用于语言构词的分组
 
 * **expression**: addExpression
 * **addExpression**: mulExpression (op mulExpression)*
