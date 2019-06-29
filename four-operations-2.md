@@ -43,8 +43,8 @@ compileExpression
    |  |  | matches '*'
    |  |  | compileTerm
    |  |  |  |_ matches integerConstant		push 3
-   |  |  |_ compileOp('*')		*
-   |  |_ compileOp('+')		+
+   |  |  |_ compileOp('*')		            *
+   |  |_ compileOp('+')		                +
    |_
  ```
 
@@ -55,6 +55,7 @@ compileExpression
 
 代码示例包括语法分析、代码生成、错误报告（生成的代码为汇编代码）。
 ```js
+// 词法分析 输出 tokens
 function lexicalAnalysis(expression) {
     const symbol = ['(', ')', '+', '-', '*', '/']
     const re = /\d/
@@ -84,6 +85,7 @@ function lexicalAnalysis(expression) {
     return tokens
 }
 
+// 汇编代码生成器
 function AssemblyWriter() {
     this.output = ''
 }
@@ -97,15 +99,17 @@ AssemblyWriter.prototype = {
         this.output += op + '\r\n'
     },
 
+    //输出汇编代码
     outputStr() {
         return this.output
     }
 }
 
+// 语法分析器
 function Parser(tokens, writer) {
     this.writer = new AssemblyWriter()
     this.tokens = tokens
-    this.len = tokens.length
+    // tokens 数组索引
     this.i = -1
     this.opMap1 = {
         '+': 'add',
