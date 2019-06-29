@@ -6,11 +6,11 @@ x|y 表示 x 或 y 将出现
 
 () 圆括号，用于语言构词的分组
 
-* expression: addExpression
-* addExpression: mulExpression (op mulExpression)*
-* mulExpression: term (op term)*
-* term: '(' expression ')' | integerConstant
-* op: `+` `-` `*` `/`
+* **expression**: addExpression
+* **addExpression**: mulExpression (op mulExpression)*
+* **mulExpression**: term (op term)*
+* **term**: '(' expression ')' | integerConstant
+* **op**: + - * /
 
 PS: `addExpression` 对应 `+` `-` 表达式，`mulExpression` 对应 `*` `/` 表达式。
 
