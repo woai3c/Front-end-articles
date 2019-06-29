@@ -43,8 +43,8 @@ compileExpression
    |  |  | matches '*'
    |  |  | compileTerm
    |  |  |  |_ matches integerConstant		push 3
-   |  |  |_ compileOp('*')		            *
-   |  |_ compileOp('+')		                +
+   |  |  |_ compileOp('*')                *
+   |  |_ compileOp('+')                   +
    |_
  ```
 
