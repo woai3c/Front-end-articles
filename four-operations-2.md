@@ -34,7 +34,7 @@ PS: `addExpression` 对应 `+` `-` 表达式，`mulExpression` 对应 `*` `/` �
 
 如果上面的理论知识看不太懂，没关系，先看代码，再和理论知识结合起来看。
 
-代码示例包括语法分析、代码生成、错误报告。
+代码示例包括语法分析、代码生成、错误报告（生成的代码为汇编代码）。
 ```js
 function lexicalAnalysis(expression) {
     const symbol = ['(', ')', '+', '-', '*', '/']
