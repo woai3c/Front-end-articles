@@ -53,10 +53,9 @@ add
 ### 代码示例
 来看看怎么将一个四则运算表达式分解成 token
 ```js
-const symbol = ['(', ')', '+', '-', '*', '/']
-const re = /\d/
-
 function lexicalAnalysis(expression) {
+    const symbol = ['(', ')', '+', '-', '*', '/']
+    const re = /\d/
     const tokens = []
     const chars = expression.trim().split('')
     let token = ''
