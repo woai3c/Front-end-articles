@@ -20,7 +20,6 @@ PS: `addExpression` 对应 `+` `-` 表达式，`mulExpression` 对应 `*` `/` �
 先来看看怎么分析一个四则运算表达式 `1 + 2 * 3`
 
 首先匹配的是 `expression`，由于目前 `expression` 往下分只有一种可能，即  `addExpression`，所以分解为 `addExpression`。
-
 依次类推，接下来的顺序为 `mulExpression`、`term`、`1`、`op`、`+`、`mulExpression`、`term`、`2`、`op`、`*`、`mulExpression`、`term`、`3`
 
 如下图所示
