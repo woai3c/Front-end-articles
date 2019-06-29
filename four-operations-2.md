@@ -28,3 +28,150 @@ PS: `addExpression` 对应 `+` `-` 表达式，`mulExpression` 对应 `*` `/` �
 
 这里可能会有人有疑问，为什么一个表达式搞得这么复杂，`expression` 下面有 `addExpression`，`addExpression` 下面还有 `mulExpression`。
 其实这里是为了考虑将来能继续扩展以及运算符优先级。
+
+### 代码示例
+编译原理的理论知识像天书，看得云里雾里，但真正动手做起来，你会发现，其实还挺简单的。
+如果上面的理论知识看不太懂，没关系，先看代码，再和理论知识结合起来看。
+代码示例包括语法分析、代码生成、错误报告。
+```js
+function lexicalAnalysis(expression) {
+    const symbol = ['(', ')', '+', '-', '*', '/']
+    const re = /\d/
+    const tokens = []
+    const chars = expression.trim().split('')
+    let token = ''
+    chars.forEach(c => {
+        if (re.test(c)) {
+            token += c
+        } else if (c == ' ' && token) {
+            tokens.push(token)
+            token = ''
+        } else if (symbol.includes(c)) {
+            if (token) {
+                tokens.push(token)
+                token = ''
+            } 
+
+            tokens.push(c)
+        }
+    })
+
+    if (token) {
+        tokens.push(token)
+    }
+
+    return tokens
+}
+
+function AssemblyWriter() {
+    this.output = ''
+}
+
+AssemblyWriter.prototype = {
+    writePush(digit) {
+        this.output += `push ${digit}\r\n`
+    },
+
+    writeOP(op) {
+        this.output += op + '\r\n'
+    },
+
+    outputStr() {
+        return this.output
+    }
+}
+
+function Parser(tokens, writer) {
+    this.writer = new AssemblyWriter()
+    this.tokens = tokens
+    this.len = tokens.length
+    this.i = -1
+    this.opMap1 = {
+        '+': 'add',
+        '-': 'sub',
+    }
+
+    this.opMap2 = {
+        '/': 'div',
+        '*': 'mul'
+    }
+
+    this.init()
+}
+
+Parser.prototype = {
+    init() {
+        this.compileExpression()
+    },
+
+    compileExpression() {
+        this.compileAddExpr()
+    },
+
+    compileAddExpr() {
+        this.compileMultExpr()
+        while (true) {
+            this.getNextToken()
+            if (this.opMap1[this.token]) {
+                let op = this.opMap1[this.token]
+                this.compileMultExpr()
+                this.writer.writeOP(op)
+            } else {
+                this.i--
+                break
+            }
+        }
+    },
+
+    compileMultExpr() {
+        this.compileTerm()
+        while (true) {
+            this.getNextToken()
+            if (this.opMap2[this.token]) {
+                let op = this.opMap2[this.token]
+                this.compileTerm()
+                this.writer.writeOP(op)
+            } else {
+                this.i--
+                break
+            }
+        }
+    },
+
+    compileTerm() {
+        this.getNextToken()
+        if (this.token == '(') {
+            this.compileExpression()
+            this.getNextToken()
+            if (this.token != ')') {
+                throw '缺少右括号：)'
+            }
+        } else if (/^\d+$/.test(this.token)) {
+            this.writer.writePush(this.token)
+        } else {
+            throw '错误的 token：第 ' + (this.i + 1) + ' 个 token (' + this.token + ')'
+        }
+    },
+
+    getNextToken() {
+        this.token = this.tokens[++this.i]
+    },
+
+    getInstructions() {
+        return this.writer.outputStr()
+    }
+}
+
+const tokens = lexicalAnalysis('100+10*10')
+const writer = new AssemblyWriter()
+const parser = new Parser(tokens, writer)
+const instructions = parser.getInstructions()
+console.log(instructions)
+/*
+push 100
+push 10
+push 10
+mul
+add
+*/
+```
