@@ -26,4 +26,4 @@
 * [用 node 搭建个人博客](https://github.com/woai3c/node-blog)
 
 ## 编译原理
-* [编译原理实战入门：用 JavaScript 写一个简单的四则运算编译器](https://github.com/woai3c/Front-end-articles/blob/master/four-operations.md)
+* [编译原理实战入门：用 JavaScript 写一个简单的四则运算编译器（一）词法分析](https://github.com/woai3c/Front-end-articles/blob/master/four-operations-1.md)
