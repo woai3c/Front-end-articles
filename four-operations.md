@@ -83,6 +83,7 @@ function lexicalAnalysis(expression) {
     return tokens
 }
 
-console.log(lexicalAnalysis('100    +   23   +    34 * 10 / 2')) // ["100", "+", "23", "+", "34", "*", "10", "/", "2"]
+console.log(lexicalAnalysis('100    +   23   +    34 * 10 / 2')) 
+// ["100", "+", "23", "+", "34", "*", "10", "/", "2"]
 ```
 获取到 token 后，还不能直接生成代码，因为还有一道工作没做。
