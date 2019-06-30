@@ -58,7 +58,7 @@ compileExpression
 
 示例：
 
-中缀表达式： `5 + 5` 转换为后缀表达式：`5 5 +`，然后再根据后缀表达式生成代码
+中缀表达式： `5 + 5` 转换为后缀表达式：`5 5 +`，然后再根据后缀表达式生成代码。
 ```js
 // 5 + 5 转换为 5 5 + 再生成代码
 push 5
@@ -71,7 +71,7 @@ add
 
 如果上面的理论知识看不太懂，没关系，先看代码，再和理论知识结合起来看。
 
-注意：这里需要引入上一篇文章词法分析的代码
+注意：这里需要引入上一篇文章词法分析的代码。
 ```js
 // 汇编代码生成器
 function AssemblyWriter() {
@@ -95,7 +95,7 @@ AssemblyWriter.prototype = {
 
 // 语法分析器
 function Parser(tokens, writer) {
-    this.writer = new AssemblyWriter()
+    this.writer = writer
     this.tokens = tokens
     // tokens 数组索引
     this.i = -1
@@ -179,7 +179,7 @@ const tokens = lexicalAnalysis('100+10*10')
 const writer = new AssemblyWriter()
 const parser = new Parser(tokens, writer)
 const instructions = parser.getInstructions()
-console.log(instructions)
+console.log(instructions) // 输出生成的汇编代码
 /*
 push 100
 push 10
