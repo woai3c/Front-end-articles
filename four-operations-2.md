@@ -28,7 +28,7 @@ PS: `addExpression` 对应 `+` `-` 表达式，`mulExpression` 对应 `*` `/` �
 ![img](https://github.com/woai3c/Front-end-articles/blob/master/imgs/four-operation.jpg)
 
 这里可能会有人有疑问，为什么一个表达式搞得这么复杂，`expression` 下面有 `addExpression`，`addExpression` 下面还有 `mulExpression`。
-其实这里是为了考虑将来能继续扩展以及运算符优先级。
+其实这里是为了考虑运算符优先级而设的，`mulExpr` 比 `addExpr` 表达式运算级要高。
 ```
 1 + 2 * 3
 compileExpression
