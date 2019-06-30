@@ -63,8 +63,6 @@ CpuEmulator.prototype = {
                     }
             }
         })
-
-        console.log(this.memory)
     },
 
     add() {
@@ -97,6 +95,10 @@ CpuEmulator.prototype = {
 
     pop() {
         return this.memory.pop()
+    },
+
+    getResult() {
+        return this.memory[0]
     }
 }
 
