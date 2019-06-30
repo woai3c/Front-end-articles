@@ -48,43 +48,29 @@ compileExpression
    |_
  ```
 
-### 代码示例
-编译原理的理论知识像天书，看得云里雾里，但真正动手做起来，你会发现，其实还挺简单的。
+### 表达式代码生成
+我们通常用的四则运算表达式是中缀表达式，但是对于计算机来说中缀表达式不便于计算。所以在代码生成阶段，要将中缀表达式转换为后缀表达式。
+
+**后缀表达式**
+
+后缀表达式，又称逆波兰式，指的是不包含括号，运算符放在两个运算对象的后面，所有的计算按运算符出现的顺序，严格从左向右进行（不再考虑运算符的优先规则）。
+
+示例：
+中缀表达式： 5 + 5 转换为后缀表达式：5 5 +，然后再根据后缀表达式生成代码
+```js
+// 5 + 5 转换为 5 5 + 再生成代码
+push 5
+push 5
+add
+```
+
+### 代码实现
+编译原理的理论知识像天书，经常让人看得云里雾里，但真正动手做起来，你会发现，其实还挺简单的。
 
 如果上面的理论知识看不太懂，没关系，先看代码，再和理论知识结合起来看。
 
-代码示例包括词法分析、语法分析、代码生成、错误报告（生成的代码为汇编代码）。
+注意：这里需要引入上一篇文章词法分析的代码
 ```js
-// 词法分析 输出 tokens
-function lexicalAnalysis(expression) {
-    const symbol = ['(', ')', '+', '-', '*', '/']
-    const re = /\d/
-    const tokens = []
-    const chars = expression.trim().split('')
-    let token = ''
-    chars.forEach(c => {
-        if (re.test(c)) {
-            token += c
-        } else if (c == ' ' && token) {
-            tokens.push(token)
-            token = ''
-        } else if (symbol.includes(c)) {
-            if (token) {
-                tokens.push(token)
-                token = ''
-            } 
-
-            tokens.push(c)
-        }
-    })
-
-    if (token) {
-        tokens.push(token)
-    }
-
-    return tokens
-}
-
 // 汇编代码生成器
 function AssemblyWriter() {
     this.output = ''
