@@ -4,6 +4,7 @@
 2. x | y 表示 x 或 y 将出现
 3. ( ) 圆括号，用于语言构词的分组
 
+以下规则从左往右看，代表左边的表达式还能继续往下细分成右边的表达式，一直细分到终结符为止（token）。
 * **expression**: addExpression
 * **addExpression**: mulExpression (op mulExpression)*
 * **mulExpression**: term (op term)*
