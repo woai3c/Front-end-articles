@@ -8,7 +8,7 @@
 * **addExpression**: mulExpression (op mulExpression)*
 * **mulExpression**: term (op term)*
 * **term**: '(' expression ')' | integerConstant
-* **op**: + - * /
+* **op**: `+ - * /`
 
 PS: `addExpression` 对应 `+` `-` 表达式，`mulExpression` 对应 `*` `/` 表达式。
 
