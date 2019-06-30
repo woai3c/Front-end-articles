@@ -84,3 +84,4 @@ function lexicalAnalysis(expression) {
 console.log(lexicalAnalysis('100    +   23   +    34 * 10 / 2')) 
 // ["100", "+", "23", "+", "34", "*", "10", "/", "2"]
 ```
+* [参考资料][计算机系统要素](https://book.douban.com/subject/1998341/)
