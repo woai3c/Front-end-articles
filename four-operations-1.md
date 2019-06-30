@@ -50,8 +50,7 @@ add
 
 **整数常量**：12、1000、111...
 
-### 代码示例
-词法分析代码实现
+### 词法分析代码实现
 ```js
 function lexicalAnalysis(expression) {
     const symbol = ['(', ')', '+', '-', '*', '/']
