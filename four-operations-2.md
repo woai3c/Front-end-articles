@@ -130,6 +130,8 @@ Parser.prototype = {
                 this.compileMultExpr()
                 this.writer.writeOP(op)
             } else {
+                // 没有匹配上相应的操作符 这里为没有匹配上 + - 
+                // 将 token 索引后退一位 LL(0)分析法
                 this.i--
                 break
             }
@@ -145,6 +147,8 @@ Parser.prototype = {
                 this.compileTerm()
                 this.writer.writeOP(op)
             } else {
+                // 没有匹配上相应的操作符 这里为没有匹配上 * / 
+                // 将 token 索引后退一位 LL(0)分析法
                 this.i--
                 break
             }
