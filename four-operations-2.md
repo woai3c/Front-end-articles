@@ -4,7 +4,7 @@
 2. x | y 表示 x 或 y 将出现
 3. ( ) 圆括号，用于语言构词的分组
 
-以下规则从左往右看，代表左边的表达式还能继续往下细分成右边的表达式，一直细分到终结符为止（token）。
+以下规则从左往右看，表示左边的表达式还能继续往下细分成右边的表达式，一直细分到不可再分为止。
 * **expression**: addExpression
 * **addExpression**: mulExpression (op mulExpression)*
 * **mulExpression**: term (op term)*
@@ -21,7 +21,7 @@ PS: `addExpression` 对应 `+` `-` 表达式，`mulExpression` 对应 `*` `/` �
 先来看看怎么分析一个四则运算表达式 `1 + 2 * 3`。
 
 首先匹配的是 `expression`，由于目前 `expression` 往下分只有一种可能，即  `addExpression`，所以分解为 `addExpression`。
-依次类推，接下来的顺序为 `mulExpression`、`term`、`1`（终结符）、`+`（终结符）、`mulExpression`、`term`、`2`（终结符）、`*`（终结符）、`mulExpression`、`term`、`3`（终结符）。
+依次类推，接下来的顺序为 `mulExpression`、`term`、`1`（integerConstant）、`+`（op）、`mulExpression`、`term`、`2`（integerConstant）、`*`（op）、`mulExpression`、`term`、`3`（integerConstant）。
 
 如下图所示：
 
