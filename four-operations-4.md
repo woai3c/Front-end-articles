@@ -16,3 +16,10 @@
 这一个多月的时间，让我有了一个质的蜕变，对于程序，不再懵懂无知。从写下一行代码开始，我就已经了解了这一个个字符最终会怎样在 CPU 中执行。
 
 如果你在看完我的描述之后，对这本书有兴趣，欢迎你来我的[项目](https://github.com/woai3c/nand2tetris)看一下，这里有这本书的下载链接和我完成本项目的源码答案。
+
+* [编译原理实战入门：用 JavaScript 写一个简单的四则运算编译器（一）词法分析](https://github.com/woai3c/Front-end-articles/blob/master/four-operations-1.md)
+* [编译原理实战入门：用 JavaScript 写一个简单的四则运算编译器（二）语法分析](https://github.com/woai3c/Front-end-articles/blob/master/four-operations-2.md)
+* [编译原理实战入门：用 JavaScript 写一个简单的四则运算编译器（三）模拟执行](https://github.com/woai3c/Front-end-articles/blob/master/four-operations-3.md)
+* [编译原理实战入门：用 JavaScript 写一个简单的四则运算编译器（四）结语](https://github.com/woai3c/Front-end-articles/blob/master/four-operations-4.md)
+* [完整源码](https://github.com/woai3c/Front-end-articles/blob/master/code/four-operations/code.js)
+## 参考资料：[计算机系统要素](https://book.douban.com/subject/1998341/)
