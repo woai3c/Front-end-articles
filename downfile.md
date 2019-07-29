@@ -23,7 +23,7 @@ axios({
   link.setAttribute('download', 'excel.xlsx')
   document.body.appendChild(link)
   link.click()
-  document.body.remove(link)
+  document.body.removeChild(link)
 })
 ```
 打开下载的文件，看看结果是否正确。
@@ -52,7 +52,7 @@ axios({
   link.setAttribute('download', 'excel.xlsx')
   document.body.appendChild(link)
   link.click()
-  document.body.remove(link)
+  document.body.removeChild(link)
 })
 ```
 
