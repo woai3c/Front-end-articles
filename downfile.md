@@ -7,7 +7,7 @@
 mdn 上是这样介绍 `Blob` 的：
 > Blob 对象表示一个不可变、原始数据的类文件对象。Blob 表示的不一定是JavaScript原生格式的数据
 
-具体使用方法
+具体使用方法(ajax 使用方法也是一样)
 ```js
 axios({
   method: 'post',
