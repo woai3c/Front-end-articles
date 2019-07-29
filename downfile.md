@@ -30,7 +30,9 @@ axios({
 
 ![img1](https://github.com/woai3c/Front-end-articles/blob/master/imgs/downfile1.jpg)
 
-一堆乱码... 一定有哪里不对。
+一堆乱码...
+
+一定有哪里不对。
 
 最后发现是参数 `responseType` 的问题，`responseType` 它表示服务器响应的数据类型，由于后台返回来的是二进制数据，所以我们要把它设为 `arraybuffer`，
 接下来再看看结果是否正确。
@@ -54,6 +56,6 @@ axios({
 })
 ```
 
-![img2](https://github.com/woai3c/Front-end-articles/blob/master/imgs/downfile2.jpg)
+![img1](https://github.com/woai3c/Front-end-articles/blob/master/imgs/downfile2.png)
 
 这次没有问题，文件能正常打开，内容也是正常的，不再是乱码。
