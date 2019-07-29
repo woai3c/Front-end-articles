@@ -23,6 +23,7 @@ axios({
   link.setAttribute('download', 'excel.xlsx')
   document.body.appendChild(link)
   link.click()
+  document.body.remove(link)
 })
 ```
 打开下载的文件，看看结果是否正确。
@@ -45,6 +46,7 @@ axios({
   link.setAttribute('download', 'excel.xlsx')
   document.body.appendChild(link)
   link.click()
+  document.body.remove(link)
 })
 ```
 这次没有问题，文件能正常打开，内容也是正常的，不再是乱码。
