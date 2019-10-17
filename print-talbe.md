@@ -14,8 +14,10 @@ printJS({
 element-ui 的表格，表面上看起来是一个表格，实际上是由两个表格组成的。
 
 表头为一个表格，表体又是个表格，这就导致了一个问题：打印的时候表体和表头错位。
-![img1](https://github.com/woai3c/Front-end-articles/blob/master/imgs/printTable1.jpg)
+![img1](https://github.com/woai3c/Front-end-articles/blob/master/imgs/printTable2.jpg)
+
 另外，在表格出现滚动头的时候，也会造成错位。
+
 ![img2](https://github.com/woai3c/Front-end-articles/blob/master/imgs/printTable1.jpg)
 ### 解决方案
 我的思路是将两个表格合成一个表格，`print-js` 组件打印的时候，实际上是把传入参数 id 对应的 DOM 里的内容提取出来打印。
