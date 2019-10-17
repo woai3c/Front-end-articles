@@ -16,7 +16,7 @@ element-ui 的表格，表面上看起来是一个表格，实际上是由两个
 表头为一个表格，表体又是个表格，这就导致了一个问题：打印的时候表体和表头错位。
 ![img1](https://github.com/woai3c/Front-end-articles/blob/master/imgs/printTable2.jpg)
 
-另外，在表格出现滚动头的时候，也会造成错位。
+另外，在表格出现滚动条的时候，也会造成错位。
 
 ![img2](https://github.com/woai3c/Front-end-articles/blob/master/imgs/printTable1.jpg)
 ### 解决方案
