@@ -58,7 +58,7 @@ function printHTML(id) {
         printable: printDOMID,
         type: 'html',
         scanStyles: false,
-        style: generatePrintStyle()
+        style: 'table { border-collapse: collapse }' // 表格样式
     })
 
     div.remove()
