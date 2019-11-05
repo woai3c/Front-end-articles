@@ -33,4 +33,4 @@
 * [编译原理实战入门：用 JavaScript 写一个简单的四则运算编译器（四）结语](https://github.com/woai3c/Front-end-articles/blob/master/four-operations-4.md)
 
 ## git
-[git comit 提交规范](https://github.com/woai3c/Front-end-articles/blob/master/git%20commit%20style.md)
+* [git comit 提交规范](https://github.com/woai3c/Front-end-articles/blob/master/git%20commit%20style.md)
