@@ -4,6 +4,7 @@
 * [如何编写高质量代码](https://github.com/woai3c/Front-end-articles/blob/master/high-quality-code.md)
 * [栅格化系统的原理以及实现](https://github.com/woai3c/Front-end-articles/blob/master/Grid%20System.md)
 * [前端性能和错误监控](https://github.com/woai3c/Front-end-articles/blob/master/monitor.md)
+* [ESlint + VSCode自动格式化代码(2019)](https://github.com/woai3c/Front-end-articles/blob/master/eslint-vscode-format.md)
 
 #### Vue
 * [多个请求下 loading 的展示与关闭](https://github.com/woai3c/Front-end-articles/blob/master/control%20loading.md)
