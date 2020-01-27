@@ -32,8 +32,8 @@ Windows Registry Editor Version 5.00
 ```
 `a` 标签里的 `ptl` 就是刚才注册的协议，现在打开浏览器点击 `tim` 将会弹出一个提示，是否打开 `TIM`。
 
-![在这里插入图片描述](https://img-blog.csdnimg.cn/20190517173813879.png)
+![在这里插入图片描述](https://github.com/woai3c/Front-end-articles/blob/master/imgs/call1.png)
 
 点击确定，即可打开 `TIM`，我们可以将提示的勾打上，以后点击 `tim` 就会直接弹出 `TIM`，不会再提示。
 
-![在这里插入图片描述](https://img-blog.csdnimg.cn/2019051717391947.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3E0MTEwMjAzODI=,size_16,color_FFFFFF,t_70)
+![在这里插入图片描述](https://github.com/woai3c/Front-end-articles/blob/master/imgs/call2.png)
