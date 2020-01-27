@@ -1,7 +1,7 @@
 # Vue 改变数据，页面不刷新的问题
 最近在用 element-ui 开发一个网站，使用 table 组件时，发现修改完数据，有时候会延迟一两秒，页面才会发生变化。
 
-![demo](https://img-blog.csdnimg.cn/20190613165358267.gif)
+![demo](https://github.com/woai3c/Front-end-articles/blob/master/imgs/vue1.gif)
 
 看了一下代码，发现修改数据的代码是这样的
 ```js
