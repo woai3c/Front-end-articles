@@ -3,11 +3,11 @@
 
 **原来的样子：**
 
-![在这里插入图片描述](https://img-blog.csdnimg.cn/20190423115058518.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3E0MTEwMjAzODI=,size_16,color_FFFFFF,t_70)
+![在这里插入图片描述](https://github.com/woai3c/Front-end-articles/blob/master/imgs/keyboard1.png)
 
 **软键盘弹出来后：**
 
-![在这里插入图片描述](https://img-blog.csdnimg.cn/20190423115112844.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3E0MTEwMjAzODI=,size_16,color_FFFFFF,t_70)
+![在这里插入图片描述](https://github.com/woai3c/Front-end-articles/blob/master/imgs/keyboard2.png)
 
 在开发APP时，通常情况下页面的宽度和高度都会设为 100%，即页面高度等于屏幕高度，页面宽度等于屏幕宽度。
 当 input 获取焦点时，软键盘弹出，页面高度被挤压，此时页面高度 = 屏幕高度 - 软键盘高度。所以，页面高度缩小，元素都挤压在一起，布局被打乱。
@@ -26,7 +26,7 @@
 }
 ```
 
-![在这里插入图片描述](https://img-blog.csdnimg.cn/2019042311512917.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3E0MTEwMjAzODI=,size_16,color_FFFFFF,t_70)
+![在这里插入图片描述](https://github.com/woai3c/Front-end-articles/blob/master/imgs/keyboard3.png)
 
 软键盘还是会弹起，因为页面最小高度被设为了 768px，所以此时总高度为 768px + 软键盘高度，超出了屏幕高度（ipad横屏屏幕高度为768px）。如上图所示，此时原来页面的上半部分“消失”，就是被顶上去了，只显示原来页面的下半部分。**但至少我们要的页面布局不变形已经实现了**。等输入完，软键盘收起时，页面恢复原状。
 
