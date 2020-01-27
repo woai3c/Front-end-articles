@@ -42,11 +42,11 @@ document.querySelector('test-div').clientHeight // 高
 获取到它们的真实开发尺寸分别为 `960 x 600` `1024 x 640`，根据分辨率和真实开发尺寸还能得知两个设备的设备像素比分别为 2 和 2.5。
 如图所示（华为 m5）
 
-![在这里插入图片描述](https://img-blog.csdnimg.cn/20191213104213298.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3E0MTEwMjAzODI=,size_16,color_FFFFFF,t_70)
+![在这里插入图片描述](https://github.com/woai3c/Front-end-articles/blob/master/imgs/mobile1.png)
 
 为了证明推断是正确的，我拿了一个专门在 m5 pro 上使用的 app 放在 chrome 上运行（模拟该设备的开发尺寸），完美适配。
 
-![在这里插入图片描述](https://img-blog.csdnimg.cn/20191213105110800.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3E0MTEwMjAzODI=,size_16,color_FFFFFF,t_70)
+![在这里插入图片描述](https://github.com/woai3c/Front-end-articles/blob/master/imgs/mobile2.png)
 
 另外提一下，为手机开发的网站放在其他手机上一般都能适配，但是放在平板上很难适配，毕竟屏幕大小差太多了，反之亦然。没有网站能完美适配所有的端，当然，简单的页面还是可以的，不过得写一堆 `@media screen`。
 
