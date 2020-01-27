@@ -17,9 +17,9 @@
 
 这个 API 的属性 `timing`，包含了页面加载各个阶段的起始及结束时间。
 
-![在这里插入图片描述](https://img-blog.csdnimg.cn/20191115231745105.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3E0MTEwMjAzODI=,size_16,color_FFFFFF,t_70)
+![在这里插入图片描述](https://github.com/woai3c/Front-end-articles/blob/master/imgs/monitor1.png)
 
-![在这里插入图片描述](https://img-blog.csdnimg.cn/20191115231408381.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3E0MTEwMjAzODI=,size_16,color_FFFFFF,t_70)
+![在这里插入图片描述](https://github.com/woai3c/Front-end-articles/blob/master/imgs/monitor2.jpg)
 
 为了方便大家理解 `timing` 各个属性的意义，我在知乎找到一位网友对于 `timing` 写的简介，在此转载一下。
 ```js
@@ -115,7 +115,7 @@ time: new Date().getTime(),
 通过这几个时间，就可以得知页面首屏加载性能如何了。
 
 另外，通过 `window.performance.getEntriesByType('resource')` 这个方法，我们还可以获取相关资源（js、css、img...）的加载时间，它会返回页面当前所加载的所有资源。
-![在这里插入图片描述](https://img-blog.csdnimg.cn/2019111523353678.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3E0MTEwMjAzODI=,size_16,color_FFFFFF,t_70)
+![在这里插入图片描述](https://github.com/woai3c/Front-end-articles/blob/master/imgs/monitor3.png)
 
 它一般包括以下几个类型
 * sciprt
