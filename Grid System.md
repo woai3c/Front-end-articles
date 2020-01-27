@@ -3,7 +3,7 @@
 在一个有限的、固定的平面上，用水平线和垂直线（虚拟的线，“参考线”），将平面划分成有规律的一系列“格子”（虚拟的格子），并依托这些格子、或以格子的边线为基准线，来进行有规律的版面布局。
 
 通俗点来说，就是人为的把网页中的一行，等比例划分,比如将一行划分为 12 等分。然后在每个格子里进行页面开发，这就栅格化。
-![grid1](https://image-static.segmentfault.com/303/471/3034714192-5ca574540d056)
+![grid1](https://github.com/woai3c/Front-end-articles/blob/master/imgs/grid1.jpg)
 ## 原理
 假如在页面里定义了一个 DIV，并设置如下 CSS 属性：
 ```css
@@ -13,7 +13,7 @@ div {
   width: 100%;
 }
 ```
-![grid2](https://image-static.segmentfault.com/150/093/1500936379-5ca57466963d7)
+![grid2](https://github.com/woai3c/Front-end-articles/blob/master/imgs/grid2.jpg)
 页面上将会展示一个带有灰色边框的，宽度 100% 的矩形。如果手动控制浏览器放大缩小，此 DIV 也会相应的放大缩小，但宽度始终是 100%。
 <br>
 
@@ -31,7 +31,7 @@ div {
     vertical-align: top; // 顶部对齐
 }
 ```
-![grid3](https://image-static.segmentfault.com/276/356/2763562365-5ca5747863d93)
+![grid3](https://github.com/woai3c/Front-end-articles/blob/master/imgs/grid3.jpg)
 页面上将会有两个宽度各占 50% 的 DIV，如果页面放大或缩小，这两个 DIV 都会始终保持着页面 50% 的宽度。
 
 相信到这里，应该有人看出来了，这就是栅格化，只不过第一个例子是将一行划分为 1 等分，即只有一个格子。
@@ -102,7 +102,7 @@ div {
 </html>
 ```
 最后呈现出来的效果是这样的。
-![grid4](https://image-static.segmentfault.com/326/974/3269742100-5ca5748759635)
+![grid4](https://github.com/woai3c/Front-end-articles/blob/master/imgs/grid4.jpg)
 
 怎么样？是不是很简单。
 
@@ -181,19 +181,19 @@ div {
 ```
 一个 DIV，同时设置两个类名。当屏幕 `>=1200px` 时，一行显示 4 列，当屏幕 `<1200px` 时，一行显示3列，而且是浏览器自动调整。
 
-![grid5](https://image-static.segmentfault.com/256/648/2566489069-5ca5749821e96)
+![grid5](https://github.com/woai3c/Front-end-articles/blob/master/imgs/grid5.jpg)
 
-![grid6](https://image-static.segmentfault.com/193/941/1939418630-5ca574a1893bb)
+![grid6](https://github.com/woai3c/Front-end-articles/blob/master/imgs/grid6.jpg)
 
 一个栅格化系统就这样实现了。
 ## 练习任务
 对于栅格化的介绍就到此结束了，但如果你看完了文章后什么都不做，不到一周，就会把学到的知识忘得七七八八，为了帮助你巩固知识，特地布置了一个小任务，按要求实现如下页面：
 
 #### 图一
-![grid7](https://image-static.segmentfault.com/750/316/750316397-5ca574ad3d6ee)
+![grid7](https://github.com/woai3c/Front-end-articles/blob/master/imgs/grid7.jpg)
 
 #### 图二
-![grid8](https://image-static.segmentfault.com/388/914/3889149994-5ca574b9c058b)
+![grid8](https://github.com/woai3c/Front-end-articles/blob/master/imgs/grid8.jpg)
 
 任务要求：
 1. 当页面大于 `768px` 时，页面如图1所示。
