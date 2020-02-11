@@ -1,4 +1,4 @@
-# ESlint + VSCode自动格式化代码(2019)
+# ESlint + VSCode自动格式化代码(2020)
 
 ![在这里插入图片描述](https://github.com/woai3c/Front-end-articles/blob/master/imgs/vscode-1.gif)
 
@@ -32,6 +32,14 @@
     },
 ],
 ```
+### 2020更新
+由于 vscode 版本更新，以上配置已经失效，需要改为
+```js
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": true,
+    },
+```
+
 配置完之后，VSCode 会根据你当前 Vue 项目下的 `.eslintrc.js` 文件的规则来验证和格式化代码。
 
 PS：自动格式化代码在保存时自动触发，目前试了 TS 和 JS 以及 vue 文件中的 JS 代码都没问题，html 和 vue 中的 html 和 css 无效。
