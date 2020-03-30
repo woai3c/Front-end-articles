@@ -1,5 +1,4 @@
 ## 前端文章
-* [前端性能优化 23 条建议（2020）](https://github.com/woai3c/Front-end-articles/blob/master/performance.md)
 * [三年前端路：分享我的工作经验与学习经历](https://github.com/woai3c/Front-end-articles/blob/master/front%20end%20summary.md)
 * [前端发展历程](https://github.com/woai3c/Front-end-articles/blob/master/history.md)
 * [事件循环](https://github.com/woai3c/Front-end-articles/blob/master/eventloop.md)
@@ -19,6 +18,7 @@
 * [Vue 页面权限控制和登陆验证](https://github.com/woai3c/Front-end-articles/blob/master/authentication.md)
 
 #### 性能优化
+* [前端性能优化 23 条建议（2020）](https://github.com/woai3c/Front-end-articles/blob/master/performance.md)
 * [JavaScript性能优化](https://github.com/woai3c/Front-end-articles/blob/master/javascript-optimization.md)
 * [优化循环的方法-循环展开](https://github.com/woai3c/Front-end-articles/blob/master/loop-unrolling.md)
 * [程序局部性原理](https://github.com/woai3c/Front-end-articles/blob/master/locality.md)
