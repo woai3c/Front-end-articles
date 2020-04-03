@@ -1,4 +1,5 @@
 ## 前端文章
+* [前端学习计算机理论知识的好处](https://github.com/woai3c/Front-end-articles/blob/master/why-learn-theory.md)
 * [HTML 元素标签语义化及使用场景](https://github.com/woai3c/Front-end-articles/blob/master/html-tag.md)
 * [三年前端路：分享我的工作经验与学习经历](https://github.com/woai3c/Front-end-articles/blob/master/front%20end%20summary.md)
 * [前端发展历程](https://github.com/woai3c/Front-end-articles/blob/master/history.md)
