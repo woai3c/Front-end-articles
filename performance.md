@@ -1,4 +1,4 @@
-# 前端性能优化 23 条建议（2020）
+# 前端性能优化 24 条建议（2020）
 
 性能优化是把双刃剑，有好的一面也有坏的一面。好的一面就是能提升网站性能，坏的一面就是配置麻烦，或者要遵守的规则太多。并且某些性能优化规则并不适用所有场景，需要谨慎使用，请读者带着批判性的眼光来阅读本文。
 
@@ -629,6 +629,45 @@ if (b & options) {
 
 参考资料：
 * [使用 transform 和 opacity 属性更改来实现动画](https://developers.google.com/web/fundamentals/performance/rendering/stick-to-compositor-only-properties-and-manage-layer-count?hl=zh-cn)
+
+#### 24. 合理使用规则，避免过度优化
+性能优化主要分为两类：
+1. 加载时优化
+2. 运行时优化
+
+上述 23 条建议中，属于加载时优化的是前面 10 条建议，属于运行时优化的是后面 13 条建议。通常来说，没有必要 23 条性能优化规则都用上，根据网站用户群体来做针对性的调整是最好的，节省精力，节省时间。
+
+在解决问题之前，得先找出问题，否则无从下手。所以在做性能优化之前，最好先调查一下网站的加载性能和运行性能。
+
+**检查加载性能**
+
+一个网站加载性能如何主要看白屏时间和首屏时间。
+* 白屏时间：指从输入网址，到页面开始显示内容的时间。
+* 首屏时间：指从输入网址，到页面完全渲染的时间。
+
+将以下脚本放在 `</head>` 前面就能获取白屏时间。
+```html
+<script>
+	new Date() - performance.timing.navigationStart
+</script>
+```
+首屏时间比较复杂，得考虑有图片和没有图片的情况。
+
+如果没有图片，则在 `window.onload` 事件里执行 `new Date() - performance.timing.navigationStart` 即可获取首屏时间。 
+
+如果有图片，则要在最后一个在首屏渲染的图片的 `onload` 事件里执行 `new Date() - performance.timing.navigationStart` 获取首屏时间，实施起来比较复杂，在这里限于篇幅就不说了。
+
+**检查运行性能**
+
+配合 chrome 的开发者工具，我们可以查看网站在运行时的性能。
+
+打开网站，按 F12 选择 performance，点击左上角的灰色圆点，变成红色就代表开始记录了。这时可以模仿用户使用网站，在使用完毕后，点击 stop，然后你就能看到网站运行期间的性能报告。如果有红色的块，代表有掉帧的情况；如果是绿色，则代表 FPS 很好。performance 的具体使用方法请用搜索引擎搜索一下，毕竟篇幅有限。
+
+通过检查加载和运行性能，相信你对网站性能已经有了大概了解。所以这时候要做的事情，就是使用上述 23 条建议尽情地去优化你的网站，加油！
+
+参考资料：
+* [performance.timing.navigationStart](https://developer.mozilla.org/zh-CN/docs/Web/API/PerformanceTiming/navigationStart)
+
 ## 其他参考资料
 * [性能为何至关重要](https://developers.google.com/web/fundamentals/performance/why-performance-matters?hl=zh-cn)
 * [高性能网站建设指南](https://github.com/woai3c/recommended-books/blob/master/%E5%89%8D%E7%AB%AF/%E9%AB%98%E6%80%A7%E8%83%BD%E7%BD%91%E7%AB%99%E5%BB%BA%E8%AE%BE%E6%8C%87%E5%8D%97.pdf)
