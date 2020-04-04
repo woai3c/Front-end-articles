@@ -20,7 +20,7 @@
 * [Vue 页面权限控制和登陆验证](https://github.com/woai3c/Front-end-articles/blob/master/authentication.md)
 
 #### 性能优化
-* [前端性能优化 23 条建议（2020）](https://github.com/woai3c/Front-end-articles/blob/master/performance.md)
+* [前端性能优化 24 条建议（2020）](https://github.com/woai3c/Front-end-articles/blob/master/performance.md)
 * [JavaScript性能优化](https://github.com/woai3c/Front-end-articles/blob/master/javascript-optimization.md)
 * [优化循环的方法-循环展开](https://github.com/woai3c/Front-end-articles/blob/master/loop-unrolling.md)
 * [程序局部性原理](https://github.com/woai3c/Front-end-articles/blob/master/locality.md)
