@@ -77,7 +77,7 @@ axios.interceptors.response.use(response => {
         const u8arr = new Uint8Array(res)
         // 将二进制数据转为字符串
         const temp = utf8decoder.decode(u8arr)
-        if (temp.includes(199999)) {
+        if (temp.includes('{code:199999')) {
             Message({
             	// 字符串转为 JSON 对象
                 message: JSON.parse(temp).msg,
