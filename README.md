@@ -31,6 +31,7 @@
 * [在浏览器调起本地应用的方法](https://github.com/woai3c/Front-end-articles/blob/master/local%20application.md)
 * [前端下载二进制流文件](https://github.com/woai3c/Front-end-articles/blob/master/downfile.md)
 * [element-ui 表格打印](https://github.com/woai3c/Front-end-articles/blob/master/print-talbe.md)
+* [Vue Cli 3 打包配置--自动忽略 console.log 语句](https://github.com/woai3c/Front-end-articles/blob/master/ignore%20log.md)
 
 ## Node
 * [用 node 搭建个人博客](https://github.com/woai3c/node-blog)
