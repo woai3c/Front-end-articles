@@ -45,6 +45,7 @@
 
 ## git
 * [git commit 提交规范](https://github.com/woai3c/Front-end-articles/blob/master/git%20commit%20style.md)
+* [git 常用命令介绍](https://github.com/woai3c/Front-end-articles/blob/master/git-commands.md)
 
 ## 其他
 * [强烈推荐的两个神级教学项目: nand2tetris 与 MIT6.828](https://github.com/woai3c/Front-end-articles/blob/master/teaching.md)
