@@ -7,6 +7,7 @@ HTTP 超文本传输​​协议是位于 TCP/IP 体系结构中的应用层协�
 <协议>://<域名>:<端口>/<路径>
 ```
 一个 URL 的一般形式通常如上所示（`http://test.com/index.html` ），现在最常用的协议就是 HTTP，HTTP 的默认端口是 80，通常可以省略。
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20200515112635158.png)
 ## HTTP/1.1
 HTTP/1.1 是目前使用最广泛的版本，一般没有特别标明版本都是指 HTTP/1.1。
@@ -21,6 +22,7 @@ HTTP/1.1 是目前使用最广泛的版本，一般没有特别标明版本都�
 6. 浏览器解析并渲染页面。
 
 下图中的 RTT 为往返时延。
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20200515114014659.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3E0MTEwMjAzODI=,size_16,color_FFFFFF,t_70)
 ### HTTP 连接拆除过程
 所有 HTTP 客户端（浏览器）、服务器都可在任意时刻关闭 TCP 连接。通常会在一条报文结束时关闭连接，但出错的时候，也可能在首部行的中间或其他任意位置关闭连接。
@@ -30,7 +32,9 @@ HTTP/1.1 是目前使用最广泛的版本，一般没有特别标明版本都�
 HTTP 报文由请求行、首部、实体主体组成，它们之间由 CRLF（回车换行符） 分隔开。
 
 **注意：实体包括首部(也称为实体首部)和实体主体，sp 即是空格 space**。
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20200515150351783.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3E0MTEwMjAzODI=,size_16,color_FFFFFF,t_70)
+
 请求行和首部是由 ASCII 文本组成的，实体主体是可选的，可以为空也可以是任意二进制数据。
 
 请求报文和响应报文的格式基本相同。
@@ -115,7 +119,9 @@ POST 方法通常用来向服务器发送表单数据。
 客户端发起一个请求时，这个请求可能要穿过路由器、防火墙、代理、网关等。每个中间节点都可能会修改原始的 HTTP 请求，TRACE 方法允许客户端在最终发起请求时，看看它变成了什么样子。
 
 TRACE 请求会在目的服务器端发起一个“环回”诊断。行程最后一站的服务器会弹回一条 TRACE 响应，并在响应主体中携带它收到的原始请求报文。 这样客户端就可以查看在所有中间 HTTP 应用程序组成的请求/响应链上，原始报文是否被毁坏或修改过。
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20200515142917465.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3E0MTEwMjAzODI=,size_16,color_FFFFFF,t_70)
+
 TRACE 方法主要用于诊断，用于验证请求是否如愿穿过了请求/响应链。它也是一种工具，用来查看代理和其他应用程序对用户请求所产生的效果。 TRACE 请求中不能带有实体的主体部分。TRACE 响应的实体主体部分包含了响应服务器收到的请求的精确副本。
 
 ##### OPTIONS
@@ -153,9 +159,11 @@ DELETE 方法就是让服务器删除请求 URL 所指定的资源。
 
 ##### 通用首部
 有些首部提供了与报文相关的最基本信息，它们被称为通用首部。以下是一些常见的通用首部：
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20200515144159939.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3E0MTEwMjAzODI=,size_16,color_FFFFFF,t_70)
 ##### 请求首部
 请求首部是只在请求报文中有意义的首部，用于说明请求的详情。以下是一些常见的请求首部：
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20200515144349828.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3E0MTEwMjAzODI=,size_16,color_FFFFFF,t_70)
 ##### 响应首部
 响应首部让服务器为客户端提供了一些额外的信息。
@@ -164,6 +172,7 @@ DELETE 方法就是让服务器删除请求 URL 所指定的资源。
 实体首部提供了有关实体及其内容的大量信息，从有关对象类型的信息，到能够对资源使用的各种有效的请求方法。
 例如**内容首部**，提供了与实体内容有关的特定信息，说明了其类型、尺寸以及处理它所需的其他有用信息。
 另外，通用的缓存首部说明了如何或什么时候进行缓存。**实体的缓存首部**提供了与被缓存实体有关的信息。
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20200515151459881.png)
 ### 性能优化
 #### 1. 减少 HTTP 请求
@@ -194,7 +203,9 @@ gzip 是目前最流行和最有效的压缩方法。可以通过向 HTTP 请求
 由于浏览器对同一域名有并发 TCP 连接数量的限制，所以将网页的资源分配到不同的域名下，可以突破浏览器的限制，从而建立更多的 TCP 连接。
 ## HTTPS
 HTTPS 是最流行的 HTTP 安全形式，由网景公司首创，所有主要的浏览器和服务器都支持此协议。 使用 HTTPS 时，所有的 HTTP 请求和响应数据在发送之前，都要进行加密。加密可以使用 SSL 或 TLS。
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20200515163019467.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3E0MTEwMjAzODI=,size_16,color_FFFFFF,t_70)
+
 SSL/TLS 协议作用在 HTTP 协议之下，对于上层应用来说，原来的发送/接收数据流程不变，这就很好地兼容了老的 HTTP 协议。由于 SSL/TLS 差别不大，下面统一使用 SSL。
 
 要想了解 HTTPS 为何安全，还得继续了解一下这些概念：**加密算法**、**摘要算法**、**数字签名**和**数字证书**。
@@ -227,8 +238,11 @@ SSL/TLS 协议作用在 HTTP 协议之下，对于上层应用来说，原来的
 2. 签名可以防止报文被篡改，如果有人在报文传输过程中对其进行了修改，校验和就不再匹配了。
 
 数字签名通常是用非对称公开密钥技术产生的。
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20200515165509385.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3E0MTEwMjAzODI=,size_16,color_FFFFFF,t_70)
+
 看上图，任何人都能用 A 的公钥 PK 对密文进行 E 运算后得到 A 发送的明文。可见这种通信并非为了保密，而是为了进行签名和核实签名，即确认此信息是 A 发送的。 但上述过程仅对报文进行了签名，对报文 X 本身却未保密，所以要采用下图的方法，同时实现秘密通信和数字签名。
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/2020051517022758.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3E0MTEwMjAzODI=,size_16,color_FFFFFF,t_70)
 ### 数字证书
 假如你想访问一个网站，怎么确保对方给你的公钥是你想访问的网站的公钥，而不是被中间人篡改过的？
@@ -248,6 +262,7 @@ SSL/TLS 协议作用在 HTTP 协议之下，对于上层应用来说，原来的
 **数字证书的数字签名计算过程**：
 1. 用摘要算法对数字证书的内容计算出摘要；
 2. 用数字证书的私钥对摘要进行加密得到数字签名。
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/2020051520222228.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3E0MTEwMjAzODI=,size_16,color_FFFFFF,t_70)
 
 浏览器收到证书时，会对签名颁发机构进行验证，如果颁发机构是个很有权威的公共签名机构，浏览器可能就知道其公开密钥了（浏览器会预装很多签名颁发机构的证书）。如果对签名颁发机构一无所知，浏览器通常会向用户显示一个对话框，看看他是否相信这个签名发布者。
@@ -255,10 +270,13 @@ SSL/TLS 协议作用在 HTTP 协议之下，对于上层应用来说，原来的
 因为数字证书的公钥是公开的，任何人都可以用公钥解密出数字证书的数字签名的摘要，然后再用同样的摘要算法对证书内容进行摘要计算，将得出的摘要和解密后的摘要作对比，如果内容一致则说明这个证书没有被篡改过，可以信任。
 
 这个过程是建立在被大家所认可的证书机构之上得到的公钥，所以这是一种安全的方式。
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20200515174341422.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3E0MTEwMjAzODI=,size_16,color_FFFFFF,t_70)
 ### HTTPS 连接建立过程
 HTTPS 连接建立过程和 HTTP 差不多，区别在于 HTTP（默认端口 80） 请求只要在 TCP 连接建立后就可以发起，而 HTTPS（默认端口 443） 在 TCP 连接建立后，还需要经历 SSL 协议握手，成功后才能发起请求。
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20200515214925750.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3E0MTEwMjAzODI=,size_16,color_FFFFFF,t_70)
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20200515215036491.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3E0MTEwMjAzODI=,size_16,color_FFFFFF,t_70)
 ## HTTP/2
 HTTP/2 是 HTTP/1.x 的扩展，而非替代。所以 HTTP 的语义不变，提供的功能不变，HTTP 方法、状态码、URL 和首部字段等这些核心概念也不变。
@@ -292,6 +310,7 @@ HTTP/2 是基于帧的协议。采用分帧是为了将重要信息封装起来�
 2. 无法预判解析需要多少内存。
 
 HTTP/2 有了帧，处理协议的程序就能预先知道会收到什么，并且 HTTP/2 有表示帧长度的字段。
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20200516110854683.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3E0MTEwMjAzODI=,size_16,color_FFFFFF,t_70)
 
 #### 帧结构
@@ -352,6 +371,7 @@ HTTP/2 规范对流的定义是：HTTP/2 连接上独立的、双向的帧序列
 HTTP 消息泛指 HTTP 请求或响应，消息由一或多个帧组成，这些帧可以乱序发送，然后再根据每个帧首部的流 ID 重新组装。
 
 一个消息至少由 HEADERS 帧（它初始化流）组成，并且可以另外包含 CONTINUATION 和 DATA 帧，以及其他的 HEADERS 帧。
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20200516131657412.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3E0MTEwMjAzODI=,size_16,color_FFFFFF,t_70)
 HTTP/1.1 的请求和响应部分都分成消息首部和消息体两部分；HTTP/2 的请求和响应分成 HEADERS 帧和 DATA 帧。
 
@@ -373,7 +393,9 @@ HTTP/2 连接建立之后，客户端与服务器交换 SETTINGS 帧，目的是
 
 ### 服务器推送
 HTTP/2 新增的一个强大的新功能，就是服务器可以对一个客户端请求发送多个响应。换句话说，除了对最初请求的响应外，服务器还可以额外向客户端推送资源，而无需客户端明确地请求。
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20200516141241927.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3E0MTEwMjAzODI=,size_16,color_FFFFFF,t_70)
+
 为什么需要这样一个机制呢？通常的 Web 应用都由几十个资源组成，客户端需要分析服务器提供的文档才能逐个找到它们。那为什么不让服务器提前就把这些资源推送给客户端，从而减少额外的时间延迟呢？服务器已经知道客户端下一步要请求什么资源了，这时候服务器推送即可派上用场。
 
 另外，客户端也可以拒绝服务器的推送。
@@ -464,6 +486,7 @@ TCP 标准规定，ACK 报文段可以携带数据，但不携带数据就不用
 3. 收到服务器的 TCP 响应报文段后，客户端也要为该 TCP 连接分配缓存和变量，并向服务器发送一个报文段。这个报文段将服务器端的序号 + 1 放置在确认号字段中，用来对服务器允许连接的报文段进行响应，因为连接已经建立，所以 SYN 置为 0。最后一个阶段，报文段可以携带客户到服务器的数据。并且以后的每一个报文段，SYN 都置为 0。
 
 下图是一个具体的示例：
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20200516200926474.png)
 ### TCP 四次挥手拆除连接
 FIN 报文段即使不携带数据，也要消耗序号。
