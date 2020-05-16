@@ -373,6 +373,7 @@ HTTP 消息泛指 HTTP 请求或响应，消息由一或多个帧组成，这些
 一个消息至少由 HEADERS 帧（它初始化流）组成，并且可以另外包含 CONTINUATION 和 DATA 帧，以及其他的 HEADERS 帧。
 
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20200516131657412.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3E0MTEwMjAzODI=,size_16,color_FFFFFF,t_70)
+
 HTTP/1.1 的请求和响应部分都分成消息首部和消息体两部分；HTTP/2 的请求和响应分成 HEADERS 帧和 DATA 帧。
 
 #### 优先级
