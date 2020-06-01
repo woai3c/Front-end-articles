@@ -60,7 +60,7 @@
 当我们在详情页中删除了对应的列表项时，就可以将详情页 `meta` 属性中的 `isRefresh` 设为 `true`。这时再返回到列表页，页面会重新刷新。
  
 #### 解决方案二
-对于需求二其实还有一个更简洁的方案，那就是使用 router-view 的 `key`属性。
+对于需求二其实还有一个更简洁的方案，那就是使用 router-view 的 `key` 属性。
 ```html
 <keep-alive>
     <router-view :key="$route.fullPath"/>
