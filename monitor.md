@@ -153,7 +153,7 @@ const getPerformance = () => {
         // 重定向耗时
         redirect: timing.redirectEnd - timing.redirectStart,
         // 白屏时间
-        whiteScreen: timing.responseStart - timing.navigationStart,
+        whiteScreen: whiteScreen,
         // DOM 渲染耗时
         dom: timing.domComplete - timing.domLoading,
         // 页面加载耗时
@@ -432,7 +432,7 @@ mounted() {
                     // 重定向耗时
                     redirect: timing.redirectEnd - timing.redirectStart,
                     // 白屏时间
-                    whiteScreen: timing.responseStart - timing.navigationStart,
+                    whiteScreen: whiteScreen,
                     // DOM 渲染耗时
                     dom: timing.domComplete - timing.domLoading,
                     // 页面加载耗时
