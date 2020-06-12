@@ -99,8 +99,6 @@ timing: {
 ```js
 // 重定向耗时
 redirect: timing.redirectEnd - timing.redirectStart,
-// 白屏时间
-whiteScreen: timing.responseStart - timing.navigationStart,
 // DOM 渲染耗时
 dom: timing.domComplete - timing.domLoading,
 // 页面加载耗时
@@ -111,6 +109,14 @@ unload: timing.unloadEventEnd - timing.unloadEventStart,
 request: timing.responseEnd - timing.requestStart,
 // 获取性能信息时当前时间
 time: new Date().getTime(),
+```
+还有一个比较重要的时间就是**白屏时间**，它指从输入网址，到页面开始显示内容的时间。
+
+将以下脚本放在 `</head>` 前面就能获取白屏时间。
+```html
+<script>
+    whiteScreen = new Date() - performance.timing.navigationStart
+</script>
 ```
 通过这几个时间，就可以得知页面首屏加载性能如何了。
 
@@ -305,16 +311,20 @@ window.onerror = function(msg, url, row, col, error) {
 ### SPA
 `window.performance` API 是有缺点的，在 SPA 切换路由时，`window.performance.timing` 的数据不会更新。
 所以我们需要另想办法来统计切换路由到加载完成的时间。
-拿 Vue 举例，一个可行的办法就是切换路由时，在组件的 `beforeCreate` 钩子里执行 `vm.$nextTick ` 函数来获取切换路由时组件的完全渲染时间。
+
+拿 Vue 举例，一个可行的办法就是切换路由时，在路由的全局前置守卫 `beforeEach` 里获取开始时间，在组件的 `mounted` 钩子里执行 `vm.$nextTick ` 函数来获取组件的渲染完毕时间。
 ```js
-beforeCreate() {
-	const time = new Date().getTime()
+router.beforeEach((to, from, next) => {
+	store.commit('setPageLoadedStartTime', new Date())
+})
+```
+```js
+mounted() {
 	this.$nextTick(() => {
-		this.$store.commit('setPageLoadedTime', new Date().getTime() - time)
+		this.$store.commit('setPageLoadedTime', new Date() - this.$store.state.pageLoadedStartTime)
 	})
 }
 ```
-<br>
 
 除了性能和错误监控，其实我们还可以做得更多。
 ### 用户信息收集
