@@ -55,7 +55,7 @@ class Promise {
                         reject(error)
                     }
                 })
-            } if (self.state == 'pending') {
+            } else if (self.state == 'pending') {
                 self.onFulfilleds.push(() => {
                     setTimeout(() => {
                         try {
@@ -233,5 +233,5 @@ class Promise {
 ```
 
 ## 参考资料
-* [Promise的源码实现（完美符合Promise/A+规范](https://github.com/YvetteLau/Blog/issues/2)
+* [Promise的源码实现（完美符合Promise/A+规范）](https://github.com/YvetteLau/Blog/issues/2)
 * [可能是目前最易理解的手写promise](https://juejin.im/post/5dc383bdf265da4d2d1f6b23)
