@@ -121,6 +121,7 @@ time: new Date().getTime(),
 通过这几个时间，就可以得知页面首屏加载性能如何了。
 
 另外，通过 `window.performance.getEntriesByType('resource')` 这个方法，我们还可以获取相关资源（js、css、img...）的加载时间，它会返回页面当前所加载的所有资源。
+
 ![在这里插入图片描述](https://github.com/woai3c/Front-end-articles/blob/master/imgs/monitor3.png)
 
 它一般包括以下几个类型
