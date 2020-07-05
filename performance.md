@@ -25,25 +25,100 @@
 参考资料：
 * [understanding-resource-timing](https://developers.google.com/web/tools/chrome-devtools/network/understanding-resource-timing)
 
+
 ### 2. 使用 HTTP2
->HTTP1.x 客户端需要使用多个连接才能实现并发和缩短延迟；HTTP1.x 不会压缩请求和响应标头，从而导致不必要的网络流量；HTTP1.x 不支持有效的资源优先级，致使底层 TCP 连接的利用率低下等等。
+HTTP2 相比 HTTP1.1 有如下几个优点：
+#### 解析速度快
+服务器解析 HTTP1.1 的请求时，必须不断地读入字节，直到遇到分隔符 CRLF 为止。而解析 HTTP2 的请求就不用这么麻烦，因为 HTTP2 是基于帧的协议，每个帧都有表示帧长度的字段。
+#### 多路复用
+HTTP1.1 如果要同时发起多个请求，就得建立多个 TCP 连接，因为一个 TCP 连接同时只能处理一个 HTTP1.1 的请求。
 
-HTTP2 是对之前 HTTP 标准的扩展，它通过支持标头字段压缩和在同一连接上进行多个并发交换，让应用更有效地利用网络资源，减少感知的延迟时间。具体来说，它可以对同一连接上的请求和响应消息进行交错发送并为 HTTP 标头字段使用有效编码。
+在 HTTP2 上，多个请求可以共用一个 TCP 连接，这称为多路复用。同一个请求和响应用一个流来表示，并有唯一的流 ID 来标识。
+多个请求和响应在 TCP 连接中可以乱序发送，到达目的地后再通过流 ID 重新组建。
 
-HTTP2 还允许为请求设置优先级，让更重要的请求更快速地完成，从而进一步提升性能。
+#### 首部压缩
+HTTP2 提供了首部压缩功能。
 
-HTTP2 支持了多路复用，HTTP 连接变得十分廉价，之前为了节省连接数所采用的类似于「资源合并、资源内联」等优化手段不再需要了。多路复用可以在一个 TCP 连接上建立大量 HTTP 连接，也就不存在 HTTP 连接数限制了，HTTP1.x 中常见的「静态域名」优化策略不但用不上了，还会带来负面影响，需要去掉。另外，HTTP2 的头部压缩功能也能大幅减少 HTTP 协议头部带来的开销。但是，要等HTTP1.x 完全退出舞台还需要一段时间。
+例如有如下两个请求：
+```
+:authority: unpkg.zhimg.com
+:method: GET
+:path: /za-js-sdk@2.16.0/dist/zap.js
+:scheme: https
+accept: */*
+accept-encoding: gzip, deflate, br
+accept-language: zh-CN,zh;q=0.9
+cache-control: no-cache
+pragma: no-cache
+referer: https://www.zhihu.com/
+sec-fetch-dest: script
+sec-fetch-mode: no-cors
+sec-fetch-site: cross-site
+user-agent: Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.122 Safari/537.36
+```
+```
+:authority: zz.bdstatic.com
+:method: GET
+:path: /linksubmit/push.js
+:scheme: https
+accept: */*
+accept-encoding: gzip, deflate, br
+accept-language: zh-CN,zh;q=0.9
+cache-control: no-cache
+pragma: no-cache
+referer: https://www.zhihu.com/
+sec-fetch-dest: script
+sec-fetch-mode: no-cors
+sec-fetch-site: cross-site
+user-agent: Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.122 Safari/537.36
+```
+从上面两个请求可以看出来，有很多数据都是重复的。如果可以把相同的首部存储起来，仅发送它们之间不同的部分，就可以节省不少的流量，加快请求的时间。
+
+HTTP/2 在客户端和服务器端使用“首部表”来跟踪和存储之前发送的键－值对，对于相同的数据，不再通过每次请求和响应发送。
+
+下面再来看一个简化的例子，假设客户端按顺序发送如下请求首部：
+```
+Header1:foo
+Header2:bar
+Header3:bat
+```
+当客户端发送请求时，它会根据首部值创建一张表：
+
+|索引|首部名称|值|
+|-|-|-|
+|62|Header1|foo|
+|63|Header2|bar|
+|64|Header3|bat|
+
+如果服务器收到了请求，它会照样创建一张表。
+当客户端发送下一个请求的时候，如果首部相同，它可以直接发送这样的首部块：
+```
+62 63 64
+```
+服务器会查找先前建立的表格，并把这些数字还原成索引对应的完整首部。
+
+#### 优先级
+HTTP2 可以对比较紧急的请求设置一个较高的优先级，服务器在收到这样的请求后，可以优先处理。
+
+#### 流量控制
+由于一个 TCP 连接流量带宽（根据客户端到服务器的网络带宽而定）是固定的，当有多个请求并发时，一个请求占的流量多，另一个请求占的流量就会少。流量控制可以对不同的流的流量进行精确控制。
+
+#### 服务器推送
+HTTP2 新增的一个强大的新功能，就是服务器可以对一个客户端请求发送多个响应。换句话说，除了对最初请求的响应外，服务器还可以额外向客户端推送资源，而无需客户端明确地请求。
+
+例如当浏览器请求一个网站时，除了返回 HTML 页面外，服务器还可以根据 HTML 页面中的资源的 URL，来提前推送资源。
+
 
 现在有很多网站已经开始使用 HTTP2 了，例如知乎：
 
-![在这里插入图片描述](https://img-blog.csdnimg.cn/20200329160616919.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3E0MTEwMjAzODI=,size_16,color_FFFFFF,t_70)
+![在这里插入图片描述](https://user-gold-cdn.xitu.io/2020/6/25/172e9f759504cd7c?w=499&h=239&f=png&s=49155)
 
 其中 h2 是指 HTTP2 协议，http/1.1 则是指 HTTP1.1 协议。
 
 参考资料：
 * [HTTP2 简介](https://developers.google.com/web/fundamentals/performance/http2/?hl=zh-cn)
-* [HTTP2 与 WEB 性能优化（三）](https://imququ.com/post/http2-and-wpo-3.html#toc-3)
-* [基于Node.js的HTTP/2 Server实践](https://juejin.im/post/5b0e9ff4518825153515aade)
+* [半小时搞懂 HTTP、HTTPS和HTTP2](https://github.com/woai3c/Front-end-articles/blob/master/http-https-http2.md)
+
 ### 3. 使用服务端渲染
 客户端渲染: 获取 HTML 文件，根据需要下载 JavaScript 文件，运行文件，生成 DOM，再渲染。
 
@@ -55,11 +130,33 @@ HTTP2 支持了多路复用，HTTP 连接变得十分廉价，之前为了节省
 参考资料：
 * [vue-ssr-demo](https://github.com/woai3c/vue-ssr-demo)
 * [Vue.js 服务器端渲染指南](https://ssr.vuejs.org/zh/)
+
 ### 4. 静态资源使用 CDN
 内容分发网络（CDN）是一组分布在多个不同地理位置的 Web 服务器。我们都知道，当服务器离用户越远时，延迟越高。CDN 就是为了解决这一问题，在多个位置部署服务器，让用户离服务器更近，从而缩短请求时间。
 
+#### CDN 原理
+当用户访问一个网站时，如果没有 CDN，过程是这样的：
+1. 浏览器要将域名解析为 IP 地址，所以需要向本地 DNS 发出请求。
+2. 本地 DNS 依次向根服务器、顶级域名服务器、权限服务器发出请求，得到网站服务器的 IP 地址。
+3. 本地 DNS 将 IP 地址发回给浏览器，浏览器向网站服务器 IP 地址发出请求并得到资源。
+
+![](https://user-gold-cdn.xitu.io/2020/7/5/1731f00155d87037?w=533&h=429&f=png&s=86512)
+
+如果用户访问的网站部署了 CDN，过程是这样的：
+1. 浏览器要将域名解析为 IP 地址，所以需要向本地 DNS 发出请求。
+2. 本地 DNS 依次向根服务器、顶级域名服务器、权限服务器发出请求，得到全局负载均衡系统（GSLB）的 IP 地址。
+3. 本地 DNS 再向 GSLB 发出请求，GSLB 的主要功能是根据本地 DNS 的 IP 地址判断用户的位置，筛选出距离用户较近的本地负载均衡系统（SLB），并将该 SLB 的 IP 地址作为结果返回给本地 DNS。
+4. 本地 DNS 将 SLB 的 IP 地址发回给浏览器，浏览器向 SLB 发出请求。
+5. SLB 根据浏览器请求的资源和地址，选出最优的缓存服务器发回给浏览器。
+6. 浏览器再根据 SLB 发回的地址重定向到缓存服务器。
+7. 如果缓存服务器有浏览器需要的资源，就将资源发回给浏览器。如果没有，就向源服务器请求资源，再发给浏览器并缓存在本地。
+
+![](https://user-gold-cdn.xitu.io/2020/7/5/1731f0974d106ea4?w=534&h=607&f=png&s=129849)
+
 参考资料：
 * [CDN是什么？使用CDN有什么优势？](https://www.zhihu.com/question/36514327/answer/193768864)
+* [CDN原理简析](https://juejin.im/post/5d105e1af265da1b71530095)
+
 ### 5. 将 CSS 放在文件头部，JavaScript 文件放在底部
 所有放在 head 标签里的 CSS 和 JS 文件都会堵塞渲染。如果这些 CSS 和 JS 需要加载和解析很久的话，那么页面就空白了。所以 JS 文件要放在底部，等 HTML 解析完了再加载 JS 文件。
 
