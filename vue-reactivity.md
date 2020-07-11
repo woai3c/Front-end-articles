@@ -1148,10 +1148,6 @@ console.log(cValue.value === 1)
 ## index.ts 文件
 index.ts 文件向外导出 reactivity 模块的 API。
 
-## 总结
-
-
-
 ## 参考资料
 * [Vue3 中的数据侦测](https://juejin.im/post/5d99be7c6fb9a04e1e7baa34#heading-10)
 * [vue3响应式源码解析-Reactive篇](https://juejin.im/post/5da9d7ebf265da5bbb1e52b7#heading-12)
