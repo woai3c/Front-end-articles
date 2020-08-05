@@ -75,6 +75,19 @@ if (process.env.NODE_ENV === 'production') {
 
 module.exports = config
 ```
-
+### 2020.8.5 更新
+使用上述方法有个缺陷，就是每次打包的时间太长。现在我已经弃用这种方法了，改成重写 `console.log()` 函数，效果更好，具体如下：
+```js
+export function rewirteLog() {
+    console.log = (function (log) {
+        return function (msg) {
+            // 如果是开发环境，调用原来的 console.log() 函数进行打印
+            // 生产环境直接忽略
+            if (process.env.NODE_ENV == 'development') log(msg)
+        }
+    }(console.log))
+}
+```
+在 `main.js` 引入这个函数并执行一次，就可以实现原来的效果了。
 ## 参考资料
 * [uglifyjs-webpack-plugin](https://github.com/webpack-contrib/uglifyjs-webpack-plugin)
