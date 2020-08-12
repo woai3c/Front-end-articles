@@ -14,6 +14,7 @@
 
 #### Vue
 * [Vue3 源码分析（一）：响应式模块 reactivity](https://github.com/woai3c/Front-end-articles/issues/2)
+* [Vue3 源码分析（二）：编译模块 compiler](https://github.com/woai3c/Front-end-articles/issues/4)
 * [多个请求下 loading 的展示与关闭](https://github.com/woai3c/Front-end-articles/blob/master/control%20loading.md)
 * [Vue 实现前进刷新，后退不刷新的效果](https://github.com/woai3c/Front-end-articles/blob/master/vue%20refresh.md)
 * [Vue 改变数据，页面不刷新的问题](https://github.com/woai3c/Front-end-articles/blob/master/vue-page-not-refresh.md)
