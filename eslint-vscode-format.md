@@ -3,7 +3,9 @@
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20191128173020158.gif)
 
 本文用 Vue 项目做示范。
+
 利用 Vue CLI 创建项目时要将 ESlint 选上，下载完依赖后，用 VSCode 打开项目。
+
 安装插件 ESLint，然后 File -> Preference -> Settings（如果装了中文插件包应该是 文件 -> 选项 -> 设置），搜索 eslint，点击 Edit in setting.json
 
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20191128173335896.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3E0MTEwMjAzODI=,size_16,color_FFFFFF,t_70)
@@ -31,7 +33,11 @@ npm i -D tslint
 不过我发现 tslint 有点缺陷，例如无法自动格式化缩进，这个可以用 `shift + alt + f` 来实现。
 
 ### 扩展
-其实还是有办法格式化 vue 文件中的 html 和 css 代码的，利用 vscode 自带的格式化，快捷键是 `shift + alt + f`，假设你当前 vscode 打开的是一个 vue 文件，按下 `shift + alt + f` 会提示你选择一种格式化规范，如果没提示，那就是已经有默认的格式化规范了（一般是 vetur 插件），然后 vue 文件的所有代码都会格式化，并且格式化规则还可以自己配置，如下图所示，可以根据自己的喜好来选择格式化规则。
+其实还是有办法格式化 vue 文件中的 html 和 css 代码的，利用 vscode 自带的格式化，快捷键是 `shift + alt + f`。
+
+假设你当前 vscode 打开的是一个 vue 文件，按下 `shift + alt + f` 会提示你选择一种格式化规范，如果没提示，那就是已经有默认的格式化规范了（一般是 vetur 插件）。
+
+然后 vue 文件的所有代码都会格式化，并且格式化规则还可以自己配置，如下图所示，可以根据自己的喜好来选择格式化规则。
 
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20191129133359274.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3E0MTEwMjAzODI=,size_16,color_FFFFFF,t_70)
 
