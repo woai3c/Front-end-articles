@@ -15,15 +15,17 @@
 
 #### type: commit 的类型
 
-* init: 初始化
 * feat: 新功能
-* fix: 修改问题
+* fix: 修改 bug
 * refactor: 代码重构
 * docs: 文档修改
 * style: 代码格式修改, 注意不是 css 修改
-* test: 测试用例修改
-* build: 构建项目
-* chore: 其他修改, 比如依赖管理
+* test: 测试用例新增、修改
+* build: 影响项目构建或依赖项修改
+* revert: 恢复上一次提交
+* perf: 更改代码，以提高性能
+* ci: 持续集成相关文件修改
+* chore: 其他修改
 
 #### scope: commit 影响的范围, 比如: route, component, utils, build...
 #### subject: commit 的概述
