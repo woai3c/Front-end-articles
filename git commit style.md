@@ -25,6 +25,7 @@
 * build: 影响项目构建或依赖项修改
 * revert: 恢复上一次提交
 * ci: 持续集成相关文件修改
+* cd: 持续部署相关文件修改
 * chore: 其他修改（不在上述类型中的修改）
 
 #### scope: commit 影响的范围, 比如: route, component, utils, build...
