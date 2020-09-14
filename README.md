@@ -1,4 +1,5 @@
 ## 前端文章
+* [深入了解 webpack 模块加载原理](https://github.com/woai3c/Front-end-articles/issues/7)
 * [实现一个 webpack loader 和 webpack plugin](https://github.com/woai3c/Front-end-articles/issues/6)
 * [从 rollup 初版源码学习打包原理](https://github.com/woai3c/Front-end-articles/issues/5)
 * [前端学习计算机理论知识的好处](https://github.com/woai3c/Front-end-articles/blob/master/why-learn-theory.md)
