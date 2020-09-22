@@ -111,7 +111,7 @@ HTTP2 新增的一个强大的新功能，就是服务器可以对一个客户�
 
 现在有很多网站已经开始使用 HTTP2 了，例如知乎：
 
-![在这里插入图片描述](https://user-gold-cdn.xitu.io/2020/6/25/172e9f759504cd7c?w=499&h=239&f=png&s=49155)
+![在这里插入图片描述](https://imgconvert.csdnimg.cn/aHR0cHM6Ly91c2VyLWdvbGQtY2RuLnhpdHUuaW8vMjAyMC82LzI1LzE3MmU5Zjc1OTUwNGNkN2M?x-oss-process=image/format,png)
 
 其中 h2 是指 HTTP2 协议，http/1.1 则是指 HTTP1.1 协议。
 
@@ -140,7 +140,7 @@ HTTP2 新增的一个强大的新功能，就是服务器可以对一个客户�
 2. 本地 DNS 依次向根服务器、顶级域名服务器、权限服务器发出请求，得到网站服务器的 IP 地址。
 3. 本地 DNS 将 IP 地址发回给浏览器，浏览器向网站服务器 IP 地址发出请求并得到资源。
 
-![](https://user-gold-cdn.xitu.io/2020/7/5/1731f00155d87037?w=533&h=429&f=png&s=86512)
+![](https://imgconvert.csdnimg.cn/aHR0cHM6Ly91c2VyLWdvbGQtY2RuLnhpdHUuaW8vMjAyMC83LzUvMTczMWYwMDE1NWQ4NzAzNw?x-oss-process=image/format,png)
 
 如果用户访问的网站部署了 CDN，过程是这样的：
 1. 浏览器要将域名解析为 IP 地址，所以需要向本地 DNS 发出请求。
