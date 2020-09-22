@@ -151,7 +151,7 @@ HTTP2 新增的一个强大的新功能，就是服务器可以对一个客户�
 6. 浏览器再根据 SLB 发回的地址重定向到缓存服务器。
 7. 如果缓存服务器有浏览器需要的资源，就将资源发回给浏览器。如果没有，就向源服务器请求资源，再发给浏览器并缓存在本地。
 
-![](https://user-gold-cdn.xitu.io/2020/7/5/1731f0974d106ea4?w=534&h=607&f=png&s=129849)
+![](https://imgconvert.csdnimg.cn/aHR0cHM6Ly91c2VyLWdvbGQtY2RuLnhpdHUuaW8vMjAyMC83LzUvMTczMWYwOTc0ZDEwNmVhNA?x-oss-process=image/format,png)
 
 参考资料：
 * [CDN是什么？使用CDN有什么优势？](https://www.zhihu.com/question/36514327/answer/193768864)
