@@ -1,7 +1,7 @@
 # 阿里云服务器部署个人网站(nodejs + mongodb)
 1. 购买阿里云服务器，选择操作系统，我选的 ubuntu
 2. 在云服务器管理控制台选择实例->更多->密钥->重置实例密码（一会登陆用） 
-3. 选择远程连接->VNC，会弹出一个密码，记住它，以后远程连接要用
+3. 选择远程连接->VNC，会弹出一个密码，记住它，以后远程连接要用（ctrl + alt + f1~f6 切换终端，例如 ctrl + alt + f1 是第一个终端）
 4. 进入后是一个命令行 输入 `root`（用户名），密码为你刚才重置的实例密码
 5. 登陆成功， 更新安装源 `sudo apt-get update && sudo apt-get upgrade -y`
 6. 安装 npm `sudo apt-get install npm`
