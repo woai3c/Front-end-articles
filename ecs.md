@@ -15,6 +15,6 @@
 14. 安装 mongodb `sudo apt install -y mongodb`，运行数据库 `sudo mongod` 
 15. 如果报错 `exception in initAndListen: NonExistentPath: Data directory /data/db not found., terminating`，请执行命令 `mkdir /data/db/ -p`，再重新运行数据库 `sudo mongod`
 16. 如果报错 `SocketException: Address already in use MONGODB`，输入 `sudo killall mongod` 关掉所有的 mongod 进程，，再重新运行数据库 `sudo mongod`
-17. 进入项目安装依赖 `npm i`  运行项目 `npm run build` 
-18. 监听 IP 必须为 `0.0.0.0` ，详情请看第 17 项
+17. 进入项目安装依赖 `npm i`  打包项目 `npm run build` 运行项目 `npm run server`
+18. 监听 IP 必须为 `0.0.0.0` ，详情请看第 19 项
 19. [部署Node.js项目注意事项](https://www.alibabacloud.com/help/zh/doc-detail/50775.htm)
