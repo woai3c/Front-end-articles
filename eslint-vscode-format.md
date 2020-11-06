@@ -1,4 +1,4 @@
-# ESlint + VSCode自动格式化代码(2020)
+# ESlint + stylelint + VSCode自动格式化代码(2020)
 
 ## eslint 格式化 js 代码
 本文用 Vue 项目做示范。
