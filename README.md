@@ -1,4 +1,5 @@
 ## 前端文章
+* [手把手带你入门前端工程化——超详细教程](https://github.com/woai3c/Front-end-articles/issues/14)
 * [前端项目自动化部署——超详细教程（Jenkins、Github Actions）](https://github.com/woai3c/Front-end-articles/issues/12)
 * [前端国际化辅助工具——自动替换中文并翻译](https://github.com/woai3c/Front-end-articles/issues/8)
 * [深入了解 webpack 模块加载原理](https://github.com/woai3c/Front-end-articles/issues/7)
