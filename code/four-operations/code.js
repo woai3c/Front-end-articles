@@ -186,7 +186,8 @@ CpuEmulator.prototype = {
     div() {
         const b = this.pop()
         const a = this.pop()
-        this.memory.push(a / b)
+        // 不支持浮点运算，所以在这要取整
+        this.memory.push(Math.floor(a / b))
     },
 
     push(x) {
