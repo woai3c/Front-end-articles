@@ -1,11 +1,12 @@
 # 前端性能优化 24 条建议（2020）
 性能优化是把双刃剑，有好的一面也有坏的一面。好的一面就是能提升网站性能，坏的一面就是配置麻烦，或者要遵守的规则太多。并且某些性能优化规则并不适用所有场景，需要谨慎使用，请读者带着批判性的眼光来阅读本文。
 
-本文相关的优化建议的引用资料出处均会在建议后面给出，或者放在文末（有些参考资料可能要梯子才能观看）。
+本文相关的优化建议的引用资料出处均会在建议后面给出，或者放在文末。
+
 ### 1. 减少 HTTP 请求
 一个完整的 HTTP 请求需要经历 DNS 查找，TCP 握手，浏览器发出 HTTP 请求，服务器接收请求，服务器处理请求并发回响应，浏览器接收响应等过程。接下来看一个具体的例子帮助理解 HTTP ：
 
-![在这里插入图片描述](https://img-blog.csdnimg.cn/20200329135114136.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3E0MTEwMjAzODI=,size_16,color_FFFFFF,t_70)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/img_convert/4e00fbaebbeea51de35b83820543298d.png)
 
 这是一个 HTTP 请求，请求的文件大小为 28.4KB。
 
@@ -24,7 +25,6 @@
 
 参考资料：
 * [understanding-resource-timing](https://developers.google.com/web/tools/chrome-devtools/network/understanding-resource-timing)
-
 
 ### 2. 使用 HTTP2
 HTTP2 相比 HTTP1.1 有如下几个优点：
@@ -111,13 +111,14 @@ HTTP2 新增的一个强大的新功能，就是服务器可以对一个客户�
 
 现在有很多网站已经开始使用 HTTP2 了，例如知乎：
 
-![在这里插入图片描述](https://imgconvert.csdnimg.cn/aHR0cHM6Ly91c2VyLWdvbGQtY2RuLnhpdHUuaW8vMjAyMC82LzI1LzE3MmU5Zjc1OTUwNGNkN2M?x-oss-process=image/format,png)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/img_convert/9cae1e2191a0594f983766df5cbe75b5.png)
 
 其中 h2 是指 HTTP2 协议，http/1.1 则是指 HTTP1.1 协议。
 
 参考资料：
 * [HTTP2 简介](https://developers.google.com/web/fundamentals/performance/http2/?hl=zh-cn)
 * [半小时搞懂 HTTP、HTTPS和HTTP2](https://github.com/woai3c/Front-end-articles/blob/master/http-https-http2.md)
+
 
 ### 3. 使用服务端渲染
 客户端渲染: 获取 HTML 文件，根据需要下载 JavaScript 文件，运行文件，生成 DOM，再渲染。
@@ -140,7 +141,7 @@ HTTP2 新增的一个强大的新功能，就是服务器可以对一个客户�
 2. 本地 DNS 依次向根服务器、顶级域名服务器、权限服务器发出请求，得到网站服务器的 IP 地址。
 3. 本地 DNS 将 IP 地址发回给浏览器，浏览器向网站服务器 IP 地址发出请求并得到资源。
 
-![](https://imgconvert.csdnimg.cn/aHR0cHM6Ly91c2VyLWdvbGQtY2RuLnhpdHUuaW8vMjAyMC83LzUvMTczMWYwMDE1NWQ4NzAzNw?x-oss-process=image/format,png)
+![](https://img-blog.csdnimg.cn/img_convert/0118e3238909c8cc33b7b0e3e908f338.png)
 
 如果用户访问的网站部署了 CDN，过程是这样的：
 1. 浏览器要将域名解析为 IP 地址，所以需要向本地 DNS 发出请求。
@@ -151,11 +152,11 @@ HTTP2 新增的一个强大的新功能，就是服务器可以对一个客户�
 6. 浏览器再根据 SLB 发回的地址重定向到缓存服务器。
 7. 如果缓存服务器有浏览器需要的资源，就将资源发回给浏览器。如果没有，就向源服务器请求资源，再发给浏览器并缓存在本地。
 
-![](https://imgconvert.csdnimg.cn/aHR0cHM6Ly91c2VyLWdvbGQtY2RuLnhpdHUuaW8vMjAyMC83LzUvMTczMWYwOTc0ZDEwNmVhNA?x-oss-process=image/format,png)
+![](https://img-blog.csdnimg.cn/img_convert/94ae3f2d8809c79f21a7803f2a15c15b.png)
 
 参考资料：
 * [CDN是什么？使用CDN有什么优势？](https://www.zhihu.com/question/36514327/answer/193768864)
-* [CDN原理简析](https://juejin.im/post/5d105e1af265da1b71530095)
+* [CDN原理简析](https://juejin.im/post/6844903873518239752)
 
 ### 5. 将 CSS 放在文件头部，JavaScript 文件放在底部
 所有放在 head 标签里的 CSS 和 JS 文件都会堵塞渲染。如果这些 CSS 和 JS 需要加载和解析很久的话，那么页面就空白了。所以 JS 文件要放在底部，等 HTML 解析完了再加载 JS 文件。
@@ -169,8 +170,15 @@ HTTP2 新增的一个强大的新功能，就是服务器可以对一个客户�
 ### 6. 使用字体图标 iconfont 代替图片图标
 字体图标就是将图标制作成一个字体，使用时就跟字体一样，可以设置属性，例如 font-size、color 等等，非常方便。并且字体图标是矢量图，不会失真。还有一个优点是生成的文件特别小。
 
+#### 压缩字体文件
+使用 [fontmin-webpack](https://github.com/patrickhulce/fontmin-webpack) 插件对字体文件进行压缩（感谢[前端小伟](https://juejin.im/user/237150239985165)提供）。
+
+![](https://img-blog.csdnimg.cn/img_convert/77b2eb5e3e09320087e3370686da9300.png)
+
 参考资料：
+* [fontmin-webpack](https://github.com/patrickhulce/fontmin-webpack)
 * [Iconfont-阿里巴巴矢量图标库](https://www.iconfont.cn/)
+
 ### 7. 善用缓存，不重复加载相同的资源
 为了避免用户每次访问网站都得请求文件，我们可以通过添加 Expires 或 max-age 来控制这一行为。Expires 设置了一个时间，只要在这个时间之前，浏览器都不会请求文件，而是直接使用缓存。而 max-age 是一个相对时间，建议使用 max-age 代替 Expires 。
 
@@ -184,6 +192,7 @@ HTTP2 新增的一个强大的新功能，就是服务器可以对一个客户�
 * [webpack + express 实现文件精确缓存](https://github.com/woai3c/node-blog/blob/master/doc/node-blog7.md)
 * [webpack-缓存](https://www.webpackjs.com/guides/caching/)
 * [张云龙--大公司里怎样开发和部署前端代码？](https://www.zhihu.com/question/20790576/answer/32602154)
+
 
 ### 8. 压缩文件
 压缩文件可以减少文件下载时间，让用户体验性更好。
@@ -222,6 +231,7 @@ const compression = require('compression')
 // 在其他中间件前使用
 app.use(compression())
 ```
+
 ### 9. 图片优化
 #### (1). 图片延迟加载
 在页面中，先不给图片设置路径，只有当图片出现在浏览器的可视区域时，才去加载真正的图片，这就是延迟加载。对于图片很多的网站来说，一次性加载全部图片，会对用户体验造成很大的影响，所以需要使用图片延迟加载。
@@ -238,7 +248,7 @@ img.src = img.dataset.src
 这样图片就加载出来了，完整的代码可以看一下参考资料。
 
 参考资料：
-* [web 前端图片懒加载实现原理](https://juejin.im/entry/594a483061ff4b006c12cea1)
+* [web 前端图片懒加载实现原理](https://juejin.im/entry/6844903482164510734)
 
 #### (2). 响应式图片
 响应式图片的优点是浏览器能够根据屏幕大小自动加载合适的图片。
@@ -305,7 +315,14 @@ webpack 配置
 有很多图片使用 CSS 效果（渐变、阴影等）就能画出来，这种情况选择 CSS3 效果更好。因为代码大小通常是图片大小的几分之一甚至几十分之一。
 
 参考资料：
-*  [img图片在webpack中使用](https://juejin.im/post/5cad99b5518825215d37b894)
+*  [img图片在webpack中使用](https://juejin.im/post/6844903816081457159)
+
+#### (6). 使用 webp 格式的图片
+>WebP 的优势体现在它具有更优的图像数据压缩算法，能带来更小的图片体积，而且拥有肉眼识别无差异的图像质量；同时具备了无损和有损的压缩模式、Alpha 透明以及动画的特性，在 JPEG 和 PNG 上的转化效果都相当优秀、稳定和统一。
+
+参考资料：
+* [WebP 相对于 PNG、JPG 有什么优势？](https://www.zhihu.com/question/27201061)
+
 ### 10. 通过 webpack 按需加载代码，提取第三库代码，减少 ES6 转为 ES5 的冗余代码
 >懒加载或者按需加载，是一种很好的优化网页或应用的方式。这种方式实际上是先把你的代码在一些逻辑断点处分离开，然后在一些代码块中完成某些操作后，立即引用或即将引用另外一些新的代码块。这样加快了应用的初始加载速度，减轻了它的总体体积，因为某些代码块可能永远不会被加载。
 
@@ -408,7 +425,8 @@ npm i -D @babel/plugin-transform-runtime @babel/runtime
 * [懒加载](http://webpack.docschina.org/guides/lazy-loading/)
 * [Vue 路由懒加载](https://router.vuejs.org/zh/guide/advanced/lazy-loading.html#%E8%B7%AF%E7%94%B1%E6%87%92%E5%8A%A0%E8%BD%BD)
 * [webpack 缓存](https://webpack.docschina.org/guides/caching/)
-* [一步一步的了解webpack4的splitChunk插件](https://juejin.im/post/5af1677c6fb9a07ab508dabb)
+* [一步一步的了解webpack4的splitChunk插件](https://juejin.im/post/6844903614759043079)
+
 
 ### 11. 减少重绘重排
 **浏览器渲染过程**
@@ -418,7 +436,7 @@ npm i -D @babel/plugin-transform-runtime @babel/runtime
 4. 遍历渲染树开始布局，计算每个节点的位置大小信息。
 5. 将渲染树每个节点绘制到屏幕。
 
-![在这里插入图片描述](https://img-blog.csdnimg.cn/20200330180943900.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3E0MTEwMjAzODI=,size_16,color_FFFFFF,t_70)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/img_convert/5647d9ad4ad5a57178919deae5175b83.png)
 
 **重排**
 
@@ -548,6 +566,7 @@ function sum2(arry, rows, cols) {
 参考资料：
 * [深入理解计算机系统](https://book.douban.com/subject/26912767/)
 
+
 ### 14. if-else 对比 switch
 当判断条件数量越来越多时，越倾向于使用 switch 而不是 if-else。
 ```js
@@ -595,6 +614,7 @@ switch (color) {
 从可读性来说，switch 语句也更好。从使用时机来说，当条件值大于两个的时候，使用 switch 更好。
 
 不过，switch 只能用于 case 值为常量的分支结构，而 if-else 更加灵活。
+
 
 ### 15. 查找表
 当条件语句特别多时，使用 switch 和 if-else 不是最佳的选择，这时不妨试一下查找表。查找表可以使用数组和对象来构建。
@@ -647,7 +667,7 @@ return map[color]
 >目前大多数设备的屏幕刷新率为 60 次/秒。因此，如果在页面中有一个动画或渐变效果，或者用户正在滚动页面，那么浏览器渲染动画或页面的每一帧的速率也需要跟设备屏幕的刷新率保持一致。
 其中每个帧的预算时间仅比 16 毫秒多一点 (1 秒/ 60 = 16.66 毫秒)。但实际上，浏览器有整理工作要做，因此您的所有工作需要在 10 毫秒内完成。如果无法符合此预算，帧率将下降，并且内容会在屏幕上抖动。 此现象通常称为卡顿，会对用户体验产生负面影响。
 
-![在这里插入图片描述](https://img-blog.csdnimg.cn/20200329214537183.jpg)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/img_convert/1beefa7a6e2094ded9feba3aec820158.png)
 
 假如你用 JavaScript 修改了 DOM，并触发样式修改，经历重排重绘最后画到屏幕上。如果这其中任意一项的执行时间过长，都会导致渲染这一帧的时间过长，平均帧率就会下降。假设这一帧花了 50 ms，那么此时的帧率为 1s / 50ms = 20fps，页面看起来就像卡顿了一样。
 
@@ -660,7 +680,7 @@ for (let i = 0, len = arry.length; i < len; i++) {
 假设上面的循环结构由于 process() 复杂度过高或数组元素太多，甚至两者都有，可以尝试一下切分。
 ```js
 const todo = arry.concat()
-setTimeout(() => {
+setTimeout(function() {
 	process(todo.shift())
 	if (todo.length) {
 		setTimeout(arguments.callee, 25)
@@ -673,6 +693,7 @@ setTimeout(() => {
 
 参考资料：
 * [渲染性能](https://developers.google.com/web/fundamentals/performance/rendering)
+
 
 ### 17. 使用 requestAnimationFrame 来实现视觉变化
 从第 16 点我们可以知道，大多数设备屏幕刷新率为 60 次/秒，也就是说每一帧的平均时间为 16.66 毫秒。在使用 JavaScript 实现动画效果的时候，最好的情况就是每次代码都是在帧的开头开始执行。而保证 JavaScript 在帧开始时运行的唯一方式是使用 `requestAnimationFrame`。
@@ -689,10 +710,11 @@ requestAnimationFrame(updateScreen);
 ```
 如果采取 `setTimeout` 或 `setInterval` 来实现动画的话，回调函数将在帧中的某个时点运行，可能刚好在末尾，而这可能经常会使我们丢失帧，导致卡顿。
 
-![在这里插入图片描述](https://img-blog.csdnimg.cn/20200330162328328.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3E0MTEwMjAzODI=,size_16,color_FFFFFF,t_70)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/img_convert/28b8f4c10fdc39630158ebdabbbd5d2f.png)
 
 参考资料：
 * [优化 JavaScript 执行](https://developers.google.com/web/fundamentals/performance/rendering/optimize-javascript-execution?hl=zh-cn)
+
 ### 18. 使用 Web Workers
 Web Worker 使用其他工作线程从而独立于主线程之外，它可以执行任务而不干扰用户界面。一个 worker 可以将消息发送到创建它的 JavaScript 代码, 通过将消息发送到该代码指定的事件处理程序（反之亦然）。
 
@@ -777,6 +799,7 @@ if (b & options) {
 	...
 }
 ```
+
 ### 20. 不要覆盖原生方法
 无论你的 JavaScript 代码如何优化，都比不上原生方法。因为原生方法是用低级语言写的（C/C++），并且被编译成机器码，成为浏览器的一部分。当原生方法可用时，尽量使用它们，特别是数学运算和 DOM 操作。
 
@@ -808,16 +831,17 @@ if (b & options) {
 * [CSS selector performance](https://ecss.io/appendix1.html)
 * [Optimizing CSS: ID Selectors and Other Myths](https://www.sitepoint.com/optimizing-css-id-selectors-and-other-myths/)
 
+
 ### 22. 使用 flexbox 而不是较早的布局模型
 在早期的 CSS 布局方式中我们能对元素实行绝对定位、相对定位或浮动定位。而现在，我们有了新的布局方式 [flexbox](https://developer.mozilla.org/zh-CN/docs/Web/CSS/CSS_Flexible_Box_Layout/Basic_Concepts_of_Flexbox)，它比起早期的布局方式来说有个优势，那就是性能比较好。
 
 下面的截图显示了在 1300 个框上使用浮动的布局开销：
 
-![在这里插入图片描述](https://img-blog.csdnimg.cn/20200330164359746.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3E0MTEwMjAzODI=,size_16,color_FFFFFF,t_70)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/img_convert/742da2bd59ee7a319b9606d4a9592249.png)
 
 然后我们用 flexbox 来重现这个例子：
 
-![在这里插入图片描述](https://img-blog.csdnimg.cn/20200330164612453.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3E0MTEwMjAzODI=,size_16,color_FFFFFF,t_70)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/img_convert/cc81f11a64d22a8cec4d95af8c167e76.png)
 
 现在，对于相同数量的元素和相同的视觉外观，布局的时间要少得多（本例中为分别 3.5 毫秒和 14 毫秒）。
 
@@ -839,10 +863,11 @@ if (b & options) {
 ### 23. 使用 transform 和 opacity 属性更改来实现动画
 在 CSS 中，transforms 和 opacity 这两个属性更改不会触发重排与重绘，它们是可以由合成器（composite）单独处理的属性。
 
-![在这里插入图片描述](https://img-blog.csdnimg.cn/20200330171328288.jpg)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/img_convert/fbd63916537c6b51773c2fb1442cf10c.png)
 
 参考资料：
 * [使用 transform 和 opacity 属性更改来实现动画](https://developers.google.com/web/fundamentals/performance/rendering/stick-to-compositor-only-properties-and-manage-layer-count?hl=zh-cn)
+
 ### 24. 合理使用规则，避免过度优化
 性能优化主要分为两类：
 1. 加载时优化
@@ -885,3 +910,5 @@ if (b & options) {
 * [Web性能权威指南](https://github.com/woai3c/recommended-books/blob/master/%E5%89%8D%E7%AB%AF/Web%E6%80%A7%E8%83%BD%E6%9D%83%E5%A8%81%E6%8C%87%E5%8D%97.pdf)
 * [高性能JavaScript](https://github.com/woai3c/recommended-books/blob/master/%E5%89%8D%E7%AB%AF/%E9%AB%98%E6%80%A7%E8%83%BDJavaScript.pdf)
 * [高效前端：Web高效编程与优化实践](https://book.douban.com/subject/30170670/)
+
+### [更多文章，欢迎关注](https://zhuanlan.zhihu.com/c_1056848825012023296)
