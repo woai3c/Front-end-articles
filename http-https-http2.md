@@ -259,7 +259,9 @@ gzip 是目前最流行和最有效的压缩方法。可以通过向 HTTP 请求
 具体请看 [webpack + express 实现文件精确缓存](https://github.com/woai3c/node-blog/blob/master/doc/node-blog7.md)。
 ## HTTPS
 HTTPS 是最流行的 HTTP 安全形式，由网景公司首创，所有主要的浏览器和服务器都支持此协议。 使用 HTTPS 时，所有的 HTTP 请求和响应数据在发送之前，都要进行加密。加密可以使用 SSL 或 TLS。
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20200515163019467.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3E0MTEwMjAzODI=,size_16,color_FFFFFF,t_70)
+
 SSL/TLS 协议作用在 HTTP 协议之下，对于上层应用来说，原来的发送/接收数据流程不变，这就很好地兼容了老的 HTTP 协议。由于 SSL/TLS 差别不大，下面统一使用 SSL。
 
 要想了解 HTTPS 为何安全，还得继续了解一下这些概念：**加密算法**、**摘要算法**、**数字签名**和**数字证书**。
@@ -316,7 +318,7 @@ SSL/TLS 协议作用在 HTTP 协议之下，对于上层应用来说，原来的
 **数字证书的数字签名计算过程**：
 1. 用摘要算法对数字证书的内容计算出摘要；
 2. 用数字证书的私钥对摘要进行加密得到数字签名。
-3. 
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/2020051520222228.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3E0MTEwMjAzODI=,size_16,color_FFFFFF,t_70)
 
 当浏览器收到证书时，会对签名颁发机构进行验证，如果颁发机构是个很有权威的公共签名机构，浏览器可能就知道其公开密钥了（浏览器会预装很多签名颁发机构的证书）。如果对签名颁发机构一无所知，浏览器通常会向用户显示一个对话框，看看他是否相信这个签名发布者。
