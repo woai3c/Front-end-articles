@@ -611,9 +611,9 @@ switch (color) {
 }
 ```
 像以上这种情况，使用 switch 是最好的。假设 color 的值为 pink，则 if-else 语句要进行 7 次判断，switch 只需要进行一次判断。
-从可读性来说，switch 语句也更好。从使用时机来说，当条件值大于两个的时候，使用 switch 更好。
+从可读性来说，switch 语句也更好。
 
-不过，switch 只能用于 case 值为常量的分支结构，而 if-else 更加灵活。
+从使用时机来说，当条件值大于两个的时候，使用 switch 更好。不过 if-else 也有 switch 无法做到的事情，例如有多个判断条件的情况下，无法使用 switch。
 
 
 ### 15. 查找表
