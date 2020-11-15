@@ -888,12 +888,7 @@ if (b & options) {
 	new Date() - performance.timing.navigationStart
 </script>
 ```
-首屏时间比较复杂，得考虑有图片和没有图片的情况。
-
-如果没有图片，则在 `window.onload` 事件里执行 `new Date() - performance.timing.navigationStart` 即可获取首屏时间。 
-
-如果有图片，则要在最后一个在首屏渲染的图片的 `onload` 事件里执行 `new Date() - performance.timing.navigationStart` 获取首屏时间，实施起来比较复杂，在这里限于篇幅就不说了。
-
+在 `window.onload` 事件里执行 `new Date() - performance.timing.navigationStart` 即可获取首屏时间。 
 ##### 检查运行性能
 
 配合 chrome 的开发者工具，我们可以查看网站在运行时的性能。
