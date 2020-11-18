@@ -1,4 +1,5 @@
 ## 前端文章
+* [chrome 开发者工具——前端实用功能总结](https://github.com/woai3c/Front-end-articles/issues/17)
 * [而立之年——回顾我的前端转行之路](https://github.com/woai3c/Front-end-articles/issues/16)
 * [手把手带你入门前端工程化——超详细教程](https://github.com/woai3c/Front-end-articles/issues/14)
 * [前端项目自动化部署——超详细教程（Jenkins、Github Actions）](https://github.com/woai3c/Front-end-articles/issues/12)
