@@ -128,6 +128,7 @@ document.querySelector('test-div').clientHeight // 高
 **分辨率较小时的页面**：
 
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201121154707760.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3E0MTEwMjAzODI=,size_16,color_FFFFFF,t_70#pic_center)
+
 如果你对栅格化原理不太了解，建议阅读我的另一篇文章[栅格化系统的原理以及实现](https://zhuanlan.zhihu.com/p/61401978)。
 ### 尽量使用移动端专用的 UI 组件库
 PC 端的 UI 组件库在移动端上会有很多样式问题，如非必要，不要使用。
