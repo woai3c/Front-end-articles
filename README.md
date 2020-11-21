@@ -16,7 +16,7 @@
 * [栅格化系统的原理以及实现](https://github.com/woai3c/Front-end-articles/blob/master/Grid%20System.md)
 * [前端性能和错误监控](https://github.com/woai3c/Front-end-articles/blob/master/monitor.md)
 * [ESlint + stylelint + VSCode自动格式化代码(2020)](https://github.com/woai3c/Front-end-articles/blob/master/eslint-vscode-format.md)
-* [移动端开发的几点建议](https://github.com/woai3c/Front-end-articles/blob/master/mobile%20recommendation.md)
+* [移动端开发一些常见问题的解决方案](https://github.com/woai3c/Front-end-articles/blob/master/mobile%20recommendation.md)
 * [前端工程化建设](https://github.com/woai3c/Front-end-articles/blob/master/engineering.md)
 * [手写 Promise](https://github.com/woai3c/Front-end-articles/blob/master/promise.md)
 
