@@ -84,7 +84,7 @@ document.querySelector('test-div').clientHeight // 高
 
 那就是**整体布局使用 vw、百分比 % 作为计量单位，内容样式上使用 px 作为计量单位**。
 
-![在这里插入图片描述](https://img-blog.csdnimg.cn/20201121142827563.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3E0MTEwMjAzODI=,size_16,color_FFFFFF,t_70#pic_center)
+![在这里插入图片描述](https://segmentfault.com/img/remote/1460000038246027/view)
 
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20201121142851802.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3E0MTEwMjAzODI=,size_16,color_FFFFFF,t_70#pic_center)
 
