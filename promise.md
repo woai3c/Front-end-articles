@@ -231,6 +231,76 @@ class Promise {
     }
 }
 ```
+## 手写 Promise 其他方法
+```js
+Promise.resolve = function (value) {
+    return new Promise(r => {
+        r(value)
+    })
+}
+
+Promise.reject = function (value) {
+    return new Promise((r, j) => {
+        j(value)
+    })
+}
+
+Promise.prototype.catch = function (errCallback) {
+    return this.then(null, errCallback)
+}
+
+// val 不会传给 finally 的回调函数，并且 finally 还需要将 val 传递给后面的 then。
+Promise.prototype.finally = function (callback) {
+    return this.then((val) => {
+        callback()
+        return new Promise(r => r(val))
+    }, (err) => {
+        callback()
+        return new Promise(r => r(err))
+    })
+}
+
+Promise.all = function (promises) {
+    return new Promise((resolve, reject) => {
+        if (!Array.isArray(promises)) {
+            return reject('参数必须为数组')
+        }
+
+        if (!promises.length) return
+
+        const result = []
+        const len = promises.length
+        let count = 0
+        promises.forEach(p => {
+            Promise.resolve(p)
+                .then(val => {
+                    count++
+                    result.push(val)
+                    if (count == len) {
+                        resolve(result)
+                    }
+                })
+                .catch(e => reject(e))
+        })
+    })
+}
+
+Promise.race = function (promises) {
+    return new Promise((resolve, reject) => {
+        if (!Array.isArray(promises)) {
+            return reject('参数必须为数组')
+        }
+
+        if (!promises.length) return
+
+        promises.forEach((p, i) => {
+            Promise.resolve(p)
+                .then(val => resolve(val))
+                .catch(e => reject(e))
+        })
+    })
+}
+```
 
 ## 参考资料
 * [Promise的源码实现（完美符合Promise/A+规范）](https://github.com/YvetteLau/Blog/issues/2)
