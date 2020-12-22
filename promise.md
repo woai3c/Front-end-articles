@@ -37,7 +37,7 @@ class Promise {
 
         const self = this
         const promise2 = new Promise((resolve, reject) => {
-            if (self.state == 'fulfilled') {
+            if (self.state == 'fulfilled') { // 针对立即 resolve(): new Promise(r => r())
                 setTimeout(() => {
                     try {
                         const x = onFulfilled(self.value)
@@ -46,7 +46,7 @@ class Promise {
                         reject(error)
                     }
                 })
-            } else if (self.state == 'rejected') {
+            } else if (self.state == 'rejected') { // 针对立即 reject(): new Promise((r, j) => j())
                 setTimeout(() => {
                     try {
                         const x = onRejected(self.reason)
@@ -55,7 +55,7 @@ class Promise {
                         reject(error)
                     }
                 })
-            } else if (self.state == 'pending') {
+            } else if (self.state == 'pending') { // 针对异步 resolve reject: new Promise((r, j) => setTimeout(() => r()))
                 self.onFulfilleds.push(() => {
                     setTimeout(() => {
                         try {
