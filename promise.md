@@ -174,7 +174,7 @@ class Promise {
                 self.onFulfilleds.forEach(callback => callback())
             }
         }
-    
+
         function reject(reason) {
             if (self.state == 'pending') {
                 self.state = 'rejected'
@@ -191,8 +191,8 @@ class Promise {
     }
 
     then(onFulfilled, onRejected) {
-        onFulfilled = typeof onFulfilled == 'function'? onFulfilled : value => value
-        onRejected = typeof onRejected == 'function'? onRejected : reason => { throw reason }
+        onFulfilled = typeof onFulfilled == 'function' ? onFulfilled : value => value
+        onRejected = typeof onRejected == 'function' ? onRejected : reason => { throw reason }
 
         const self = this
         const promise2 = new Promise((resolve, reject) => {
@@ -205,7 +205,7 @@ class Promise {
                         } else {
                             resolve(x)
                         }
-                    } catch (error) {
+                    } catch(error) {
                         reject(error)
                     }
                 })
@@ -214,13 +214,13 @@ class Promise {
             self.onRejecteds.push(() => {
                 setTimeout(() => {
                     try {
+                        const x = onRejected(self.reason)
                         if (x instanceof Promise) {
-                            const x = onRejected(self.reason)
                             x.then(val => resolve(val))
                         } else {
                             resolve(x)
                         }
-                    } catch (error) {
+                    } catch(error) {
                         reject(error)
                     }
                 })
