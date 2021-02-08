@@ -28,13 +28,15 @@ PS：自动格式化代码在保存时自动触发，目前试了 JS 以及 vue 
 ```
 npm install --save-dev typescript @typescript-eslint/parser @typescript-eslint/eslint-plugin
 ```
-在 `.eslintrc.js` 配置文件，添加以下两个配置项：
-```js
-module.exports = {
-    parser: '@typescript-eslint/parser',
-    plugins: ['@typescript-eslint'],
-}
+
+在 `.eslintrc` 配置文件，添加以下两个配置项：
+```json
+"parser": "@typescript-eslint/parser",
+"plugins": [
+    "@typescript-eslint"
+],
 ```
+
 将根目录下的 `package.json` 文件的 `scripts` 选项添加以下配置项：
 ```json
 "scripts": {
