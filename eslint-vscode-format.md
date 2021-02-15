@@ -23,6 +23,53 @@
 
 PS：自动格式化代码在保存时自动触发，目前试了 JS 以及 vue 文件中的 JS 代码都没问题，html 和 vue 中的 html 和 css 无效。
 
+#### lint-staged
+使用 `lint-staged` 可以只对 git 暂存区上的文件进行校验，不需要对所有的文件进行 lint 检查。
+
+安装
+```
+npm i -D lint-staged
+```
+将原来 `package.json` 文件中的代码：
+```json
+"husky": {
+  "hooks": {
+    "pre-commit": "npm run lint",
+    "commit-msg": "node script/verify-commit.js",
+    "pre-push": "npm test"
+  }
+},
+```
+改为：
+```json
+"husky": {
+  "hooks": {
+    "pre-commit": "lint-staged",
+    "commit-msg": "node script/verify-commit.js",
+    "pre-push": "npm test"
+  }
+},
+"lint-staged": {
+  "src/**/*.{js,jsx,ts,tsx}": "eslint",
+  "test/**/*.{js,jsx,ts,tsx}": "eslint"
+},
+```
+文件过滤说明：
+```json
+{
+    "*.js": "项目下所有的 js 文件（不包含子文件夹）",
+    "**/*.js": "项目下所有的 js 文件",
+    "src/*.js": "src 目录所有的 js 文件（不包含子文件夹）",
+    "src/**/*.js": "src 目录所有的 js 文件"
+}
+```
+多个后缀匹配：
+```json
+"lint-staged": {
+    "src/**/*.{js,jsx,ts,tsx}": "eslint",
+  },
+```
+
 #### TypeScript
 下载插件
 ```
