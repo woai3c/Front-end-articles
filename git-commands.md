@@ -95,6 +95,37 @@ git reset --hard 485776d96f57db88c6a6f31146532d21fc01b1ab
 ```
 git push -f
 ```
+
+### 8. `git rebase`
+如果你想将多个 commit 合并成一个，可以使用 `git rebase`。假设你有三次提交，分别为 abc。并且需要合并 ab，则输入以下命令：
+```
+git rebase -i <c 的 commit id>
+```
+下面是一个真实示例：
+```
+git rebase -i c486fa803767ff75780c8df7e18b560fdc332b1e
+```
+执行命令后，会弹出一个框，上面会显示 a 和 b 的 commit 消息。类似于这样：
+```vim
+pick 9fe8f12 chore: 全局命令 mvl -> mvc(mini-vue-cli)
+pick 645156a chore(create): 美化下载格式提示语
+```
+同时有一些命令需要了解一下：
+```
+p, pick = use commit
+r, reword = use commit, but edit the commit message
+e, edit = use commit, but stop for amending
+s, squash = use commit, but meld into previous commit
+f, fixup = like “squash”, but discard this commit’s log message
+x, exec = run command (the rest of the line) using shell
+d, drop = remove commit
+```
+按照上述命令的解释，这时只要保证第一个 commit 不动，将第二个 commit 的 pick 改为 s 就可以了。由于这是 vi 编辑模式，所以你需要按一下 i 才可以开始编辑，编辑完成按一个 esc 然后输入 :wq 回车即可。
+
+这时还会弹出一个提示框，让你更改 commit message。按照刚才的操作修改完后保存即可。最后在命令行执行 `git push -f` 推送到远程仓库。
+
+
+
 ### 解决冲突
 当执行 `git pull`，将远程分支和本地分支合并时，有可能会出现冲突的情况。
 例如有 A 和 B 两个人，对同一文件 `test.txt` 进行了修改。A 修改完后先提交到了远程分支，当 B 要提交时，执行 `git pull`，发现远程仓库的 `test.txt` 和自己本地的版本有冲突。
