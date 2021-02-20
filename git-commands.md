@@ -38,10 +38,12 @@ git push
 ### 4. `git pull`
 `git pull` 将远程仓库的更新拉取下来，再和本地分支进行合并。
 
-### 5. `git branch` `git checkout`
-`git branch` 查看当前所有分支
-`git branch <name>` 创建分支
-`git checkout <name>` 切换分支
+### 5. `git branch` `git checkout`...
+* `git branch` 查看当前所有分支
+* `git branch <name>` 创建分支
+* `git checkout <name>` 切换分支
+* `git branch -d <branchName>` 删除本地分支
+* `git push origin --delete <branchName>` 删除远程分支
 
 创建分支 dev
 ```
