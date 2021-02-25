@@ -1,4 +1,4 @@
-## git commit 提交规范
+# git commit 提交规范
 ```md
 <type>(<scope>): <subject>
 
