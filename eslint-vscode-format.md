@@ -1,14 +1,12 @@
-# ESlint + stylelint + VSCode自动格式化代码(2020)
-
-
-## eslint 格式化 js 代码
+# ESlint + Stylelint + VSCode 自动格式化代码(2020)
+## eslint 格式化代码
 ![](https://img-blog.csdnimg.cn/img_convert/2124694cc6805a78697657ba790f69a0.gif)
 
 本文用 Vue 项目做示范。
 
-利用 Vue CLI 创建项目时要将 ESlint 选上，下载完依赖后，用 VSCode 打开项目。
+利用 `Vue-CLI`  创建项目时要将 ESlint 选上，下载完依赖后，用 VSCode 打开项目。
 
-安装插件 ESLint，然后 `File` -> `Preference`-> `Settings`（如果装了中文插件包应该是 文件 -> 选项 -> 设置），搜索 eslint，点击 Edit in setting.json
+安装插件 ESLint，然后 `File` -> `Preference`-> `Settings`（如果装了中文插件包应该是 文件 -> 选项 -> 设置），搜索 eslint，点击 `Edit in setting.json`
 
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/img_convert/9820d5a2ec912c0fa232908174911424.png)
 
@@ -21,61 +19,13 @@
 ```
 配置完之后，VSCode 会根据你当前 Vue 项目下的 `.eslintrc.js` 文件的规则来验证和格式化代码。
 
-PS：自动格式化代码在保存时自动触发，目前试了 JS 以及 vue 文件中的 JS 代码都没问题，html 和 vue 中的 html 和 css 无效。
 
-#### lint-staged
-使用 `lint-staged` 可以只对 git 暂存区上的文件进行校验，不需要对所有的文件进行 lint 检查。
-
-安装
-```
-npm i -D lint-staged
-```
-将原来 `package.json` 文件中的代码：
-```json
-"husky": {
-  "hooks": {
-    "pre-commit": "npm run lint",
-    "commit-msg": "node script/verify-commit.js",
-    "pre-push": "npm test"
-  }
-},
-```
-改为：
-```json
-"husky": {
-  "hooks": {
-    "pre-commit": "lint-staged",
-    "commit-msg": "node script/verify-commit.js",
-    "pre-push": "npm test"
-  }
-},
-"lint-staged": {
-  "src/**/*.{js,jsx,ts,tsx}": "eslint",
-  "test/**/*.{js,jsx,ts,tsx}": "eslint"
-},
-```
-文件过滤说明：
-```json
-{
-    "*.js": "项目下所有的 js 文件（不包含子文件夹）",
-    "**/*.js": "项目下所有的 js 文件",
-    "src/*.js": "src 目录所有的 js 文件（不包含子文件夹）",
-    "src/**/*.js": "src 目录所有的 js 文件"
-}
-```
-多个后缀匹配：
-```json
-"lint-staged": {
-    "src/**/*.{js,jsx,ts,tsx}": "eslint",
-  },
-```
 
 #### TypeScript
 下载插件
 ```
 npm install --save-dev typescript @typescript-eslint/parser @typescript-eslint/eslint-plugin
 ```
-
 在 `.eslintrc` 配置文件，添加以下两个配置项：
 ```json
 "parser": "@typescript-eslint/parser",
@@ -83,8 +33,7 @@ npm install --save-dev typescript @typescript-eslint/parser @typescript-eslint/e
     "@typescript-eslint"
 ],
 ```
-
-将根目录下的 `package.json` 文件的 `scripts` 选项添加以下配置项：
+在根目录下的 `package.json` 文件的 `scripts` 选项里添加以下配置项：
 ```json
 "scripts": {
   "lint": "eslint --ext .js,.ts,.tsx test/ src/",
@@ -94,31 +43,30 @@ npm install --save-dev typescript @typescript-eslint/parser @typescript-eslint/e
 
 ![](https://img-blog.csdnimg.cn/img_convert/e990512dbf4bbf446017ec810b878ec1.gif)
 
-### 扩展
-其实还是有办法格式化 vue 文件中的 html 和 css 代码的，利用 vscode 自带的格式化，快捷键是 `shift + alt + f`，假设你当前 vscode 打开的是一个 vue 文件，按下 `shift + alt + f` 会提示你选择一种格式化规范，如果没提示，那就是已经有默认的格式化规范了（一般是 vetur 插件），然后 vue 文件的所有代码都会格式化，并且格式化规则还可以自己配置，如下图所示，可以根据自己的喜好来选择格式化规则。
-
-![在这里插入图片描述](https://img-blog.csdnimg.cn/img_convert/f532633b2856c8e1cedaa6c38c176151.png)
-
-因为之前已经设置过 eslint 的格式化规则了，所以 vue 文件只需要格式化 html 和 css 中的代码，不需要格式化 javascript 代码，我们可以这样配置来禁止 vetur 格式化 javascript 代码：
-
-![在这里插入图片描述](https://img-blog.csdnimg.cn/img_convert/64fac739a981493721ae2fbdda495be0.png)
-
-然后回到刚才的 vue 文件，随意打乱代码的格式，再按下 `shift + alt + f` ，会发现 html 和 css 中的代码已经格式化了，但是 javascript 的代码并没格式化。没关系，因为已经设置了 eslint 格式化，所以只要保存，javascript 的代码也会自动格式化。
-
-同理，其他类型的文件也可以这样来设置格式化规范。
-
-## stylelint 格式化 css 代码
+如果你使用 `Vue-CLI` 创建项目，并且想要格式化 TypeScript 的代码，则需要在 `.eslintrc.js` 文件添加或修改以下几项：
+```js
+parser: 'vue-eslint-parser',
+plugins: [
+    '@typescript-eslint',
+],
+parserOptions: {
+    parser: '@typescript-eslint/parser',
+    ecmaVersion: 2020,
+},
+```
+这样就可以格式化 `.js` `.ts` `.vue` 文件了。
+#### 格式化 CSS 代码
 下载依赖
 ```
 npm install --save-dev stylelint stylelint-config-standard
 ```
-在项目根目录下新建一个 `.stylelintrc.json` 文件并输入以下内容：
+在项目根目录下新建一个 `.stylelintrc.json` 文件，并输入以下内容：
 ```json
 {
     "extends": "stylelint-config-standard"
 }
 ```
-VSCode 添加 `stylelint` 插件
+VSCode 添加 `stylelint` 插件：
 
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/img_convert/afa020a625f5c5aee5fa304d35eb6682.png)
 
@@ -135,3 +83,26 @@ VSCode 添加 `stylelint` 插件
     }
 }
 ```
+
+如果你想格式化 `sass` `scss` 文件，则需要下载 `stylelint-scss` 插件：
+```
+npm i -D stylelint-scss
+```
+然后就可以格式化 scss 文件了。
+
+#### 扩展
+如何格式化 HTML、Vue（或其他后缀） 文件中的 HTML 代码？
+
+这需要利用 VSCode 自带的格式化，快捷键是 `shift + alt + f`。假设当前 VSCode 打开的是一个 Vue 文件，按下 `shift + alt + f` 会提示你选择一种格式化规范。如果没提示，那就是已经有默认的格式化规范了（一般是 vetur 插件），然后 Vue 文件的所有代码都会格式化，并且格式化规则还可以自己配置。
+
+具体规则如下图所示，可以根据自己的喜好来选择格式化规则。
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/img_convert/f532633b2856c8e1cedaa6c38c176151.png)
+
+因为之前已经设置过 ESlint 和 Stylelint 的格式化规则了，所以 Vue 文件只需要格式化 HTML 中的代码，因此需要禁止 vetur 格式化 JavaScript 和 CSS 代码：
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/img_convert/64fac739a981493721ae2fbdda495be0.png)
+
+根据上图配置完成后，回到刚才的 Vue 文件。随意打乱代码的格式，再按下 `shift + alt + f` ，会发现 HTML 代码已经格式化了，但是 JavaScript 和 CSS 代码并没格式化。没关系，因为已经设置了 ESlint 和 Stylelint 格式化，所以只要执行保存操作，JavaScript 和 CSS 的代码也会自动格式化。
+
+同理，其他类型的文件也可以这样设置格式化规范。
