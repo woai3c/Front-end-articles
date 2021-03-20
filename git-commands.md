@@ -53,6 +53,11 @@ git branch dev
 ```
 git checkout dev
 ```
+`git checkout` 命令加上 `-b` 参数表示创建并切换，`git checkout -b dev` 相当于以下两条命令:
+```
+git branch dev
+git checkout dev
+```
 ### 6. `git log`
 `git log` 命令可以查看提交的历史记录。
 ```
@@ -76,7 +81,7 @@ E:\res\platform>git log --pretty=oneline
 514cf81798a14b3bf273019d02885f87bf8ad2ac feat: 添加全局 log 函数
 2f0e28962d3f2d5e9c047387560986411d2a07d0 chore: 更新 eslint 规则
 ```
-### 7. `git reset`
+### 7. `git reset` 版本回退
 `git reset` 命令用于版本回退。
 假如你正在开发一个项目，有一天产品提了个新功能，要求三天内完成，于是你快马加鞭、加班加点终于在三天内完成了。
 结果第四天产品告诉你新功能不要了。你想打死产品的心都有了，话虽如此，工作还是得继续，这时 `git reset` 就可以派上用场了。
@@ -126,9 +131,7 @@ d, drop = remove commit
 
 这时还会弹出一个提示框，让你更改 commit message。按照刚才的操作修改完后保存即可。最后在命令行执行 `git push -f` 推送到远程仓库。
 
-
-
-### 解决冲突
+### 9. 解决冲突
 当执行 `git pull`，将远程分支和本地分支合并时，有可能会出现冲突的情况。
 例如有 A 和 B 两个人，对同一文件 `test.txt` 进行了修改。A 修改完后先提交到了远程分支，当 B 要提交时，执行 `git pull`，发现远程仓库的 `test.txt` 和自己本地的版本有冲突。
 ```
@@ -152,6 +155,12 @@ aaaaaa
 ### 以太网的的信道利用率
 ```
 把 `<<<` `===` `>>>` 删除掉，并替换成自己的内容，再执行 `git add` `git commit` 提交内容。 这时，执行 `git pull`，你会发现没有更新，刚修改的内容也不会变，最后再执行 `git push` 将内容推送到远程仓库。
+
+### 10. `git merge`
+将指定分支合并到当前分支。例如你想将 a 分支合并到 b 分支，则切换到 b 分支，并执行：
+```
+git merge a
+```
 
 ## 参考资料
 * [Git教程-廖雪峰](https://www.liaoxuefeng.com/wiki/896043488029600)
