@@ -7,6 +7,7 @@
 * [而立之年——回顾我的前端转行之路](https://github.com/woai3c/Front-end-articles/issues/16)
 * [手把手带你入门前端工程化——超详细教程](https://github.com/woai3c/Front-end-articles/issues/14)
 * [前端项目自动化部署——超详细教程（Jenkins、Github Actions）](https://github.com/woai3c/Front-end-articles/issues/12)
+* [gitlab 自动化部署](https://github.com/woai3c/Front-end-articles/blob/master/gitlab-ci.md)
 * [前端国际化辅助工具——自动替换中文并翻译](https://github.com/woai3c/Front-end-articles/issues/8)
 * [深入了解 webpack 模块加载原理](https://github.com/woai3c/Front-end-articles/issues/7)
 * [实现一个 webpack loader 和 webpack plugin](https://github.com/woai3c/Front-end-articles/issues/6)
