@@ -1,3 +1,4 @@
+# gitlab 自动化部署
 ## 安装
 ```bash
 sudo curl --output /usr/local/bin/gitlab-runner "https://gitlab-runner-downloads.s3.amazonaws.com/latest/binaries/gitlab-runner-darwin-amd64"
