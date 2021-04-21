@@ -1,4 +1,3 @@
-# ESlint + Stylelint + VSCode 自动格式化代码(2020)
 ## eslint 格式化代码
 ![](https://img-blog.csdnimg.cn/img_convert/2124694cc6805a78697657ba790f69a0.gif)
 
@@ -17,6 +16,11 @@
         "source.fixAll": true,
     },
 ```
+
+同时要确保 VSCode 右下角的状态栏 ESlint 是处于工作状态的。
+
+![image](https://img-blog.csdnimg.cn/img_convert/e80a254f238a3505aa3531fe30aa9f5c.png)
+
 配置完之后，VSCode 会根据你当前 Vue 项目下的 `.eslintrc.js` 文件的规则来验证和格式化代码。
 
 
@@ -55,7 +59,7 @@ parserOptions: {
 },
 ```
 这样就可以格式化 `.js` `.ts` `.vue` 文件了。
-#### 格式化 CSS 代码
+## stylelint 格式化代码
 下载依赖
 ```
 npm install --save-dev stylelint stylelint-config-standard
@@ -90,7 +94,7 @@ npm i -D stylelint-scss
 ```
 然后就可以格式化 scss 文件了。
 
-#### 扩展
+## 扩展
 如何格式化 HTML、Vue（或其他后缀） 文件中的 HTML 代码？
 
 这需要利用 VSCode 自带的格式化，快捷键是 `shift + alt + f`。假设当前 VSCode 打开的是一个 Vue 文件，按下 `shift + alt + f` 会提示你选择一种格式化规范。如果没提示，那就是已经有默认的格式化规范了（一般是 vetur 插件），然后 Vue 文件的所有代码都会格式化，并且格式化规则还可以自己配置。
