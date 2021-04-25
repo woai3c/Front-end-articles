@@ -1,3 +1,4 @@
+# gitlab 自动化部署
 gitlab-runner 是与 GitLab CI / CD一起使用的应用程序，用于自动构建、测试、部署等操作。本文主要介绍如何使用 gitlab-runner 来实现项目的自动化部署，并且分两种情况：安装在本机与服务器。
 ## 将 gitlab-runner 安装在本机（Mac）
 ```bash
