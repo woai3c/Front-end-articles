@@ -160,6 +160,10 @@ yum remove nodejs npm -y
 ```bash
  chmod -R 777 /usr/local/nginx/html
  ```
+### 将要部署的目录添加到 gitlab-runner 用户组
+```bash
+chgrp -R gitlab-runner test // 这里是 test 目录
+```
  ### .gitlab-ci.yml 文件
  与安装在本机上的脚本差不多，只是部署阶段的命令有所不同：
  ```yml
