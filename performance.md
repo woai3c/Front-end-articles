@@ -905,7 +905,9 @@ if (b & options) {
 将以下脚本放在 `</head>` 前面就能获取白屏时间。
 ```html
 <script>
-	new Date() - performance.timing.navigationStart
+  new Date() - performance.timing.navigationStart
+  // 通过 domLoading 和 navigationStart 也可以
+  performance.timing.domLoading - performance.timing.navigationStart
 </script>
 ```
 在 `window.onload` 事件里执行 `new Date() - performance.timing.navigationStart` 即可获取首屏时间。 
