@@ -630,10 +630,7 @@ switch (color) {
         break
 }
 ```
-像以上这种情况，使用 switch 是最好的。假设 color 的值为 pink，则 if-else 语句要进行 7 次判断，switch 只需要进行一次判断。
-从可读性来说，switch 语句也更好。
-
-从使用时机来说，当条件值大于两个的时候，使用 switch 更好。不过 if-else 也有 switch 无法做到的事情，例如有多个判断条件的情况下，无法使用 switch。
+像上面的这种情况，从可读性来说，使用 switch 是比较好的（js 的 switch 语句不是基于哈希实现，而是循环判断，所以说 if-else、switch 从性能上来说是一样的）。
 
 
 ### 15. 查找表
