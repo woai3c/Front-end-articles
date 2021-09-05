@@ -230,7 +230,6 @@ git cherry-pick A..B
 ```
 这表示合并从 A 到 B 的所有记录。
 
-
 ## 参考资料
 * [Git教程-廖雪峰](https://www.liaoxuefeng.com/wiki/896043488029600)
 * [learngitbranching](https://learngitbranching.js.org/?locale=zh_CN)
