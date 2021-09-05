@@ -112,6 +112,12 @@ git reset --hard 485776d96f57db88c6a6f31146532d21fc01b1ab
 git push -f
 ```
 
+用远程分支覆盖本地分支
+```
+git fetch --all
+git reset --hard origin/master（这里的 master 为远程分支）
+```
+
 ### 9. `git revert`
 `git revert` 也可以撤销记录，只不过它撤销的记录不会消失，这一点和 `git reset` 不一样。`git reset` 撤销的记录就跟消失了一样。
 
@@ -210,6 +216,20 @@ git tag -d <tagName>
 ```
 git push origin --delete <tagname>
 ```
+
+### 13. `git cherry-pick`
+如果你想将某个指定 commit 放到当前分支上，可以使用 `git cherry-pick <commitid1> <commitid2>...`。
+
+假设当前分支为 master，历史记录为 `x y`。现在 dev 分支上有 `a b c d` 四个记录，你想将其中的 b 记录合并到当前分支，可以执行 `git cherry-pick b`。执行后 master 分支变为 `x y b`。
+
+或者想批量提交 dev 分支中的 `b d` 两个记录，可以执行 `git cherry-pick b d`。这样 dev 分支的 `b d` 记录就合并到 master 分支了，变成 `x y b d`。
+
+另外批量连续合并还有省略语法
+```
+git cherry-pick A..B 
+```
+这表示合并从 A 到 B 的所有记录。
+
 
 ## 参考资料
 * [Git教程-廖雪峰](https://www.liaoxuefeng.com/wiki/896043488029600)
