@@ -218,7 +218,7 @@ git push origin --delete <tagname>
 ```
 
 ### 13. `git cherry-pick`
-如果你想将某个指定 commit 放到当前分支上，可以使用 `git cherry-pick <commitid1> <commitid2>...`。
+如果你想将某个指定记录放到当前分支上，可以使用 `git cherry-pick <commitid1> <commitid2>...`。
 
 假设当前分支为 master，历史记录为 `x y`。现在 dev 分支上有 `a b c d` 四个记录，你想将其中的 b 记录合并到当前分支，可以执行 `git cherry-pick b`。执行后 master 分支变为 `x y b`。
 
@@ -239,6 +239,17 @@ git cherry-pick A..B
 ![image](https://user-images.githubusercontent.com/22117876/132132078-4de2cf12-8529-4556-9b6b-77f048fa347d.png)
 
 就和上图一样，这是当前分支修改后和远程分支上的对比。
+
+### 合并分支前，先整理当前分支的记录
+假设你切了一个 bugFix 分支来修复线上 bug，经过一段时间的努力后终于将 bug 修复了。但是为了调试（加了很多 debug 代码）或其他原因，bugFix 上多了很多无用的记录消息。
+```
+commit3: 修复登录 bug
+commit2: 添加 debug 语句
+commit1: 添加 console 语句
+```
+例如上面的三个记录，前面的两个记录添加了很多调试代码，在最后一个记录终于修复了 bug，并且删除了调试代码。这时如果直接将 bugFix 分支合到 master 分支，就会把调试的记录也合并进来。
+
+这时可以使用 `git cherry-pick` 只将最后一个记录合并到 master 分支。或者使用 `git rebase` 将 bugFix 分支另外两个记录抛弃，然后再合并。
 
 
 ## 参考资料
