@@ -112,7 +112,16 @@ git reset --hard 485776d96f57db88c6a6f31146532d21fc01b1ab
 git push -f
 ```
 
-### 8. `git rebase`
+### 9. `git revert`
+`git revert` 也可以撤销记录，只不过它撤销的记录不会消失，这一点和 git reset 不一样。git reset 撤销的记录就跟消失了一样。
+
+假设现在当前分支有 `a b c` 记录，执行 `git reset b` 后，当前的分支记录会变成 `a b`。
+
+如果用 `git revert` 来撤销记录，即执行 `git revert b`，会在当前分支上再生成一个新的 commit 记录，变成 `a b c c'`，这个 `c'` 的状态和记录 `b` 是一样的。
+
+如果你想让别人知道你撤销过记录，就使用 `git revert`，因为它会留下撤销的记录，否则用 `git reset`。
+
+### 10. `git rebase`
 如果你想将多个 commit 合并成一个，可以使用 `git rebase`。假设你有三次提交，分别为 abc。并且需要合并 ab，则输入以下命令：
 ```
 git rebase -i <c 的 commit id>
@@ -140,7 +149,7 @@ d, drop = remove commit
 
 这时还会弹出一个提示框，让你更改 commit message。按照刚才的操作修改完后保存即可。最后在命令行执行 `git push -f` 推送到远程仓库。
 
-### 9. 解决冲突
+### 11. 解决冲突
 当执行 `git pull`，将远程分支和本地分支合并时，有可能会出现冲突的情况。
 例如有 A 和 B 两个人，对同一文件 `test.txt` 进行了修改。A 修改完后先提交到了远程分支，当 B 要提交时，执行 `git pull`，发现远程仓库的 `test.txt` 和自己本地的版本有冲突。
 ```
@@ -176,7 +185,7 @@ git merge 合并分支后可能不是一条直线，所以可以使用 git rebas
 git rebase a
 ```
 
-### 11. `git tag`
+### 12. `git tag`
 打标签
 ```
 git tag <tagName>
@@ -204,3 +213,4 @@ git push origin --delete <tagname>
 
 ## 参考资料
 * [Git教程-廖雪峰](https://www.liaoxuefeng.com/wiki/896043488029600)
+* [learngitbranching](https://learngitbranching.js.org/?locale=zh_CN)
