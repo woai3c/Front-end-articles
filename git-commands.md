@@ -230,6 +230,17 @@ git cherry-pick A..B
 ```
 这表示合并从 A 到 B 的所有记录。
 
+## 高级技巧
+### 修改历史 commit 的消息
+假设当前分支有 `a b c` 三个记录，如果你想对 `a` 记录的消息进行修改。可以使用 `git rebase` 将 `a` 记录换到最前面，然后使用 `git commit --amend` 对其消息进行修改。
+
+然后再使用 `git rebase` 将 `a b c` 的三个记录恢复原序。
+
+![image](https://user-images.githubusercontent.com/22117876/132132078-4de2cf12-8529-4556-9b6b-77f048fa347d.png)
+
+就和上图一样，这是当前分支修改后和远程分支上的对比。
+
+
 ## 参考资料
 * [Git教程-廖雪峰](https://www.liaoxuefeng.com/wiki/896043488029600)
 * [learngitbranching](https://learngitbranching.js.org/?locale=zh_CN)
