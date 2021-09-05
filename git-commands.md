@@ -113,11 +113,11 @@ git push -f
 ```
 
 ### 9. `git revert`
-`git revert` 也可以撤销记录，只不过它撤销的记录不会消失，这一点和 git reset 不一样。git reset 撤销的记录就跟消失了一样。
+`git revert` 也可以撤销记录，只不过它撤销的记录不会消失，这一点和 `git reset` 不一样。`git reset` 撤销的记录就跟消失了一样。
 
-假设现在当前分支有 `a b c` 记录，执行 `git reset b` 后，当前的分支记录会变成 `a b`。
+假设现在当前分支有 `a b c d` 记录，执行 `git reset b` 后，当前的分支记录会变成 `a b`。
 
-如果用 `git revert` 来撤销记录，即执行 `git revert b`，会在当前分支上再生成一个新的 commit 记录，变成 `a b c c'`，这个 `c'` 的状态和记录 `b` 是一样的。
+如果用 `git revert` 来撤销记录，即执行 `git revert b`，会在当前分支上再生成一个新的 commit 记录，变成 `a b c d b'`，这个 `b'` 的状态和记录 `b` 是一样的。
 
 如果你想让别人知道你撤销过记录，就使用 `git revert`，因为它会留下撤销的记录，否则用 `git reset`。
 
