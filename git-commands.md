@@ -58,6 +58,15 @@ git checkout dev
 git branch dev
 git checkout dev
 ```
+强制切换分支到指定的 commit
+```
+git branch -f <branchName> <commitID>
+```
+将当前 HEAD 分支的记录树往后移动 2 个 commit
+```
+git checkout HEAD~2
+```
+
 ### 6. `git log`
 `git log` 命令可以查看提交的历史记录。
 ```
