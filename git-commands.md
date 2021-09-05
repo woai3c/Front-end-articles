@@ -170,9 +170,36 @@ aaaaaa
 ```
 git merge a
 ```
+
 git merge 合并分支后可能不是一条直线，所以可以使用 git rebase 来合并分支。这样合并后在历史记录上看起来就是一条直线了。
 ```
 git rebase a
+```
+
+### 11. `git tag`
+打标签
+```
+git tag <tagName>
+```
+
+如果忘记打标签了，可以指定以前的 commit 打标签
+```
+git tag -a <tagName> <commitid>
+```
+
+推送标签
+```
+git push origin --tags
+```
+
+删除标签
+```
+git tag -d <tagName>
+```
+
+删除远程标签
+```
+git push origin --delete <tagname>
 ```
 
 ## 参考资料
