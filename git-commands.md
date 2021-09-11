@@ -44,6 +44,7 @@ git push
 * `git checkout <name>` 切换分支
 * `git branch -d <branchName>` 删除本地分支
 * `git push origin --delete <branchName>` 删除远程分支
+* `git checkout <commitid>` 将 HEAD 切换到该记录
 
 创建分支 dev
 ```
