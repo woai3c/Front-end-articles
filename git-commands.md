@@ -200,7 +200,7 @@ git tag <tagName>
 
 如果忘记打标签了，可以指定以前的 commit 打标签
 ```
-git tag -a <tagName> <commitid>
+git tag <tagName> <commitid>
 ```
 
 推送标签
