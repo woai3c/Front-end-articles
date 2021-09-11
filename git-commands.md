@@ -240,6 +240,12 @@ git cherry-pick A..B
 
 就和上图一样，这是当前分支修改后和远程分支上的对比。
 
+#### 第二种方式
+1. 使用 `git checkout -b <branchName> a` 从指定记录切出一个分支
+2. 在新分支使用 `git commit --amend` 修改提交消息
+3. 使用 `git cherry-pick` 将 `b c` 记录，追加到新分支
+4. 切换回原来的分支，使用 `git rebase <branchName>` 合并新分支，再强制推送到远程分支
+
 ### 2. 合并分支前，先整理当前分支的记录
 假设你切了一个 bugFix 分支来修复线上 bug，经过一段时间的努力后终于将 bug 修复了。但是为了调试（加了很多 debug 代码）或其他原因，bugFix 上多了很多无用的记录消息。
 ```
