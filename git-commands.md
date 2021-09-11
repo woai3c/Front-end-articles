@@ -156,6 +156,11 @@ d, drop = remove commit
 
 这时还会弹出一个提示框，让你更改 commit message。按照刚才的操作修改完后保存即可。最后在命令行执行 `git push -f` 推送到远程仓库。
 
+#### 合并分支
+`git rebase <branchName>`，假设当前在 main 分支，想将 test 分支合到 main 分支上，可以在 main 分支上执行 `git rebase test`。
+
+也可以用 `git rebase main test`，这时不管你在哪个分支上执行这条命令，都会把 test 分支 rebase 到 main 分支上。
+
 ### 11. 解决冲突
 当执行 `git pull`，将远程分支和本地分支合并时，有可能会出现冲突的情况。
 例如有 A 和 B 两个人，对同一文件 `test.txt` 进行了修改。A 修改完后先提交到了远程分支，当 B 要提交时，执行 `git pull`，发现远程仓库的 `test.txt` 和自己本地的版本有冲突。
