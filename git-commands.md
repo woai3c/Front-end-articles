@@ -231,6 +231,25 @@ git cherry-pick A..B
 ```
 这表示合并从 A 到 B 的所有记录。
 
+### 14. `git describe`
+`git describe` 的语法是：
+```
+git describe <ref>
+```
+<ref> 可以是任何能被 Git 识别成提交记录的引用，如果你没有指定的话，Git 会以你目前所检出的位置（HEAD）。
+
+它输出的结果是这样的：
+```
+<tag>_<numCommits>_g<hash>
+```
+tag 表示的是离 ref 最近的标签， numCommits 是表示这个 ref 与 tag 相差有多少个提交记录， hash 表示的是你所给定的 ref 所表示的提交记录哈希值的前几位。
+
+当 ref 提交记录上有某个标签时，则只输出标签名称。
+    
+![image](https://user-images.githubusercontent.com/22117876/132954224-2a6a7cea-be85-4719-930e-fd614980eb45.png)
+
+
+
 ## 高级技巧
 ### 1. 修改历史 commit 的消息
 假设当前分支有 `a b c` 三个记录，如果你想对 `a` 记录的消息进行修改。可以使用 `git rebase` 将 `a` 记录换到最前面，然后使用 `git commit --amend` 对其消息进行修改。
