@@ -157,7 +157,7 @@ d, drop = remove commit
 这时还会弹出一个提示框，让你更改 commit message。按照刚才的操作修改完后保存即可。最后在命令行执行 `git push -f` 推送到远程仓库。
 
 #### 合并分支
-`git rebase <branchName>`，假设当前在 main 分支，想将 test 分支合到 main 分支上，可以在 main 分支上执行 `git rebase test`。
+`git rebase <branchName>`，假设要将 test 分支合到 main 分支上，可以在 test 分支上执行 `git rebase main`。
 
 也可以用 `git rebase main test`，这时不管你在哪个分支上执行这条命令，都会把 test 分支 rebase 到 main 分支上。
 
