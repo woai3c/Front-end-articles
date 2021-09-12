@@ -41,7 +41,7 @@ git push
 ### 5. `git branch` `git checkout`...
 * `git branch` 查看当前所有分支
 * `git branch <name>` 创建分支
-* `git checkout <name>` 切换分支
+* `git checkout <name> [commitid--可选的 commitid]` 切换分支
 * `git branch -d <branchName>` 删除本地分支
 * `git push origin --delete <branchName>` 删除远程分支
 * `git checkout <commitid>` 将 HEAD 切换到该记录
@@ -253,8 +253,22 @@ tag 表示的是离 ref 最近的标签， numCommits 是表示这个 ref 与 ta
     
 ![image](https://user-images.githubusercontent.com/22117876/132954224-2a6a7cea-be85-4719-930e-fd614980eb45.png)
 
+### 15. `^` 和 `~` 的区别
+操作符 `^` 与 `~` 符一样，后面也可以跟一个数字。
 
+但是该操作符后面的数字与 `~` 后面的不同，并不是用来指定向上返回几代，而是指定合并提交记录的第几个父记录。还记得前面提到过的一个合并提交有两个记录吧，所以遇到这样的节点时该选择哪条路径就不是很清晰了。
 
+Git 默认选择合并提交的“第一个”父记录，在操作符 ^ 后跟一个数字可以改变这一默认行为。
+
+![image](https://user-images.githubusercontent.com/22117876/132990602-5038f4ec-4c57-48e5-aa35-dfe26f8076a1.png)
+
+![image](https://user-images.githubusercontent.com/22117876/132990627-0fa9c6b2-78c7-4ce6-905d-a686ee798244.png)
+
+![image](https://user-images.githubusercontent.com/22117876/132990636-d984e9c4-84f1-4efa-9a1d-a43988b3ecbe.png)
+
+![image](https://user-images.githubusercontent.com/22117876/132990701-643719be-989e-4236-99d7-f938e0c8ba09.png)
+
+    
 ## 高级技巧
 ### 1. 修改历史 commit 的消息
 假设当前分支有 `a b c` 三个记录，如果你想对 `a` 记录的消息进行修改。可以使用 `git rebase` 将 `a` 记录换到最前面，然后使用 `git commit --amend` 对其消息进行修改。
