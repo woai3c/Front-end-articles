@@ -31,10 +31,17 @@ git push origin dev
 ```
 git push -u origin master
 ```
-以后每次提交就可以直接使用 `git push` 了，不用每次都输上一串命令。
+以后每次提交就可以直接使用 `git push` 了，不用每次都输上一串命令
 ```
 git push
 ```
+
+要同时为源和目的地指定 <分支名> 的话，只需要用冒号 : 将二者连起来就可以了：
+```
+git push origin <source>:<destination>
+```
+例如 `git push origin a:b` 命令，它会把本地分支 a 推送到远程分支 b，如果分支 b 不存在，还会创建它。而且还能这样使用 `git push origin a^:b`，这样将把 a 分支的父提交推送到远程分支 b。
+
 ### 4. `git pull`
 `git pull` 将远程仓库的更新拉取下来，再和本地分支进行合并。
 
@@ -268,6 +275,30 @@ Git 默认选择合并提交的“第一个”父记录，在操作符 ^ 后跟�
 
 ![image](https://user-images.githubusercontent.com/22117876/132990701-643719be-989e-4236-99d7-f938e0c8ba09.png)
 
+从下面的示例也可以看出它们俩的区别：
+```
+G   H   I   J
+ \ /     \ /
+  D   E   F
+   \  |  / \
+    \ | /   |
+     \|/    |
+      B     C
+       \   /
+        \ /
+         A
+A =      = A^0
+B = A^   = A^1     = A~1
+C = A^2  = A^2
+D = A^^  = A^1^1   = A~2
+E = B^2  = A^^2
+F = B^3  = A^^3
+G = A^^^ = A^1^1^1 = A~3
+H = D^2  = B^^2    = A^^^2  = A~2^2
+I = F^   = B^3^    = A^^3^
+J = F^2  = B^3^2   = A^^3^2
+```
+    
 ### 15. 本地分支与远程分支
 大家都知道，本地分支 main 是和远程分支 origin/main 关联的。这种关联在以下两种情况下可以清楚地得到展示：
 * pull 操作时, 提交记录会被先下载到 origin/main 上，之后再合并到本地的 main 分支。隐含的合并目标由这个关联确定的。
