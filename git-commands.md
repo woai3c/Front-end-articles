@@ -268,6 +268,16 @@ Git 默认选择合并提交的“第一个”父记录，在操作符 ^ 后跟�
 
 ![image](https://user-images.githubusercontent.com/22117876/132990701-643719be-989e-4236-99d7-f938e0c8ba09.png)
 
+### 15. 本地分支与远程分支
+大家都知道，本地分支 main 是和远程分支 origin/main 关联的。这种关联在以下两种情况下可以清楚地得到展示：
+* pull 操作时, 提交记录会被先下载到 origin/main 上，之后再合并到本地的 main 分支。隐含的合并目标由这个关联确定的。
+* push 操作时, 我们把工作从 main 推到远程仓库中的 main 分支(同时会更新远程分支 origin/main) 。这个推送的目的地也是由这种关联确定的！
+
+![image](https://user-images.githubusercontent.com/22117876/134705044-f3194ef2-739e-4ee5-8fce-33e333f258bd.png)
+
+改变本地分支与远程分支关联的方法：
+1. `git checkout -b foo origin/main`，就可以创建一个名为 foo 的分支，它跟踪远程分支 origin/main。
+2. `git branch -u origin/main foo`，这样也可以让 foo 跟踪 origin/main。
     
 ## 高级技巧
 ### 1. 修改历史 commit 的消息
