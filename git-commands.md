@@ -42,10 +42,18 @@ git push origin <source>:<destination>
 ```
 例如 `git push origin a:b` 命令，它会把本地分支 a 推送到远程分支 b，如果分支 b 不存在，还会创建它。而且还能这样使用 `git push origin a^:b`，这样将把 a 分支的父提交推送到远程分支 b。
 
-### 4. `git pull`
+### 4. `git fetch <远程主机名> <分支名>`
+`git fetch origin foo`， Git 会到远程仓库的 foo 分支上，然后获取所有本地不存在的提交，放到本地的 origin/foo 上。`git fetch` 它不会更新你的本地的非远程分支, 只是下载提交记录。所以它把提交记录放在 origin/foo 上，而不是 foo 分支。
+
+如果一定要直接更新本地分支，可以使用 `git fetch origin <source>:<destination>`，其中 source 是指远程分支，destination 是本地分支，正好与 `git pull` 相反。
+例如 `git fetch origin foo~1:bar`，它把远程分支 foo 的上一个记录更新到本地分支 bar。
+
+如果 git fetch 没有参数，它会下载所有的提交记录到各个远程分支...
+
+### 5. `git pull`
 `git pull` 将远程仓库的更新拉取下来，再和本地分支进行合并。
 
-### 5. `git branch` `git checkout`...
+### 6. `git branch` `git checkout`...
 * `git branch` 查看当前所有分支
 * `git branch <name>` 创建分支
 * `git checkout <name> [commitid--可选的 commitid]` 切换分支
@@ -75,7 +83,7 @@ git branch -f <branchName> <commitID>
 git checkout HEAD~2
 ```
 
-### 6. `git log`
+### 7. `git log`
 `git log` 命令可以查看提交的历史记录。
 ```
 E:\res\platform>git log
@@ -98,7 +106,7 @@ E:\res\platform>git log --pretty=oneline
 514cf81798a14b3bf273019d02885f87bf8ad2ac feat: 添加全局 log 函数
 2f0e28962d3f2d5e9c047387560986411d2a07d0 chore: 更新 eslint 规则
 ```
-### 7. `git reset` 版本回退
+### 8. `git reset` 版本回退
 `git reset` 命令用于版本回退。
 假如你正在开发一个项目，有一天产品提了个新功能，要求三天内完成，于是你快马加鞭、加班加点终于在三天内完成了。
 结果第四天产品告诉你新功能不要了。你想打死产品的心都有了，话虽如此，工作还是得继续，这时 `git reset` 就可以派上用场了。
@@ -193,7 +201,7 @@ aaaaaa
 ```
 把 `<<<` `===` `>>>` 删除掉，并替换成自己的内容，再执行 `git add` `git commit` 提交内容。 这时，执行 `git pull`，你会发现没有更新，刚修改的内容也不会变，最后再执行 `git push` 将内容推送到远程仓库。
 
-### 10. `git merge`
+### 12. `git merge`
 将指定分支合并到当前分支。例如你想将 a 分支合并到 b 分支，则切换到 b 分支，并执行：
 ```
 git merge a
@@ -204,7 +212,7 @@ git merge 合并分支后可能不是一条直线，所以可以使用 git rebas
 git rebase a
 ```
 
-### 12. `git tag`
+### 13. `git tag`
 打标签
 ```
 git tag <tagName>
@@ -230,7 +238,7 @@ git tag -d <tagName>
 git push origin --delete <tagname>
 ```
 
-### 13. `git cherry-pick`
+### 14. `git cherry-pick`
 如果你想将某个指定记录放到当前分支上，可以使用 `git cherry-pick <commitid1> <commitid2>...`。
 
 假设当前分支为 master，历史记录为 `x y`。现在 dev 分支上有 `a b c d` 四个记录，你想将其中的 b 记录合并到当前分支，可以执行 `git cherry-pick b`。执行后 master 分支变为 `x y b`。
@@ -243,7 +251,7 @@ git cherry-pick A..B
 ```
 这表示合并从 A 到 B 的所有记录。
 
-### 14. `git describe`
+### 15. `git describe`
 `git describe` 的语法是：
 ```
 git describe <ref>
@@ -260,7 +268,7 @@ tag 表示的是离 ref 最近的标签， numCommits 是表示这个 ref 与 ta
     
 ![image](https://user-images.githubusercontent.com/22117876/132954224-2a6a7cea-be85-4719-930e-fd614980eb45.png)
 
-### 15. `^` 和 `~` 的区别
+### 16. `^` 和 `~` 的区别
 操作符 `^` 与 `~` 符一样，后面也可以跟一个数字。
 
 但是该操作符后面的数字与 `~` 后面的不同，并不是用来指定向上返回几代，而是指定合并提交记录的第几个父记录。还记得前面提到过的一个合并提交有两个记录吧，所以遇到这样的节点时该选择哪条路径就不是很清晰了。
@@ -299,7 +307,7 @@ I = F^   = B^3^    = A^^3^
 J = F^2  = B^3^2   = A^^3^2
 ```
     
-### 15. 本地分支与远程分支
+### 17. 本地分支与远程分支
 大家都知道，本地分支 main 是和远程分支 origin/main 关联的。这种关联在以下两种情况下可以清楚地得到展示：
 * pull 操作时, 提交记录会被先下载到 origin/main 上，之后再合并到本地的 main 分支。隐含的合并目标由这个关联确定的。
 * push 操作时, 我们把工作从 main 推到远程仓库中的 main 分支(同时会更新远程分支 origin/main) 。这个推送的目的地也是由这种关联确定的！
