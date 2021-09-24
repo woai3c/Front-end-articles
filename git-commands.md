@@ -42,6 +42,8 @@ git push origin <source>:<destination>
 ```
 例如 `git push origin a:b` 命令，它会把本地分支 a 推送到远程分支 b，如果分支 b 不存在，还会创建它。而且还能这样使用 `git push origin a^:b`，这样将把 a 分支的父提交推送到远程分支 b。
 
+**注意**，如果 source 为空，它将删除远程分支。`git push origin :foo` 这条命令将删除远程分支 foo。
+
 ### 4. `git fetch <远程主机名> <分支名>`
 `git fetch origin foo`， Git 会到远程仓库的 foo 分支上，然后获取所有本地不存在的提交，放到本地的 origin/foo 上。`git fetch` 它不会更新你的本地的非远程分支, 只是下载提交记录。所以它把提交记录放在 origin/foo 上，而不是 foo 分支。
 
@@ -50,8 +52,14 @@ git push origin <source>:<destination>
 
 如果 git fetch 没有参数，它会下载所有的提交记录到各个远程分支...
 
+**注意**，如果 fetch 空到本地，它将创建一个分支。`git fetch origin :foo` 将在本地创建一个 foo 分支。
+
 ### 5. `git pull`
-`git pull` 将远程仓库的更新拉取下来，再和本地分支进行合并。
+`git pull` 将远程仓库的更新拉取下来，再和本地分支进行合并。它相当于 `git fetch` `git merge` 这两个操作的结合。
+`git pull origin foo` 相当于 `git fetch origin foo; git merge origin/foo`。
+
+![image](https://user-images.githubusercontent.com/22117876/134711798-6320f10f-81e0-4d9d-b8f1-d5144da94142.png)
+
 
 ### 6. `git branch` `git checkout`...
 * `git branch` 查看当前所有分支
