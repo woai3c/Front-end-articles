@@ -11,9 +11,35 @@ git add .
 ```
 ### 2. `git commit`
 将暂存区的文件提交到当前分支。
-```git
+```
 git commit -m '将刚才添加到暂存区的文件提交到当前分支，-m 代表要加注释'
 ```
+
+修改最近一次提交的消息：
+```
+git commit --amend
+```
+
+修改最近一次提交的用户信息：
+```
+git commit --amend --author="xxx <yyy@ccc.com>" --no-edit
+```
+
+#### 全局修改邮箱地址
+另一个常见的情形是在你开始工作时忘记运行 git config 来设置你的名字与邮箱地址， 或者你想要开源一个项目并且修改所有你的工作邮箱地址为你的个人邮箱地址。 任何情形下，你也可以通过 filter-branch 来一次性修改多个提交中的邮箱地址。 需要小心的是只修改你自己的邮箱地址，所以你使用 --commit-filter：
+```
+git filter-branch --commit-filter '
+    if [ "$GIT_AUTHOR_EMAIL" = "schacon@localhost" ];
+    then
+            GIT_AUTHOR_NAME="Scott Chacon";
+            GIT_AUTHOR_EMAIL="schacon@example.com";
+            git commit-tree "$@";
+    else
+            git commit-tree "$@";
+    fi' HEAD
+```
+这会遍历并重写每一个提交来包含你的新邮箱地址。 因为提交包含了它们父提交的 SHA-1 校验和，这个命令会修改你的历史中的每一个提交的 SHA-1 校验和， 而不仅仅只是那些匹配邮箱地址的提交。
+
 ### 3. `git push <远程主机名> <分支名>`
 推送分支，就是把该分支上的所有本地提交推送到远程库。
 ```
