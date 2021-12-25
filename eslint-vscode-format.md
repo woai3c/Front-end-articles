@@ -18,7 +18,8 @@
 "eslint.validate": [
     "javascript",
     "javascriptreact",
-    "typescript"
+    "typescript",
+    "typescriptreact",
 ],
 "eslint.alwaysShowStatus": true,
 "stylelint.validate": [
