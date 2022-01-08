@@ -1,4 +1,5 @@
 ## 前端文章
+* [2021 年终总结：奔向北京，迎接 996！](https://github.com/woai3c/Front-end-articles/issues/30)
 * [前端监控 SDK 的一些技术要点原理分析](https://github.com/woai3c/Front-end-articles/issues/26)
 * [手把手教你写一个脚手架（二）](https://github.com/woai3c/Front-end-articles/issues/23)
 * [手把手教你写一个脚手架](https://github.com/woai3c/Front-end-articles/issues/22)
