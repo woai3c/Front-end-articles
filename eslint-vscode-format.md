@@ -1,4 +1,4 @@
-# ESlint + Stylelint + VSCode自动格式化代码(2020)
+# ESlint + Stylelint + VSCode自动格式化代码(2022)
 ## eslint 格式化代码
 本文用 Vue 项目做示范。
 
@@ -83,10 +83,10 @@ parserOptions: {
 ```
 npm install --save-dev stylelint stylelint-config-standard
 ```
-在项目根目录下新建一个 `.stylelintrc.json` 文件，并输入以下内容：
-```json
-{
-    "extends": "stylelint-config-standard"
+在项目根目录下新建一个 `.stylelintrc.js` 文件，并输入以下内容：
+```js
+module.exports = {
+    extends: "stylelint-config-standard"
 }
 ```
 VSCode 添加 `stylelint` 插件：
@@ -98,8 +98,8 @@ VSCode 添加 `stylelint` 插件：
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/img_convert/6156343f2a04454fa1d843f8bdecd07e.gif)
 
 如果你想修改插件的默认规则，可以看[官方文档](https://github.com/stylelint/stylelint/blob/5a8465770b4ec17bb1b47f359d1a17132a204a71/docs/user-guide/rules/list.md)，它提供了 170 项规则修改。例如我想要用 4 个空格作为缩进，可以这样配置：
-```json
-{
+```js
+module.exports = {
     "extends": "stylelint-config-standard",
     "rules": {
         "indentation": 4
@@ -107,12 +107,17 @@ VSCode 添加 `stylelint` 插件：
 }
 ```
 
-如果你想格式化 `sass` `scss` 文件，则需要下载 `stylelint-scss` 插件：
+如果你想格式化 `sass` `scss` 文件，则需要下载 `stylelint-scss` `stylelint-config-standard-scss
+` 插件：
 ```
-npm i -D stylelint-scss
+npm i -D stylelint-scss stylelint-config-standard-scss
 ```
-然后就可以格式化 scss 文件了。
-
+注意，要把 `stylelint-config-standard` 改成 `stylelint-config-standard-scss`，然后就可以格式化 scss 文件了。
+```js
+module.exports = {
+    extends: "stylelint-config-standard-scss"
+}
+```
 ## 扩展
 
 如何格式化 HTML、Vue（或其他后缀） 文件中的 HTML 代码？
@@ -127,14 +132,39 @@ extends: [
 
 其他的 HTML 文件需要利用 VSCode 自带的格式化，快捷键是 `shift + alt + f`。假设当前 VSCode 已经打开了一个 HTML 文件，按下 `shift + alt + f` 会提示你选择一种格式化规范。如果没提示，那就是已经有默认的格式化规范了，然后 HTML 文件的所有代码都会格式化，并且格式化规则还可以自己配置。
 
-## 疑难问题
-#### `Unknown word (CssSyntaxError)` 错误
-解决方案为降级安装 VSCode 的 `stylelint` 插件，点击插件旁边的小齿轮，再点 `Install Another Version`，选择其他版本进行安装。
 
-![image.png](https://img-blog.csdnimg.cn/img_convert/996d6d1b438edc491eab9f764c6863dd.png)
+## 踩坑
+### `Unknown word (CssSyntaxError)` 错误
+这个问题主要是因为 stylelint 升级到 14 大版本造成的。
+#### 解决方案一
+安装 stylelint 新的相关依赖：
+```
+npm i -D stylelint-config-recommended-vue stylelint-config-standard-scss postcss-html
+```
+然后修改 `.stylelintrc.js` 文件的配置项：
+```js
+extends: [
+    'stylelint-config-standard-scss', 
+    'stylelint-config-recommended-vue',
+    'stylelint-config-recommended-vue/scss',
+],
+customSyntax: 'postcss-html',
+```
+这样修改以后，就不会再报错了。
+#### 解决方案二
+第二个解决方案就是将以上三个插件的版本降一个大版本就好了，最后的版本如下：
+```
+"stylelint": "^13.13.1",
+"stylelint-config-standard": "^22.0.0",
+"stylelint-scss": "^3.21.0",
+```
+同时需要将 VSCode 的 `stylelint` 插件降级，现在插件的最新版本是 1.0.3，不支持 `stylelint` 13 版本。点击插件旁边的小齿轮，再点 `Install Another Version`，选择其他版本进行安装。
+
+
+![image.png](https://img-blog.csdnimg.cn/img_convert/05c8a3141c46f62b02f98785580c7dde.png)
 
 选 `0.87.6` 版本安装就可以了，这时 css 自动格式化功能恢复正常。
-#### 忽略 `.vue` 文件中的 HTML 模板验证规则无效
+### 忽略 `.vue` 文件中的 HTML 模板验证规则无效
 举个例子，如果你将 HTML 模板每行的代码文本长度设为 100，当超过这个长度后 eslint 将会报错。此时如果你还是想超过这个长度，可以选择忽略这个规则：
 ```js
 /* eslint-disable max-len */
