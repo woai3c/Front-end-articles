@@ -273,7 +273,7 @@ git push origin --delete <tagname>
 ```
 
 ### 14. `git cherry-pick`
-如果你想将某个指定记录（该记录的所有文件快照）放到当前分支上，可以使用 `git cherry-pick <commitid1> <commitid2>...`。
+如果你想将某个指定记录（该记录的所有文件的快照状态）放到当前分支上，可以使用 `git cherry-pick <commitid1> <commitid2>...`。
 
 假设当前分支为 master，历史记录为 `x y`。现在 dev 分支上有 `a b c d` 四个记录，你想将其中的 b 记录合并到当前分支，可以执行 `git cherry-pick b`。执行后 master 分支变为 `x y b`。
 
