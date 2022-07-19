@@ -396,7 +396,7 @@ commit1: 添加 console 语句
 这时可以使用 `git cherry-pick` 只将最后一个记录合并到 master 分支。或者使用 `git rebase` 将 bugFix 分支另外两个记录抛弃，然后再合并。
 
 ### 18. commit 落后的分支向 commit 领先的分支进行强推
-请看 [https://www.eet-china.com/mp/a22448.html](Git如何优雅地回退代码) 中的升级融合一节
+请看 [Git如何优雅地回退代码](https://www.eet-china.com/mp/a22448.html) 中的升级融合一节
 ## 参考资料
 * [Git教程-廖雪峰](https://www.liaoxuefeng.com/wiki/896043488029600)
 * [learngitbranching](https://learngitbranching.js.org/?locale=zh_CN)
