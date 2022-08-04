@@ -63,10 +63,6 @@
 
 ## 编译原理
 * [编译原理实战入门：用 JavaScript 写一个简单的四则运算编译器（修订版）](https://github.com/woai3c/Front-end-articles/issues/15)
-* [编译原理实战入门：用 JavaScript 写一个简单的四则运算编译器（一）词法分析](https://github.com/woai3c/Front-end-articles/blob/master/four-operations-1.md)
-* [编译原理实战入门：用 JavaScript 写一个简单的四则运算编译器（二）语法分析](https://github.com/woai3c/Front-end-articles/blob/master/four-operations-2.md)
-* [编译原理实战入门：用 JavaScript 写一个简单的四则运算编译器（三）模拟执行](https://github.com/woai3c/Front-end-articles/blob/master/four-operations-3.md)
-* [编译原理实战入门：用 JavaScript 写一个简单的四则运算编译器（四）结语](https://github.com/woai3c/Front-end-articles/blob/master/four-operations-4.md)
 
 ## 计算机网络
 * [半小时搞懂 HTTP、HTTPS和HTTP2](https://github.com/woai3c/Front-end-articles/blob/master/http-https-http2.md)
