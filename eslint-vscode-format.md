@@ -40,8 +40,6 @@
 ![](https://img-blog.csdnimg.cn/img_convert/2124694cc6805a78697657ba790f69a0.gif)
 
 
-
-#### TypeScript
 下载插件
 ```
 npm i -D eslint eslint-config-airbnb-vue3-ts
