@@ -30,7 +30,9 @@ gitlab-runner register
 在 gitlab 上打开项目 -> settings -> CI/CD -> Runners settings
 ```
 选择 `Runners settings` 后就能看到下图，在 `Specific Runners` 里面有所需的 URL 和 token。
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20210421191422842.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3E0MTEwMjAzODI=,size_16,color_FFFFFF,t_70)
+
 创建成功后还需要运行
 ```bash
 gitlab-runner start
@@ -38,6 +40,14 @@ gitlab-runner start
 进行激活，看到 gitlab-runner 左边的圆点变成绿色就代表激活了。
 
 **注意事项**：创建的 gitlab-runner 是运行在本机上的，如果你的电脑关机了，其他人推送代码就没有 gitlab-runner 去执行自动部署任务。所以建议项目相关人员都创建一个 gitlab-runner。
+
+### 配置多个 runner 同时运行多个任务
+gitlab-runner 可以注册多个，但是默认只能同时并发一个 runner。如果需要多个 runner 同时运行多个 job，则需要修改一下 gitlab-runner 的全局配置。
+```shell
+vim /etc/gitlab-runner/config.toml
+```
+打开文件后可以看到 `concurrent = 1`，这个 1 就是 runner 的并发数。例如将它设为 10，则可以同时运行 10 个 job。具体配置项请看 [高级配置](https://docs.gitlab.cn/runner/configuration/advanced-configuration.html)。
+
 
 ### .gitlab-ci.yml 文件
 创建 gitlab-runner 后，还需要在项目根目录下创建一个 `.gitlab-ci.yml` 文件。这样只要执行 `push` 操作，gitlab 就会自动调用 gitlab-runner 去执行 `.gitlab-ci.yml` 文件。下面来看一个简单的示例：
