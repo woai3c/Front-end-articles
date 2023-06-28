@@ -182,6 +182,7 @@ git reset --hard origin/master（这里的 master 为远程分支）
 ```
 git rebase -i <c 的 commit id>
 ```
+你在执行 git rebase 命令时使用 -i 或 --interactive 选项，这将打开一个交互式界面，允许你对提交进行编辑和重新排序。
 下面是一个真实示例：
 ```
 git rebase -i c486fa803767ff75780c8df7e18b560fdc332b1e
@@ -198,17 +199,53 @@ r, reword = use commit, but edit the commit message
 e, edit = use commit, but stop for amending
 s, squash = use commit, but meld into previous commit
 f, fixup = like “squash”, but discard this commit’s log message
+b, break = stop here (continue rebase later with 'git rebase --continue')
 x, exec = run command (the rest of the line) using shell
 d, drop = remove commit
+l, label <label> = label current HEAD with a name
+t, reset <label> = reset HEAD to a label
+m, merge [-C <commit> | -c <commit>] <label> [# <oneline>]
+       create a merge commit using the original merge commit's
+       message (or the oneline, if no original merge commit was
+       specified). Use -c <commit> to reword the commit message.
 ```
 按照上述命令的解释，这时只要保证第一个 commit 不动，将第二个 commit 的 pick 改为 s 就可以了。由于这是 vi 编辑模式，所以你需要按一下 i 才可以开始编辑，编辑完成按一个 esc 然后输入 :wq 回车即可。
 
 这时还会弹出一个提示框，让你更改 commit message。按照刚才的操作修改完后保存即可。最后在命令行执行 `git push -f` 推送到远程仓库。
 
+#### 合并任意 commit 修改
+假如你有 4 个 commit 的提交需要修改，可以执行如下命令：
+```
+git rebase -i HEAD~4
+```
+这将打开一个交互式界面，其中列出了 abcd 4 个 commit 的信息：
+```
+pick <commit-hash> a
+pick <commit-hash> b
+pick <commit-hash> c
+pick <commit-hash> d
+```
+重新排序提交，并且选择你要执行的命令。比如这里我期望合并 d 到 b，可以重新排序提交（这里你也可以任意更改 commit 的提交信息）
+```
+pick <commit-hash> a
+pick <commit-hash> c
+pick <commit-hash> b
+s <commit-hash> d
+```
+完成一次 rebase 后得到了期望的结果：
+```
+- <commit-hash> a
+- <commit-hash> c
+- <commit-hash> b
+```
+再次执行 rebase，重新排序提交保证正确的 commit 提交顺序即可。
+
 #### 合并分支
 `git rebase <branchName>`，假设要将 test 分支合到 main 分支上，可以在 test 分支上执行 `git rebase main`。
 
 也可以用 `git rebase main test`，这时不管你在哪个分支上执行这条命令，都会把 test 分支 rebase 到 main 分支上。
+
+更多请参考: [Git-重写历史](https://git-scm.com/book/zh/v2/Git-%E5%B7%A5%E5%85%B7-%E9%87%8D%E5%86%99%E5%8E%86%E5%8F%B2)
 
 ### 11. 解决冲突
 当执行 `git pull`，将远程分支和本地分支合并时，有可能会出现冲突的情况。
