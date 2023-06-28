@@ -182,7 +182,6 @@ git reset --hard origin/master（这里的 master 为远程分支）
 ```
 git rebase -i <c 的 commit id>
 ```
-你在执行 git rebase 命令时使用 -i 或 --interactive 选项，这将打开一个交互式界面，允许你对提交进行编辑和重新排序。
 下面是一个真实示例：
 ```
 git rebase -i c486fa803767ff75780c8df7e18b560fdc332b1e
@@ -213,7 +212,7 @@ m, merge [-C <commit> | -c <commit>] <label> [# <oneline>]
 
 这时还会弹出一个提示框，让你更改 commit message。按照刚才的操作修改完后保存即可。最后在命令行执行 `git push -f` 推送到远程仓库。
 
-#### 合并任意 commit 修改
+#### 合并任意位置的 commit 记录
 假如你有 4 个 commit 的提交需要修改，可以执行如下命令：
 ```
 git rebase -i HEAD~4
