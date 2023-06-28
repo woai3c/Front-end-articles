@@ -224,7 +224,7 @@ pick <commit-hash> b
 pick <commit-hash> c
 pick <commit-hash> d
 ```
-重新排序提交，并且选择你要执行的命令。比如这里我期望合并 d 到 b，可以重新排序提交（这里你也可以任意更改 commit 的提交信息）
+重新排序提交，并且选择你要执行的命令。比如这里我期望 d 和 b 合并，可以重新排序提交（这里你也可以任意更改 commit 的提交信息）
 ```
 pick <commit-hash> a
 pick <commit-hash> c
