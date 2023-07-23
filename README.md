@@ -1,4 +1,5 @@
 ## 前端文章
+* [Vue 加载远程组件的解决方案](https://github.com/woai3c/Front-end-articles/issues/42)
 * [markdown 编辑器实现双屏同步滚动](https://github.com/woai3c/Front-end-articles/issues/34)
 * [可视化拖拽组件库一些技术要点原理分析（四）](https://github.com/woai3c/Front-end-articles/issues/33)
 * [手把手教你写一个简易的微前端框架](https://github.com/woai3c/Front-end-articles/issues/31)
