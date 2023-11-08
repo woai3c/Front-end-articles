@@ -248,7 +248,7 @@ rsync -av /home/gitlab-runner/ /app/gitlab-runner/
 ```sh
 builds_dir = "/app/gitlab-runner/builds"
 cache_dir = "/app/gitlab-runner/cache"
-environment = ["DOCKER_TLS_CERTDIR=/app/gitlab-runner"]
+environment = ["HOME=/app/gitlab-runner"]
 ```
 
 然后重新启动 gitlab-runner 服务并删除旧数据：
@@ -268,8 +268,23 @@ Could not create directory '/home/gitlab-runner/.ssh'.
 ```
 
 实际上在 gitlab ci 远程登录机器时需要访问 .ssh 目录，虽然配置了新的目录，但是不生效。网上找了很久，也问了 chatgpt 还是找不到解决方案。
-所以最后把新目录下的 `/app/gitlab-runner/.ssh` 所有内容又复制了一份，放到 `/home/gitlab-runner/.ssh` 下，这样就可以正常工作了。
+所以最后把新目录下的 `/app/gitlab-runner/.ssh` 所有内容又复制了一份，放到 `/home/gitlab-runner/.ssh` 下，这样就可以了。
+```sh
+cp -R /app/gitlab-runner/.ssh /home/gitlab-runner/.ssh
+cp -R /app/gitlab-runner/.bashrc /home/gitlab-runner/.bashrc
+cp -R /app/gitlab-runner/.bash_history /home/gitlab-runner/.bash_history
+# 设置文件所有者为 gitlab-runner
+chown -R gitlab-runner:gitlab-runner /home/gitlab-runner/
+```
 
+后面又遇到个错误：
+```sh
+cannot remove '/usr/share/nginx/html/jc-assembly-platform-development/*': Permission denied
+```
+其实还是权限问题
+```sh
+chown -R gitlab-runner:gitlab-runner /usr/share/nginx/html/
+```
 ## 在 gitlab-runner 中使用 docker 来跑 ci
 
 ### 安装 docker 并修改配置
