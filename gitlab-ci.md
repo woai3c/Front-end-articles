@@ -269,3 +269,74 @@ Could not create directory '/home/gitlab-runner/.ssh'.
 
 实际上在 gitlab ci 远程登录机器时需要访问 .ssh 目录，虽然配置了新的目录，但是不生效。网上找了很久，也问了 chatgpt 还是找不到解决方案。
 所以最后把新目录下的 `/app/gitlab-runner/.ssh` 所有内容又复制了一份，放到 `/home/gitlab-runner/.ssh` 下，这样就可以正常工作了。
+
+## 在 gitlab-runner 中使用 docker 来跑 ci
+
+### 安装 docker 并修改配置
+
+首先需要将 gitlab runner 的 `executor` 设置为 `docker`，并修改相关配置。编辑 `/etc/gitlab-runner/config.toml` 文件：
+将 `[[runners]]` 的配置改成下面这样：
+
+```sh
+[[runners]]
+name = "nodejs-172"
+url = "http://gitlab.jcinfo.com/"
+id = 108
+token = "2GEBw3M5PTS3-gxZPLzH"
+token_obtained_at = 2023-11-03T07:13:35Z
+token_expires_at = 0001-01-01T00:00:00Z
+environment = ["HOME=/app/gitlab-runner"]
+executor = "docker"
+[runners.custom_build_dir]
+[runners.docker]
+  tls_verify = false
+  image = "docker:19.03.12"
+  privileged = true
+  disable_entrypoint_overwrite = false
+  oom_kill_disable = false
+  disable_cache = false
+  # 将 docker 容器上的文件和宿主机对应起来
+  volumes = ["/app/gitlab-runner/cache", "/app/gitlab-runner/.ssh:/root/.ssh", "/usr/share/nginx/html:/usr/share/nginx/html", "/root/gitlab-runner:/root/gitlab-runner"]
+  shm_size = 0
+```
+
+然后在 gitlab-runner 服务器上安装 docker，安装教程网上有很多，这里就不再赘述了。安装完后记得添加国内镜像源，不然拉取镜像会很慢。编辑 `/etc/docker/daemon.json` 文件：
+
+```json
+{
+  "registry-mirrors": [
+    "https://dockerproxy.com",
+    "https://hub-mirror.c.163.com",
+    "https://mirror.baidubce.com",
+    "https://ccr.ccs.tencentyun.com"
+  ]
+}
+```
+
+修改文件后，执行 `sudo systemctl restart docker` 进行重启。
+
+### 修改 `.gitlab-ci.yml` 文件
+
+在原来的基础上添加以下代码：
+
+```yml
+# 使用 node:16 镜像
+image: node:16
+
+stages:
+  - build
+  - deploy
+
+before_script:
+  - echo 'install pnpm'
+  - npm install -g pnpm
+  # 将 172.16.71.15 机器（docker 宿主机）的私钥添加到当前机器的 ~/.ssh/id_rsa 文件中
+  - mkdir -p ~/.ssh
+  - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+  - chmod 600 ~/.ssh/id_rsa
+```
+
+可以看到在 `before_script` 阶段安装了 `pnpm` 和写入了 ssh key。这里的 `SSH_PRIVATE_KEY` 是一个变量，需要在 gitlab ci 上设置。只需要将 key 设为 `SSH_PRIVATE_KEY`，然后值是 gitlab-runner 服务器的私钥。
+如果不写入私钥，那么在远程登录机器时会报错（如果不需要远程登录，那么这行可以去掉）。
+
+安装 `pnpm` 是因为这个镜像只声明了 node，其他的全局依赖都得自己手动安装。
