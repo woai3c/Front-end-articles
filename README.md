@@ -84,5 +84,7 @@
 ## License
 MIT
 ## 赞助
+如果你觉得这些文章对你的帮助很大，可以请作者喝一杯奶茶🎁😉。
+
 ![](https://github.com/woai3c/nand2tetris/blob/master/img/wx.jpg)
 ![](https://github.com/woai3c/nand2tetris/blob/master/img/zfb.jpg)
