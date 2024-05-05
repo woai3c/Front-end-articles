@@ -61,6 +61,7 @@
 * [Vue Cli 3 打包配置--自动忽略 console.log 语句](https://github.com/woai3c/Front-end-articles/blob/master/ignore%20log.md)
 
 ## Node
+* [如何为 Nestjs 编写单元测试和 E2E 测试](https://github.com/woai3c/Front-end-articles/issues/46)
 * [用 node 搭建个人博客](https://github.com/woai3c/node-blog)
 * [阿里云服务器部署个人网站](https://github.com/woai3c/Front-end-articles/blob/master/ecs.md)
 
