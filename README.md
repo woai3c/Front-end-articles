@@ -1,7 +1,7 @@
 ## English Articles
 
 * [How to write unit tests and E2E tests for Nestjs applications](en-articles/nestjs-tests.md)
-
+* [How to load remote components in Vue 3](en-articles/load-remote-component-in-vue.md)
 
 ## 前端文章
 * [从零开始实现一个玩具版浏览器渲染引擎](https://github.com/woai3c/Front-end-articles/issues/44)
