@@ -39,6 +39,8 @@ When loading the remote TestInput component as shown above, it causes a "Relativ
 ### Problem 2: Different Vue 3 Contexts
 My first attempt to solve the first problem was to package the component with all its dependencies. While this removed all import statements, it unfortunately didn't work. This is because the Vue 3 context in our project and the Vue 3 context from node_modules are incompatible - they need to share the same context to work properly.
 
+![在这里插入图片描述](https://img-blog.csdnimg.cn/18191ed1d5b2427e97331f386542a4fe.png)
+
 Even though all Vue 3 method names are the same across different contexts, their variables are not. This prevents remote components from loading normally.
 
 ### Solution
