@@ -26,3 +26,85 @@ I've created separate branches on Github for the code of each phase. Since under
 5. Painting - [v5 branch](https://github.com/woai3c/tiny-rendering-engine/tree/v5)
 
 Now, let's look at how to create an HTML parser.
+
+## HTML parser
+The purpose of the HTML parser is to transform HTML code into a DOM tree. For example:
+```html
+<div class="lightblue test" id=" div " data-index="1">test!</div>
+```
+The above of HTML code will be transforming as a DOM tree:
+```json
+{
+    "tagName": "div",
+    "attributes": {
+        "class": "lightblue test",
+        "id": "div",
+        "data-index": "1"
+    },
+    "children": [
+        {
+            "nodeValue": "test!",
+            "nodeType": 3
+        }
+    ],
+    "nodeType": 1
+}
+```
+Writing a parser requires some knowledge of compilation principles such as lexical analysis and syntactic analysis. However, our tiny parser is very simple, so it's okay even if you don't understand these principles - you'll understand once you see the code.
+
+Looking back at the HTML code above, the entire parsing process is shown in the following picture. 
+
+![HTML parsing process](https://i-blog.csdnimg.cn/blog_migrate/1249487abc7d4bc32a38168db68d5b64.png)
+
+Each piece of HTML code has its corresponding parsing method.
+
+To simplify the HTML parser, we need to add some restrictions:
+1. HTML tag must be shown with a pair: `<div>...</div>`
+2. HTML attribute value must be quoted: `<div class="test">...</div>`
+3. Don't support comments
+4. No need for most error handling
+5. Only support two nodes: `Element` and `Text`
+
+With these restrictions, the HTML parser will be simpler.
+
+### Node Types
+First, we need to design data structure to support different node types:
+```ts
+export enum NodeType {
+    Element = 1,
+    Text = 3,
+}
+
+export interface Element {
+    tagName: string
+    attributes: Record<string, string>
+    children: Node[]
+    nodeType: NodeType.Element
+}
+
+interface Text {
+    nodeValue: string
+    nodeType: NodeType.Text
+}
+
+export type Node = Element | Text
+```
+And then we need two create function:
+```ts
+export function element(tagName: string) {
+    return {
+        tagName,
+        attributes: {},
+        children: [],
+        nodeType: NodeType.Element,
+    } as Element
+}
+
+export function text(data: string) {
+    return {
+        nodeValue: data,
+        nodeType: NodeType.Text,
+    } as Text
+}
+```
+These two functions will return corresponding DOM nodes when they call in parsing Element code or Text code.
