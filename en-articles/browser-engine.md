@@ -107,4 +107,206 @@ export function text(data: string) {
     } as Text
 }
 ```
-These two functions will return corresponding DOM nodes when they call in parsing Element code or Text code.
+These two functions will return corresponding DOM nodes when they are called in parsing Element code or Text code.
+
+### HTML Parser Execution Process
+The following diagram shows the execution process of the HTML parser:
+![在这里插入图片描述](https://i-blog.csdnimg.cn/blog_migrate/df2f04ff5b19a6867d899d182ff183a9.png)
+
+The entry point of the HTML parser is the `parse()` method, which traverses and parses all HTML text until the end:
+
+1. Check if the current character is `<`. If it is, parse it as an `Element` node by calling `parseElement()`; otherwise, call `parseText()`.
+
+2. `parseText()` is relatively simple - it traverses forward through the string until encountering the `<` character. All characters between the current position and the `<` character become the value of the `Text` node.
+
+3. `parseElement()` is more complex. First, it calls `parseTag()` to parse and obtain the element's tag name.
+
+4. Then it enters the `parseAttrs()` method to check for attribute nodes. If the node has a `class` or other HTML attributes, it calls `parseAttr()` to parse these attributes.
+
+5. At this point, the first half of the element node has been parsed. Next, it needs to parse the element's child nodes. This creates a recursive process, returning to step 1.
+
+6. After all child nodes are parsed, it calls `parseTag()` to verify that the ending tag name matches the starting tag name. If they match, `parseElement()` or `parse()` completes; otherwise, it throws an error. 
+
+### Detailed Implementation of HTML Parser Methods
+#### Entry point `parse()`
+The entry point of the HTML parser is `parse(rawText)`:
+```ts
+parse(rawText: string) {
+    this.rawText = rawText.trim()
+    this.len = this.rawText.length
+    this.index = 0
+    this.stack = []
+
+    const root = element('root')
+    while (this.index < this.len) {
+        this.removeSpaces()
+        if (this.rawText[this.index].startsWith('<')) {
+            this.index++
+            this.parseElement(root)
+        } else {
+            this.parseText(root)
+        }
+    }
+}
+```
+The `parse()` method traverses through the entire HTML text. It first checks if the current character is `<`. If it is, the text is treated as an Element node and `parseElement()` is called; otherwise, it's treated as a Text node and `parseText()` is called.
+
+#### Parse Element Node `parseElement()`
+```ts
+private parseElement(parent: Element) {
+	// 解析标签
+    const tag = this.parseTag()
+    // 生成元素节点
+    const ele = element(tag)
+
+    this.stack.push(tag)
+
+    parent.children.push(ele)
+    // 解析属性
+    this.parseAttrs(ele)
+
+    while (this.index < this.len) {
+        this.removeSpaces()
+        if (this.rawText[this.index].startsWith('<')) {
+            this.index++
+            this.removeSpaces()
+            // 判断是否是结束标签
+            if (this.rawText[this.index].startsWith('/')) {
+                this.index++
+                const startTag = this.stack[this.stack.length - 1]
+                // 结束标签
+                const endTag = this.parseTag()
+                if (startTag !== endTag) {
+                    throw Error(`The end tagName ${endTag} does not match start tagName ${startTag}`)
+                }
+
+                this.stack.pop()
+                while (this.index < this.len && this.rawText[this.index] !== '>') {
+                    this.index++
+                }
+
+                break
+            } else {
+                this.parseElement(ele)
+            }
+        } else {
+            this.parseText(ele)
+        }
+    }
+
+    this.index++
+}
+```
+`parseElement()` first calls `parseTag()` and `parseAttrs()` to parse the tag name and attributes, then recursively parses child nodes until all HTML text has been processed.
+
+#### Parse Text Node `parseText()`
+```ts
+private parseText(parent: Element) {
+    let str = ''
+    while (
+        this.index < this.len
+        && !(this.rawText[this.index] === '<' && /\w|\//.test(this.rawText[this.index + 1]))
+    ) {
+        str += this.rawText[this.index]
+        this.index++
+    }
+
+    this.sliceText()
+    parent.children.push(text(removeExtraSpaces(str)))
+}
+```
+Parsing text nodes is relatively simpler. The method continues to traverse forward until it encounters the `<` character. For example, when processing the HTML text `<div>test!</div>`, `parseText()` extracts the value `test!`.
+
+#### Parse Tag `parseTag()`
+After entering `parseElement()`, the first call is to `parseTag()`, which parses the tag name:
+```ts
+private parseTag() {
+    let tag = ''
+
+    this.removeSpaces()
+
+    // get tag name
+    while (this.index < this.len && this.rawText[this.index] !== ' ' && this.rawText[this.index] !== '>') {
+        tag += this.rawText[this.index]
+        this.index++
+    }
+
+    this.sliceText()
+    return tag
+}
+```
+For example, when processing the HTML text `<div>test!</div>`, `parseTag()` extracts the tag name `div`.
+
+#### Parse Attribute Nodes `parseAttrs()`
+After parsing the tag name, the next step is to parse attribute nodes:
+```ts
+private parseAttrs(ele: Element) {
+    // Continue traversing until encountering '>', indicating the end of the <div ....> segment
+    while (this.index < this.len && this.rawText[this.index] !== '>') {
+        this.removeSpaces()
+        this.parseAttr(ele)
+        this.removeSpaces()
+    }
+
+    this.index++
+}
+
+// 解析单个属性，例如 class="foo bar"
+private parseAttr(ele: Element) {
+    let attr = ''
+    let value = ''
+    while (this.index < this.len && this.rawText[this.index] !== '=' && this.rawText[this.index] !== '>') {
+        attr += this.rawText[this.index++]
+    }
+
+    this.sliceText()
+    attr = attr.trim()
+    if (!attr.trim()) return
+
+    this.index++
+    let startSymbol = ''
+    if (this.rawText[this.index] === "'" || this.rawText[this.index] === '"') {
+        startSymbol = this.rawText[this.index++]
+    }
+
+    while (this.index < this.len && this.rawText[this.index] !== startSymbol) {
+        value += this.rawText[this.index++]
+    }
+
+    this.index++
+    ele.attributes[attr] = value.trim()
+    this.sliceText()
+}
+```
+`parseAttr()` can parse HTML text such as `class="test"` into an object `{ class: "test" }`.
+
+#### Helper Methods
+Sometimes there are many unnecessary spaces between different nodes and attributes, so we need a method to remove them:
+```ts
+protected removeSpaces() {
+    while (this.index < this.len && (this.rawText[this.index] === ' ' || this.rawText[this.index] === '\n')) {
+        this.index++
+    }
+
+    this.sliceText()
+}
+```
+For debugging purposes, developers need to check the current character being processed. If all previously processed characters remain in the text, debugging becomes more difficult as developers need to manually find the current character based on the index value. Therefore, we need to remove all processed characters to ensure only unprocessed text remains:
+```ts
+protected sliceText() {
+    this.rawText = this.rawText.slice(this.index)
+    this.len = this.rawText.length
+    this.index = 0
+}
+```
+The `sliceText()` method removes all processed characters. For example, when parsing the tag name `div`:
+[img]()
+
+After parsing, we need to remove the processed text, as shown in the following diagram:
+[img]()
+
+### Summary
+In conclusion, we have covered the complete logic of the HTML parser. The entire implementation consists of approximately 200 lines of code, or around 100 lines excluding TypeScript type declarations.
+
+
+
