@@ -305,8 +305,155 @@ The `sliceText()` method removes all processed characters. For example, when par
 After parsing, we need to remove the processed text, as shown in the following diagram:
 [img]()
 
-### Summary
+### Brief summary
 In conclusion, we have covered the complete logic of the HTML parser. The entire implementation consists of approximately 200 lines of code, or around 100 lines excluding TypeScript type declarations.
 
 
+## CSS Parser
+CSS stylesheet is a collection of CSS rules, and the purpose of CSS parser is to transform CSS text into a CSS rule collection.
+```css
+div, p {
+    font-size: 88px;
+    color: #000;
+}
+```
 
+For example, the CSS parser will transform the above CSS text into the following CSS rule collection:
+```json
+[
+    {
+        "selectors": [
+            {
+                "id": "",
+                "class": "",
+                "tagName": "div"
+            },
+            {
+                "id": "",
+                "class": "",
+                "tagName": "p"
+            }
+        ],
+        "declarations": [
+            {
+                "name": "font-size",
+                "value": "88px"
+            },
+            {
+                "name": "color",
+                "value": "#000"
+            }
+        ]
+    }
+]
+```
+
+Each rule has a `selectors` and `declarations` attribute, where `selectors` indicates CSS selectors, and `declarations` indicates a collection of CSS property declarations.
+```ts
+export interface Rule {
+    selectors: Selector[]
+    declarations: Declaration[]
+}
+
+export interface Selector {
+    tagName: string
+    id: string
+    class: string
+}
+
+export interface Declaration {
+    name: string
+    value: string | number
+}
+```
+
+![CSS Rule Structure](https://i-blog.csdnimg.cn/blog_migrate/2c3b148abca60a3384ffa184c5165efe.png)
+
+Each CSS rule can contain multiple selectors and CSS properties.
+
+### Parse CSS Rule `parseRule()`
+```ts
+private parseRule() {
+    const rule: Rule = {
+        selectors: [],
+        declarations: [],
+    }
+
+    rule.selectors = this.parseSelectors()
+    rule.declarations = this.parseDeclarations()
+
+    return rule
+}
+```
+
+In `parseRule()`, it calls `parseSelectors()` to parse CSS selectors, and then calls `parseDeclarations()` to parse CSS properties from the remaining CSS text.
+
+### Parse Selector `parseSelector()`
+```ts
+private parseSelector() {
+    const selector: Selector = {
+        id: '',
+        class: '',
+        tagName: '',
+    }
+
+    switch (this.rawText[this.index]) {
+        case '.':
+            this.index++
+            selector.class = this.parseIdentifier()
+            break
+        case '#':
+            this.index++
+            selector.id = this.parseIdentifier()
+            break
+        case '*':
+            this.index++
+            selector.tagName = '*'
+            break
+        default:
+            selector.tagName = this.parseIdentifier()
+    }
+
+    return selector
+}
+
+private parseIdentifier() {
+    let result = ''
+    while (this.index < this.len && this.identifierRE.test(this.rawText[this.index])) {
+        result += this.rawText[this.index++]
+    }
+
+    this.sliceText()
+    return result
+}
+```
+
+We only support tag names, ID selectors with the `#` prefix, class selectors with the `.` prefix, or combinations of these. If the tag name is `*`, it represents a universal selector that can match any tag.
+
+The standard CSS parser will skip unrecognized parts and continue parsing the remaining CSS text. This behavior ensures compatibility with older browsers and prevents program interruption due to errors. Our CSS parser is simpler and doesn't include such error handling.
+
+### Parse CSS Properties `parseDeclaration()`
+```ts
+private parseDeclaration() {
+    const declaration: Declaration = { name: '', value: '' }
+    this.removeSpaces()
+    declaration.name = this.parseIdentifier()
+    this.removeSpaces()
+
+    while (this.index < this.len && this.rawText[this.index] !== ':') {
+        this.index++
+    }
+
+    this.index++ // clear :
+    this.removeSpaces()
+    declaration.value = this.parseValue()
+    this.removeSpaces()
+
+    return declaration
+}
+```
+
+`parseDeclaration()` will parse CSS text such as `color: red;` into an object `{ name: "color", value: "red" }`.
+
+### Summary
+The CSS parser is relatively simpler since most concepts have been covered in the HTML parser section. The entire CSS parser's code is approximately 100 lines, and if you have read the HTML parser's code, you should find the CSS parser's code easier to understand.
