@@ -9,7 +9,7 @@ The rendering engine is a component of the browser that transforms source code (
 
 This tiny rendering engine consists of five phases:
 
-![在这里插入图片描述](https://i-blog.csdnimg.cn/blog_migrate/db9434b91f831ee82c3ed0405dd37d19.png)
+![Rendering engine](https://i-blog.csdnimg.cn/blog_migrate/db9434b91f831ee82c3ed0405dd37d19.png)
 
 1. Parse HTML and generate DOM tree
 2. Parse CSS and generate CSS rule collection
@@ -455,5 +455,178 @@ private parseDeclaration() {
 
 `parseDeclaration()` will parse CSS text such as `color: red;` into an object `{ name: "color", value: "red" }`.
 
-### Summary
+### Brief Summary
 The CSS parser is relatively simpler since most concepts have been covered in the HTML parser section. The entire CSS parser's code is approximately 100 lines, and if you have read the HTML parser's code, you should find the CSS parser's code easier to understand.
+
+
+## Build Style Tree
+The purpose of this phase is to write a style tree builder that takes a DOM tree and a collection of CSS rules as input and generates a style tree.
+![img](https://i-blog.csdnimg.cn/blog_migrate/db9434b91f831ee82c3ed0405dd37d19.png)
+
+Each node in the style tree contains CSS property values and a reference to its corresponding DOM node:
+```ts
+interface AnyObject {
+    [key: string]: any
+}
+
+export interface StyleNode {
+    node: Node // DOM node
+    values: AnyObject // style property values
+    children: StyleNode[] // style tree children
+}
+```
+
+Let's look at a simple example:
+```html
+<div>test</div>
+```
+```css
+div {
+    font-size: 88px;
+    color: #000;
+}
+```
+
+The above HTML and CSS will be transformed by the style builder into a style tree:
+```json
+{
+    "node": { // DOM node
+        "tagName": "div",
+        "attributes": {},
+        "children": [
+            {
+                "nodeValue": "test",
+                "nodeType": 3
+            }
+        ],
+        "nodeType": 1
+    },
+    "values": { // CSS property values
+        "font-size": "88px",
+        "color": "#000"
+    },
+    "children": [ // style tree children
+        {
+            "node": {
+                "nodeValue": "test",
+                "nodeType": 3
+            },
+            "values": { // text node inherits parent's styles
+                "font-size": "88px",
+                "color": "#000"
+            },
+            "children": []
+        }
+    ]
+}
+```
+### Traverse DOM Tree
+Now we need to traverse the DOM tree and check if each node matches any CSS rules.
+```ts
+export function getStyleTree(eles: Node | Node[], cssRules: Rule[], parent?: StyleNode) {
+    if (Array.isArray(eles)) {
+        return eles.map((ele) => getStyleNode(ele, cssRules, parent))
+    }
+
+    return getStyleNode(eles, cssRules, parent)
+}
+```
+### Match Selector
+The selector matching is easier to implement since our CSS parser only supports simple selectors. We just need to check if the element itself matches the selector.
+
+```ts
+/**
+ * Check if CSS selector matches the element
+ */
+function isMatch(ele: Element, selectors: Selector[]) {
+    return selectors.some((selector) => {
+        // Universal selector
+        if (selector.tagName === '*') return true
+        if (selector.tagName === ele.tagName) return true
+        if (ele.attributes.id === selector.id) return true
+
+        if (ele.attributes.class) {
+            const classes = ele.attributes.class.split(' ').filter(Boolean)
+            const classes2 = selector.class.split(' ').filter(Boolean)
+            for (const name of classes) {
+                if (classes2.includes(name)) return true
+            }
+        }
+
+        return false
+    })
+}
+```
+
+Once we find the matching DOM node, we need to combine the DOM node with its matching CSS properties to output a style tree node:
+
+```ts
+function getStyleNode(ele: Node, cssRules: Rule[], parent?: StyleNode) {
+    const styleNode: StyleNode = {
+        node: ele,
+        values: getStyleValues(ele, cssRules, parent),
+        children: [],
+    }
+
+    if (ele.nodeType === NodeType.Element) {
+        // Merge inline styles
+        if (ele.attributes.style) {
+            styleNode.values = { ...styleNode.values, ...getInlineStyle(ele.attributes.style) }
+        }
+
+        styleNode.children = ele.children.map((e) => getStyleNode(e, cssRules, styleNode)) as unknown as StyleNode[]
+    }
+
+    return styleNode
+}
+
+function getStyleValues(ele: Node, cssRules: Rule[], parent?: StyleNode) {
+    const inheritableAttrValue = getInheritableAttrValues(parent)
+
+    // Text nodes inherit inheritable properties from parent
+    if (ele.nodeType === NodeType.Text) return inheritableAttrValue
+
+    return cssRules.reduce((result: AnyObject, rule) => {
+        if (isMatch(ele as Element, rule.selectors)) {
+            result = { ...result, ...cssValueArrToObject(rule.declarations) }
+        }
+
+        return result
+    }, inheritableAttrValue)
+}
+```
+
+In CSS selectors, different selectors have different priorities. For example, ID selector's priority is higher than class selectors. However, for simplicity, we haven't implemented selector priorities - all selectors have the same priority.
+
+### Inherit Property
+Text nodes can't match any selector, so where do their styles come from? The answer is inheritance - text nodes inherit styles from their parent nodes.
+
+There are many inheritable properties in CSS. Even when child nodes haven't declared certain properties, they can still inherit them from their parents. For example, font color, font family and so on are all inheritable. For simplicity, we only support inheriting the `color` and `font-size` properties from parent nodes.
+
+```ts
+// Inheritable properties for child elements, only two listed here but there are many more
+const inheritableAttrs = ['color', 'font-size']
+
+/**
+ * Get inheritable property values from parent element
+ */
+function getInheritableAttrValues(parent?: StyleNode) {
+    if (!parent) return {}
+    const keys = Object.keys(parent.values)
+    return keys.reduce((result: AnyObject, key) => {
+        if (inheritableAttrs.includes(key)) {
+            result[key] = parent.values[key]
+        }
+
+        return result
+    }, {})
+}
+```
+
+### Inline Style
+In CSS, inline styles have the highest priority except for `!important`.
+```html
+<span style="color: red; background: yellow;">
+```
+
+We first call `getStyleValues()` to get the current DOM node's CSS property values, and then get the node's inline styles. The inline styles will override the current node's styles.
