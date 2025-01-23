@@ -630,3 +630,153 @@ In CSS, inline styles have the highest priority except for `!important`.
 ```
 
 We first call `getStyleValues()` to get the current DOM node's CSS property values, and then get the node's inline styles. The inline styles will override the current node's styles.
+
+## Layout Tree
+The fourth phase involves transforming a style tree into a layout tree, which is one of the more complex parts of the entire rendering engine.
+
+![Rendering engine phases](https://i-blog.csdnimg.cn/blog_migrate/db9434b91f831ee82c3ed0405dd37d19.png)
+
+### CSS Box Model
+In CSS, every DOM node can be represented as a box. The box model includes content, padding, border, margin, and the node's position information on the page.
+
+![CSS Box Model](https://i-blog.csdnimg.cn/blog_migrate/990f4896e5bef784fb854f68d456595b.png)
+
+We can represent the box model using the following data structures:
+
+```ts
+export default class Dimensions {
+    content: Rect
+    padding: EdgeSizes
+    border: EdgeSizes
+    margin: EdgeSizes
+}
+
+export default class Rect {
+    x: number
+    y: number
+    width: number
+    height: number
+}
+
+export interface EdgeSizes {
+    top: number
+    right: number
+    bottom: number
+    left: number
+}
+```
+
+### Block Layout and Inline Layout
+The CSS `display` property determines how a box model is laid out. While the `display` property can have many values such as `block`, `inline`, `flex`, and others, we will only support `block` and `inline` layouts in our implementation. By default, all box models have `display: inline`.
+
+Let's look at the differences between these layouts using HTML code:
+```html
+<container>
+  <a></a>
+  <b></b>
+  <c></c>
+  <d></d>
+</container>
+```
+With `block` layout, elements are stacked vertically (top to bottom):
+![在这里插入图片描述](https://i-blog.csdnimg.cn/blog_migrate/8ef7819edb4366a86dc91872ba0e41a3.png)
+
+With `inline` layout, elements are arranged horizontally (left to right):
+![在这里插入图片描述](https://i-blog.csdnimg.cn/blog_migrate/417422f697c29f7ba38c529a6e13e782.png)
+
+When a container has both `block` and `inline` elements, we wrap the inline elements in an anonymous block container:
+![在这里插入图片描述](https://i-blog.csdnimg.cn/blog_migrate/24dc7bab858fa8ac370f4477dc45eae1.png)
+
+This allows us to properly handle both inline and block elements within the same container.
+
+Generally, page content grows vertically. When child nodes are added to a container, they increase the container's height rather than its width. In other words, child nodes typically expand to fill their container's width, while the container's height expands to accommodate its child nodes.
+
+### Layout Tree
+The layout tree is a collection of box models.
+```ts
+export default class LayoutBox {
+    dimensions: Dimensions
+    boxType: BoxType
+    children: LayoutBox[]
+    styleNode: StyleNode
+}
+```
+
+Each box model can be of type `block`, `inline`, or `anonymous`:
+```ts
+export enum BoxType {
+    BlockNode = 'BlockNode',
+    InlineNode = 'InlineNode',
+    AnonymousBlock = 'AnonymousBlock',
+}
+```
+We generate box models according to each DOM node's `display` property when building the style tree.
+
+When a block node contains an inline child node, we need to create an anonymous node (which is actually a block node) to wrap the child node. If there are multiple inline child nodes in a row, they all need to be placed in the same anonymous node.
+
+```ts
+function buildLayoutTree(styleNode: StyleNode) {
+    if (getDisplayValue(styleNode) === Display.None) {
+        throw new Error('Root node has display: none.')
+    }
+
+    const layoutBox = new LayoutBox(styleNode)
+
+    let anonymousBlock: LayoutBox | undefined
+    for (const child of styleNode.children) {
+        const childDisplay = getDisplayValue(child)
+        // Skip if DOM node has display: none
+        if (childDisplay === Display.None) continue
+
+        if (childDisplay === Display.Block) {
+            anonymousBlock = undefined
+            layoutBox.children.push(buildLayoutTree(child))
+        } else {
+            // Create an anonymous container for inline nodes
+            if (!anonymousBlock) {
+                anonymousBlock = new LayoutBox()
+                layoutBox.children.push(anonymousBlock)
+            }
+
+            anonymousBlock.children.push(buildLayoutTree(child))
+        }
+    }
+
+    return layoutBox
+}
+```
+
+### Traverse Layout Tree
+To start building the layout tree, we use the entry point function `getLayoutTree()`:
+```ts
+export function getLayoutTree(styleNode: StyleNode, parentBlock: Dimensions) {
+    parentBlock.content.height = 0
+    const root = buildLayoutTree(styleNode)
+    root.layout(parentBlock)
+    return root
+}
+```
+
+The entry point traverses the style tree, combines the relevant information from style tree nodes to generate a `LayoutBox` object, and then calls the `layout()` method. This method calculates the position and dimension information for each box model.
+
+As mentioned at the beginning of the chapter, a box model's width depends on its parent, while its height depends on its child nodes. This means our code needs to traverse the tree top-down when calculating widths (so we can set child node widths after knowing their parent's width), and then bottom-up when calculating heights (so we can calculate parent heights after knowing their children's dimensions).
+
+```ts
+layout(parentBlock: Dimensions) {
+    // Calculate current node's width before traversing children
+    // since child width depends on parent width
+    this.calculateBlockWidth(parentBlock)
+    // Calculate box node position
+    this.calculateBlockPosition(parentBlock)
+    // Traverse children and calculate their positions and dimensions
+    this.layoutBlockChildren()
+    // Calculate current node's height after children
+    // since parent height depends on children's height
+    this.calculateBlockHeight()
+}
+```
+
+This method performs one complete traversal of the layout tree - top-down for width calculations and bottom-up for height calculations. A production-grade layout engine might perform multiple tree traversals, alternating between top-down and bottom-up passes as needed.
+
+
+
