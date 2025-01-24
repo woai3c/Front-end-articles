@@ -9,7 +9,7 @@ The rendering engine is a component of the browser that transforms source code (
 
 This tiny rendering engine consists of five phases:
 
-![Rendering engine](https://i-blog.csdnimg.cn/blog_migrate/db9434b91f831ee82c3ed0405dd37d19.png)
+![Rendering Pipeline](https://i-blog.csdnimg.cn/blog_migrate/db9434b91f831ee82c3ed0405dd37d19.png)
 
 1. Parse HTML and generate DOM tree
 2. Parse CSS and generate CSS rule collection
@@ -251,7 +251,7 @@ private parseAttrs(ele: Element) {
     this.index++
 }
 
-// 解析单个属性，例如 class="foo bar"
+// parse a single attribute, such as class="foo bar"
 private parseAttr(ele: Element) {
     let attr = ''
     let value = ''
@@ -300,17 +300,16 @@ protected sliceText() {
 }
 ```
 The `sliceText()` method removes all processed characters. For example, when parsing the tag name `div`:
-[img]()
 
 After parsing, we need to remove the processed text, as shown in the following diagram:
-[img]()
+![Text Slicing After](https://i-blog.csdnimg.cn/blog_migrate/5f9f7c6cc876dea1374036cbb2332f2d.png)
 
 ### Brief summary
 In conclusion, we have covered the complete logic of the HTML parser. The entire implementation consists of approximately 200 lines of code, or around 100 lines excluding TypeScript type declarations.
 
 
 ## CSS Parser
-CSS stylesheet is a collection of CSS rules, and the purpose of CSS parser is to transform CSS text into a CSS rule collection.
+A CSS stylesheet is a collection of CSS rules, and the purpose of CSS parser is to transform CSS text into a CSS rule collection.
 ```css
 div, p {
     font-size: 88px;
@@ -632,7 +631,7 @@ In CSS, inline styles have the highest priority except for `!important`.
 We first call `getStyleValues()` to get the current DOM node's CSS property values, and then get the node's inline styles. The inline styles will override the current node's styles.
 
 ## Layout Tree
-The fourth phase involves transforming a style tree into a layout tree, which is one of the more complex parts of the entire rendering engine.
+The fourth phase, transforming a style tree into a layout tree, is one of the more complex parts of the entire rendering engine.
 
 ![Rendering engine phases](https://i-blog.csdnimg.cn/blog_migrate/db9434b91f831ee82c3ed0405dd37d19.png)
 
@@ -679,13 +678,13 @@ Let's look at the differences between these layouts using HTML code:
 </container>
 ```
 With `block` layout, elements are stacked vertically (top to bottom):
-![在这里插入图片描述](https://i-blog.csdnimg.cn/blog_migrate/8ef7819edb4366a86dc91872ba0e41a3.png)
+![Block Layout](https://i-blog.csdnimg.cn/blog_migrate/8ef7819edb4366a86dc91872ba0e41a3.png)
 
 With `inline` layout, elements are arranged horizontally (left to right):
-![在这里插入图片描述](https://i-blog.csdnimg.cn/blog_migrate/417422f697c29f7ba38c529a6e13e782.png)
+![Inline Layout](https://i-blog.csdnimg.cn/blog_migrate/417422f697c29f7ba38c529a6e13e782.png)
 
 When a container has both `block` and `inline` elements, we wrap the inline elements in an anonymous block container:
-![在这里插入图片描述](https://i-blog.csdnimg.cn/blog_migrate/24dc7bab858fa8ac370f4477dc45eae1.png)
+![Mixed Layout](https://i-blog.csdnimg.cn/blog_migrate/24dc7bab858fa8ac370f4477dc45eae1.png)
 
 This allows us to properly handle both inline and block elements within the same container.
 
@@ -779,4 +778,217 @@ layout(parentBlock: Dimensions) {
 This method performs one complete traversal of the layout tree - top-down for width calculations and bottom-up for height calculations. A production-grade layout engine might perform multiple tree traversals, alternating between top-down and bottom-up passes as needed.
 
 
+### Calculating Width
+Now, let's first calculate the box model's width. This part is complex, so we need to explain it in detail.
 
+First, we need to get the current node's `width`, `padding`, `border`, and `margin` information:
+```ts
+calculateBlockWidth(parentBlock: Dimensions) {
+    // Initial values
+    const styleValues = this.styleNode?.values || {}
+    
+    // Default value is auto
+    let width = styleValues.width ?? 'auto'
+    let marginLeft = styleValues['margin-left'] || styleValues.margin || 0
+    let marginRight = styleValues['margin-right'] || styleValues.margin || 0
+    
+    let borderLeft = styleValues['border-left'] || styleValues.border || 0
+    let borderRight = styleValues['border-right'] || styleValues.border || 0
+    
+    let paddingLeft = styleValues['padding-left'] || styleValues.padding || 0
+    let paddingRight = styleValues['padding-right'] || styleValues.padding || 0
+    
+    // Get parent node's width, if any property is 'auto', set it to 0
+    let totalWidth = sum(width, marginLeft, marginRight, borderLeft, borderRight, paddingLeft, paddingRight)
+    // ...
+}
+```
+If these CSS property values haven't been set, they will default to 0. We also need to compare if the current node's total width is equal to the parent node's width. If the `width` or `margin` property is set to `auto`, then we can adjust these properties to fit the available space. So now we need to check the current node's width.
+
+```ts
+const isWidthAuto = width === 'auto'
+const isMarginLeftAuto = marginLeft === 'auto'
+const isMarginRightAuto = marginRight === 'auto'
+
+// If current block's width exceeds parent element's width, set its expandable margins to 0
+if (!isWidthAuto && totalWidth > parentWidth) {
+    if (isMarginLeftAuto) {
+        marginLeft = 0
+    }
+
+    if (isMarginRightAuto) {
+        marginRight = 0
+    }
+}
+
+// Adjust current element's width based on the difference between parent and child element widths
+const underflow = parentWidth - totalWidth
+
+// If all three values are set, fill the difference into marginRight
+if (!isWidthAuto && !isMarginLeftAuto && !isMarginRightAuto) {
+    marginRight += underflow
+} else if (!isWidthAuto && !isMarginLeftAuto && isMarginRightAuto) {
+    // If right margin is auto, set marginRight to the difference value
+    marginRight = underflow
+} else if (!isWidthAuto && isMarginLeftAuto && !isMarginRightAuto) {
+    // If left margin is auto, set marginLeft to the difference value
+    marginLeft = underflow
+} else if (isWidthAuto) {
+    // If only width is auto, set the other two values to 0
+    if (isMarginLeftAuto) {
+        marginLeft = 0
+    }
+
+    if (isMarginRightAuto) {
+        marginRight = 0
+    }
+
+    if (underflow >= 0) {
+        // Expand width to fill remaining space, original width was auto, calculated as 0
+        width = underflow
+    } else {
+        // Width cannot be negative, so adjust marginRight instead
+        width = 0
+        marginRight += underflow
+    }
+} else if (!isWidthAuto && isMarginLeftAuto && isMarginRightAuto) {
+    // If only marginLeft and marginRight are auto, set both to half of underflow
+    marginLeft = underflow / 2
+    marginRight = underflow / 2
+}
+```
+The above code has shown the calculation details, and important parts have been commented.
+
+By comparing the current node's width with the parent's width, we can get a difference value:
+```ts
+// Adjust current element's width based on the difference between parent and child element widths
+const underflow = parentWidth - totalWidth
+```
+If the difference value is greater than 0, it indicates that the child nodes' width is less than the parent's width. If the difference value is less than 0, it indicates that the child nodes' width is greater than the parent's width. The above code logic uses these property values (`underflow`, `width`, `padding`, `margin`) to adjust child nodes' width and margin so they can fit within the parent's width.
+
+### Position
+Calculating the current node's position information is relatively simpler. The method `calculateBlockPosition()` will locate the current node by calculating the `margin`, `border`, `padding` information of the current node along with the parent node's position information:
+```ts
+calculateBlockPosition(parentBlock: Dimensions) {
+    const styleValues = this.styleNode?.values || {}
+    const { x, y, height } = parentBlock.content
+    const dimensions = this.dimensions
+    
+    dimensions.margin.top = transformValueSafe(styleValues['margin-top'] || styleValues.margin || 0)
+    dimensions.margin.bottom = transformValueSafe(styleValues['margin-bottom'] || styleValues.margin || 0)
+    
+    dimensions.border.top = transformValueSafe(styleValues['border-top'] || styleValues.border || 0)
+    dimensions.border.bottom = transformValueSafe(styleValues['border-bottom'] || styleValues.border || 0)
+    
+    dimensions.padding.top = transformValueSafe(styleValues['padding-top'] || styleValues.padding || 0)
+    dimensions.padding.bottom = transformValueSafe(styleValues['padding-bottom'] || styleValues.padding || 0)
+    
+    dimensions.content.x = x + dimensions.margin.left + dimensions.border.left + dimensions.padding.left
+    dimensions.content.y = y + height + dimensions.margin.top + dimensions.border.top + dimensions.padding.top
+}
+    
+function transformValueSafe(val: number | string) {
+    if (val === 'auto') return 0
+    return parseInt(String(val))
+}
+```
+
+For example, the following code shows how to calculate the x coordinate of the current node's content area:
+```ts
+dimensions.content.x = x + dimensions.margin.left + dimensions.border.left + dimensions.padding.left
+```
+
+![img](https://i-blog.csdnimg.cn/blog_migrate/6c373082e3ecafb2a95d21077227ddec.png)
+
+### Traverse Child Nodes
+We must traverse child nodes before calculating the parent's height, because the parent's height depends on its child nodes' height.
+```ts
+layoutBlockChildren() {
+    const { dimensions } = this
+    for (const child of this.children) {
+        child.layout(dimensions)
+        // Calculate parent node's height after traversing child nodes
+        dimensions.content.height += child.dimensions.marginBox().height
+    }
+}
+```
+Each node's height is the difference value of its top margin and bottom margin, so we can call `marginBox()` to get the height:
+```ts
+export default class Dimensions {
+    content: Rect
+    padding: EdgeSizes
+    border: EdgeSizes
+    margin: EdgeSizes
+
+    constructor() {
+        const initValue = {
+            top: 0,
+            right: 0,
+            bottom: 0,
+            left: 0,
+        }
+
+        this.content = new Rect()
+
+        this.padding = { ...initValue }
+        this.border = { ...initValue }
+        this.margin = { ...initValue }
+    }
+
+    paddingBox() {
+        return this.content.expandedBy(this.padding)
+    }
+
+    borderBox() {
+        return this.paddingBox().expandedBy(this.border)
+    }
+
+    marginBox() {
+        return this.borderBox().expandedBy(this.margin)
+    }
+}
+```
+
+```ts
+export default class Rect {
+    x: number
+    y: number
+    width: number
+    height: number
+
+    constructor() {
+        this.x = 0
+        this.y = 0
+        this.width = 0
+        this.height = 0
+    }
+
+    expandedBy(edge: EdgeSizes) {
+        const rect = new Rect()
+        rect.x = this.x - edge.left
+        rect.y = this.y - edge.top
+        rect.width = this.width + edge.left + edge.right
+        rect.height = this.height + edge.top + edge.bottom
+
+        return rect
+    }
+}
+```
+
+After traversing through child nodes and performing relative methods, we have got all child nodes' height, and then get the parent's height (the sum of child nodes' height).
+
+### Height Property
+By default, a node's height is equal to its content's height. But if we have set the `height` property value manually, we need to set the node's height to the specified value:
+```ts
+calculateBlockHeight() {
+    // If element has height property set, use that height; otherwise use height calculated by layoutBlockChildren()
+    const height = this.styleNode?.values.height
+    if (height) {
+        this.dimensions.content.height = parseInt(height)
+    }
+}
+```
+For more simplicity, we don't need to implement [collapsing margins](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_box_model/Mastering_margin_collapsing).
+
+### Brief Summary
+The layout tree is the most difficult part of the rendering engine. After this phase, we have understood each node's position and dimensional information in the layout tree. In the next phase, we need to study how to paint the layout tree onto the browser page.
