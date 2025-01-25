@@ -54,7 +54,7 @@ Writing a parser requires some knowledge of compilation principles such as lexic
 
 Looking back at the HTML code above, the entire parsing process is shown in the following picture. 
 
-![HTML parsing process](https://i-blog.csdnimg.cn/blog_migrate/1249487abc7d4bc32a38168db68d5b64.png)
+![HTML Parsing Process](https://i-blog.csdnimg.cn/blog_migrate/df2f04ff5b19a6867d899d182ff183a9.png)
 
 Each piece of HTML code has its corresponding parsing method.
 
@@ -1037,7 +1037,7 @@ const charA = [
 The first item of the two-dimensional array indicates each bit's value of the first row in the memory. There are a total of 11 rows to draw a `A`.
 
 ### Painting Layout Tree
-After the basic knowledge of paint screen of popular science, now we start to painting layout tree(for convenience, we using [node-canvas]() library).
+After the basic knowledge of paint screen of popular science, now we start to painting layout tree(for convenience, we using [node-canvas](https://github.com/Automattic/node-canvas) library).
 
 First, we need to traverse the entire layout tree, and then paint they one by one:
 ```ts
@@ -1050,11 +1050,11 @@ function renderLayoutBox(layoutBox: LayoutBox, ctx: CanvasRenderingContext2D, pa
     }
 }
 ```
-The function will traverse each node and then paint backgroud, border, text in turn, and then paint all child nodes recursively.
+The function will traverse each node and then paint background, border, text in turn, and then paint all child nodes recursively.
 
 By default, we will paint HTML elements according to their order in the layout tree. If two elements overlap, we need to paint the next element on the previous element. The sort way also represented in the layout tree, it will paint a element according to its order in the layout tree.
 
-### Painting Backgroud Color
+### Painting Background Color
 ```ts
 function renderBackground(layoutBox: LayoutBox, ctx: CanvasRenderingContext2D) {
     const { width, height, x, y } = layoutBox.dimensions.borderBox()
