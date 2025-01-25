@@ -154,15 +154,15 @@ The `parse()` method traverses through the entire HTML text. It first checks if 
 #### Parse Element Node `parseElement()`
 ```ts
 private parseElement(parent: Element) {
-	// 解析标签
+    // Parse tag
     const tag = this.parseTag()
-    // 生成元素节点
+    // Generate element node
     const ele = element(tag)
 
     this.stack.push(tag)
 
     parent.children.push(ele)
-    // 解析属性
+    // Parse attributes
     this.parseAttrs(ele)
 
     while (this.index < this.len) {
@@ -170,11 +170,11 @@ private parseElement(parent: Element) {
         if (this.rawText[this.index].startsWith('<')) {
             this.index++
             this.removeSpaces()
-            // 判断是否是结束标签
+            // Check if it's an end tag
             if (this.rawText[this.index].startsWith('/')) {
                 this.index++
                 const startTag = this.stack[this.stack.length - 1]
-                // 结束标签
+                // End tag
                 const endTag = this.parseTag()
                 if (startTag !== endTag) {
                     throw Error(`The end tagName ${endTag} does not match start tagName ${startTag}`)
@@ -636,7 +636,7 @@ The fourth phase, transforming a style tree into a layout tree, is one of the mo
 ![Rendering engine phases](https://i-blog.csdnimg.cn/blog_migrate/db9434b91f831ee82c3ed0405dd37d19.png)
 
 ### CSS Box Model
-In CSS, every DOM node can be represented as a box. The box model includes content, padding, border, margin, and the node's position information on the page.
+In CSS, every DOM node can be represented as a box. The box model consists of content, padding, border, margin, and information about the node's position on the page.
 
 ![CSS Box Model](https://i-blog.csdnimg.cn/blog_migrate/990f4896e5bef784fb854f68d456595b.png)
 
@@ -810,7 +810,7 @@ const isWidthAuto = width === 'auto'
 const isMarginLeftAuto = marginLeft === 'auto'
 const isMarginRightAuto = marginRight === 'auto'
 
-// If current block's width exceeds parent element's width, set its expandable margins to 0
+// If current block width exceeds parent width, set its expandable margins to 0
 if (!isWidthAuto && totalWidth > parentWidth) {
     if (isMarginLeftAuto) {
         marginLeft = 0
@@ -991,4 +991,182 @@ calculateBlockHeight() {
 For more simplicity, we don't need to implement [collapsing margins](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_box_model/Mastering_margin_collapsing).
 
 ### Brief Summary
-The layout tree is the most difficult part of the rendering engine. After this phase, we have understood each node's position and dimensional information in the layout tree. In the next phase, we need to study how to paint the layout tree onto the browser page.
+The layout tree is the most complex part of the rendering engine. After this phase, we understand each node's position and dimensional information in the layout tree. In the next phase, we need to study how to paint the layout tree onto the browser page.
+
+## Paint
+The purpose of this phase is painting each node on the page according to the information of the layout tree. The most computers are using raster(bitmap) technology so far. The process of paint each node to page is called rasterization.
+
+Browsers usually use various graphics APIs and libraries (such as Skia, Cairo, Direct2D and others) to implement rasterization. These apis provide a lot of features such as paint Polygons, lines, curves, gradients and text.
+
+Actually, painting is the most complex part, but by using the [canvas](https://github.com/Automattic/node-canvas) library, we don't need to implement rasterization ourselves, which simplifies the painting implementation. Before start to the paint phase, we first study some basic knowledge of how to paint image and text, it help us to understand what the implementation process of rasterization.
+
+### How Computer Paint Image And Text
+Painting pixel is belong to the low operation of computer, it depends on the detail of screen and gpu api. For simplicity, we can use a section of memory to indicates the screen, the each bit of memory indicates a pixel of screen. For example, if painting a pixel on the `(x,y)` of the screen, we can use `memory[x + y * rowSize] = 1` to indicate. Starting from top-left of the screen, the column calculation is left to right, the row calculation is top to bottom. So the coordinate of the top left corner is `(0,0)`.
+
+For simplicity, we use one bit to indicates a pixel of screen, 0 is represent white, 1 is represent black. The each row length of screen is represented with `rowSize`, the each column height of screen is represented with `colSize`.
+![img](https://i-blog.csdnimg.cn/blog_migrate/ec464563aa66f07bd74e4ed4b51f39e8.png)
+
+### Painting Line
+If we need to paint a line, we just need to know the start point `(x1,y1)` and the end point `(x2,y2)`.
+![img](https://i-blog.csdnimg.cn/blog_migrate/6155fd1970297379f8388c90393538f1.png)
+
+And then set the area memory values from `(x1,y1)` to `(x2,y2)` as 1 according to `memory[x + y * rowSize] = 1` formula, then we have drawed a line.
+
+### Painting Character
+For paint text on the screen, we first divide the screen to several area according to the logic character, each area can output a single completely character.  Assume that we have a screen with 256 rows and 512 column, if we assign each character with a 11*8 pixel's grid, then the screen can show 23 rows, each row contains 64 characters(it also have 3 pixels not to used).
+
+According to the above precondition, now we plan to draw a `A`:
+![img](https://i-blog.csdnimg.cn/blog_migrate/29555f5a140c1892ca6c8ed2ca0dab64.png)
+
+The picture of `A` is represented by a 11*8 pixels grid. For show it in the memory, we can use a two-dimensional array to indicate:
+```ts
+const charA = [
+	[0, 0, 1, 1, 0, 0, 0, 0], // 按从左至右的顺序来读取 bit，转换成十进制数字就是 12
+	[0, 1, 1, 1, 1, 0, 0, 0], // 30
+	[1, 1, 0, 0, 1, 1, 0, 0], // 51
+	[1, 1, 0, 0, 1, 1, 0, 0], // 51
+	[1, 1, 1, 1, 1, 1, 0, 0], // 63
+	[1, 1, 0, 0, 1, 1, 0, 0], // 51
+	[1, 1, 0, 0, 1, 1, 0, 0], // 51
+	[1, 1, 0, 0, 1, 1, 0, 0], // 51
+	[1, 1, 0, 0, 1, 1, 0, 0], // 51
+	[0, 0, 0, 0, 0, 0, 0, 0], // 0
+	[0, 0, 0, 0, 0, 0, 0, 0], // 0
+]
+```
+The first item of the two-dimensional array indicates each bit's value of the first row in the memory. There are a total of 11 rows to draw a `A`.
+
+### Painting Layout Tree
+After the basic knowledge of paint screen of popular science, now we start to painting layout tree(for convenience, we using [node-canvas]() library).
+
+First, we need to traverse the entire layout tree, and then paint they one by one:
+```ts
+function renderLayoutBox(layoutBox: LayoutBox, ctx: CanvasRenderingContext2D, parent?: LayoutBox) {
+    renderBackground(layoutBox, ctx)
+    renderBorder(layoutBox, ctx)
+    renderText(layoutBox, ctx, parent)
+    for (const child of layoutBox.children) {
+        renderLayoutBox(child, ctx, layoutBox)
+    }
+}
+```
+The function will traverse each node and then paint backgroud, border, text in turn, and then paint all child nodes recursively.
+
+By default, we will paint HTML elements according to their order in the layout tree. If two elements overlap, we need to paint the next element on the previous element. The sort way also represented in the layout tree, it will paint a element according to its order in the layout tree.
+
+### Painting Backgroud Color
+```ts
+function renderBackground(layoutBox: LayoutBox, ctx: CanvasRenderingContext2D) {
+    const { width, height, x, y } = layoutBox.dimensions.borderBox()
+    ctx.fillStyle = getStyleValue(layoutBox, 'background')
+    ctx.fillRect(x, y, width, height)
+}
+```
+First, we need to get the position and dimension information of the layout node, starting from `x,y`, paint the  rectangle area. And fill the rectangle according to the value of the CSS property `background`.
+
+### Painting Border
+```ts
+function renderBorder(layoutBox: LayoutBox, ctx: CanvasRenderingContext2D) {
+    const { width, height, x, y } = layoutBox.dimensions.borderBox()
+    const { left, top, right, bottom } = layoutBox.dimensions.border
+    const borderColor = getStyleValue(layoutBox, 'border-color')
+    if (!borderColor) return
+
+    ctx.fillStyle = borderColor
+
+    // left
+    ctx.fillRect(x, y, left, height)
+    // top
+    ctx.fillRect(x, y, width, top)
+    // right
+    ctx.fillRect(x + width - right, y, right, height)
+    // bottom
+    ctx.fillRect(x, y + height - bottom, width, bottom)
+}
+```
+Actually, Painting border is painting four rectangles, each rectangle is a border.
+
+### Painting Text
+```ts
+function renderText(layoutBox: LayoutBox, ctx: CanvasRenderingContext2D, parent?: LayoutBox) {
+    if (layoutBox.styleNode?.node.nodeType === NodeType.Text) {
+        // get AnonymousBlock x y
+        const { x = 0, y = 0, width } = parent?.dimensions.content || {}
+        const styles = layoutBox.styleNode?.values || {}
+        const fontSize = styles['font-size'] || '14px'
+        const fontFamily = styles['font-family'] || 'serif'
+        const fontWeight = styles['font-weight'] || 'normal'
+        const fontStyle = styles['font-style'] || 'normal'
+
+        ctx.fillStyle = styles.color
+        ctx.font = `${fontStyle} ${fontWeight} ${fontSize} ${fontFamily}`
+        ctx.fillText(layoutBox.styleNode?.node.nodeValue, x, y + parseInt(fontSize), width)
+    }
+}
+```
+By the `fillText()` method of canvas, we can very convenient to paint text with different font style, size, color.
+
+### Outputting Image
+After painting completely, we can output images with the help of the canvas apis. Let's show it with the following example:
+```html
+<html>
+    <body id=" body " data-index="1" style="color: red; background: yellow;">
+        <div>
+            <div class="lightblue test">test1!</div>
+            <div class="lightblue test">
+                <div class="foo">foo</div>
+            </div>
+        </div>
+    </body>
+</html>
+```
+```css
+* {
+    display: block;
+}
+
+div {
+    font-size: 14px;
+    width: 400px;
+    background: #fff;
+    margin-bottom: 20px;
+    display: block;
+    background: lightblue;
+}
+
+.lightblue {
+    font-size: 16px;
+    display: block;
+    width: 200px;
+    height: 200px;
+    background: blue;
+    border-color: green;
+    border: 10px;
+}
+
+.foo {
+    width: 100px;
+    height: 100px;
+    background: red;
+    color: yellow;
+    margin-left: 50px;
+}
+
+body {
+    display: block;
+    font-size: 88px;
+    color: #000;
+}
+```
+The above HTML, CSS codes will output a image by parse with a rendering engine:
+![img](https://i-blog.csdnimg.cn/blog_migrate/f91990adc68cf23a9bd8d100c168c886.png)
+
+## Summary
+So far, we have completed our tiny rendering engine. While it may not be practical for real use, implementing it helps us understand how real rendering engines work, making it valuable from a learning perspective.
+
+### Reference Material
+* [Let's build a browser engine!](https://limpet.net/mbrubeck/2014/08/08/toy-layout-engine-1.html)
+* [robinson](https://github.com/mbrubeck/robinson)
+* [渲染页面：浏览器的工作原理](https://developer.mozilla.org/zh-CN/docs/Web/Performance/How_browsers_work)
+* [关键渲染路径](https://developer.mozilla.org/zh-CN/docs/Web/Performance/Critical_rendering_path)
+* [计算机系统要素](https://book.douban.com/subject/1998341/)
