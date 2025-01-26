@@ -679,12 +679,15 @@ Let's look at the differences between these layouts using HTML code:
 </container>
 ```
 With `block` layout, elements are stacked vertically (top to bottom):
+
 ![Block Layout](https://i-blog.csdnimg.cn/blog_migrate/8ef7819edb4366a86dc91872ba0e41a3.png)
 
 With `inline` layout, elements are arranged horizontally (left to right):
+
 ![Inline Layout](https://i-blog.csdnimg.cn/blog_migrate/417422f697c29f7ba38c529a6e13e782.png)
 
 When a container has both `block` and `inline` elements, we wrap the inline elements in an anonymous block container:
+
 ![Mixed Layout](https://i-blog.csdnimg.cn/blog_migrate/24dc7bab858fa8ac370f4477dc45eae1.png)
 
 This allows us to properly handle both inline and block elements within the same container.
