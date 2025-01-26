@@ -1008,10 +1008,12 @@ Actually, painting is the most complex part, but by using the [canvas](https://g
 Painting pixel is belong to the low operation of computer, it depends on the detail of screen and gpu api. For simplicity, we can use a section of memory to indicates the screen, the each bit of memory indicates a pixel of screen. For example, if painting a pixel on the `(x,y)` of the screen, we can use `memory[x + y * rowSize] = 1` to indicate. Starting from top-left of the screen, the column calculation is left to right, the row calculation is top to bottom. So the coordinate of the top left corner is `(0,0)`.
 
 For simplicity, we use one bit to indicates a pixel of screen, 0 is represent white, 1 is represent black. The each row length of screen is represented with `rowSize`, the each column height of screen is represented with `colSize`.
+
 ![img](https://i-blog.csdnimg.cn/blog_migrate/ec464563aa66f07bd74e4ed4b51f39e8.png)
 
 ### Painting Line
 If we need to paint a line, we just need to know the start point `(x1,y1)` and the end point `(x2,y2)`.
+
 ![img](https://i-blog.csdnimg.cn/blog_migrate/6155fd1970297379f8388c90393538f1.png)
 
 And then set the area memory values from `(x1,y1)` to `(x2,y2)` as 1 according to `memory[x + y * rowSize] = 1` formula, then we have drawed a line.
@@ -1020,6 +1022,7 @@ And then set the area memory values from `(x1,y1)` to `(x2,y2)` as 1 according t
 For paint text on the screen, we first divide the screen to several area according to the logic character, each area can output a single completely character.  Assume that we have a screen with 256 rows and 512 column, if we assign each character with a 11*8 pixel's grid, then the screen can show 23 rows, each row contains 64 characters(it also have 3 pixels not to used).
 
 According to the above precondition, now we plan to draw a `A`:
+
 ![img](https://i-blog.csdnimg.cn/blog_migrate/29555f5a140c1892ca6c8ed2ca0dab64.png)
 
 The picture of `A` is represented by a 11*8 pixels grid. For show it in the memory, we can use a two-dimensional array to indicate:
