@@ -54,7 +54,7 @@ Writing a parser requires some knowledge of compilation principles such as lexic
 
 Looking back at the HTML code above, the entire parsing process is shown in the following picture. 
 
-![HTML Parsing Process](https://i-blog.csdnimg.cn/blog_migrate/df2f04ff5b19a6867d899d182ff183a9.png)
+![HTML Parsing Process](https://i-blog.csdnimg.cn/blog_migrate/1249487abc7d4bc32a38168db68d5b64.png)
 
 Each piece of HTML code has its corresponding parsing method.
 
@@ -300,6 +300,7 @@ protected sliceText() {
 }
 ```
 The `sliceText()` method removes all processed characters. For example, when parsing the tag name `div`:
+![在这里插入图片描述](https://i-blog.csdnimg.cn/blog_migrate/a08edae6fc2b2eebb1e0ba31b0f802fd.png)
 
 After parsing, we need to remove the processed text, as shown in the following diagram:
 ![Text Slicing After](https://i-blog.csdnimg.cn/blog_migrate/5f9f7c6cc876dea1374036cbb2332f2d.png)
