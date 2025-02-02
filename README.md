@@ -88,7 +88,8 @@
 * [How to write unit tests and E2E tests for Nestjs applications](en-articles/nestjs-tests.md)
 * [How to load remote components in Vue 3](en-articles/load-remote-component-in-vue.md)
 * [Make a tiny browser engine from scratch](en-articles/browser-engine.md)
-* [Implementing Binary Tree Traversals: Converting Recursive to Iterative Approach](en-articles/binary-tree-sort.md)
+* [Implementing Synchronous Scrolling in a Dual-Pane Markdown Editor](en-articles/markdown-editor-scroll.md)
+
 ## License
 MIT
 ## 赞助
