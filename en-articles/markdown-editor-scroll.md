@@ -20,3 +20,10 @@ Although the principle is simple, the implementation results are not satisfactor
 ![在这里插入图片描述](https://i-blog.csdnimg.cn/blog_migrate/79e22b27bca126e02e154262c52a4486.gif#pic_center)
 
 As shown in the animation above, when we stop at the second heading, the content in both panes is synchronized. However, when scrolling to the third heading, there's already a height difference of nearly 300 pixels between the two panes. So this solution is barely usable - better than nothing, but not ideal.
+
+## Rendering Large-area Elements in Both Panes Simultaneously
+The inconsistency in the heights of the dual-pane content is caused by the fact that the same markdown element can have different heights before and after rendering. For example, an image written in markdown is only a single line of code, but once rendered, its size can vary significantly—with heights ranging from a few tens to several hundreds of pixels. If the markdown image code were rendered simultaneously in both panes, this issue could be resolved.
+
+![在这里插入图片描述](https://i-blog.csdnimg.cn/blog_migrate/55e538de6d2eb8366342b7bb0792c8d3.png)
+
+However, aside from images, many other elements also exhibit differences in height before and after rendering (although not as drastic as with images). For instance, headings like h1 and h2—when an article becomes longer—the small differences in height accumulate, making the overall height discrepancy between the two panes increasingly significant. Therefore, this solution is not very reliable.
