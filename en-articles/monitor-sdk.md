@@ -48,3 +48,88 @@ The FP measurement output:
 }
 ```
 The `startTime` value represents the paint timing we need.
+
+### FCP
+FCP (First Contentful Paint) - Time from page load start until any part of page content is rendered. The "content" in this metric refers to text, images (including background images), `<svg>` elements, and non-white `<canvas>` elements.
+
+![image.png](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/a4f1c9b61029448dae2b1cfb57b4ef75~tplv-k3u1fbpfcp-watermark.image?)
+
+To provide a good user experience, the FCP score should be kept under 1.8 seconds.
+
+![image.png](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/9818c66879b345e3b4845ff3fe01e8c9~tplv-k3u1fbpfcp-watermark.image?)
+
+The measurement code:
+```ts
+const entryHandler = (list) => {        
+    for (const entry of list.getEntries()) {
+        if (entry.name === 'first-contentful-paint') {
+            observer.disconnect()
+        }
+        
+        console.log(entry)
+    }
+}
+
+const observer = new PerformanceObserver(entryHandler)
+observer.observe({ type: 'paint', buffered: true })
+```
+We can get the value of FCP via the above code:
+```ts
+{
+    duration: 0,
+    entryType: "paint",
+    name: "first-contentful-paint",
+    startTime: 459, // fcp 时间
+}
+```
+The `startTime` value is the painting time we need.
+
+### LCP
+LCP (Largest Contentful Paint) - Time from page load start until the largest text block or image element completes rendering. The LCP metric reports the relative render time of the largest visible image or text block in the viewport, measured from when the page first begins loading.
+
+A good LCP score should be kept under 2.5 seconds.
+
+![image.png](https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/c090dd8b042c46d2adaba5395ca68f47~tplv-k3u1fbpfcp-watermark.image?)
+
+The measurement code:
+```ts
+const entryHandler = (list) => {
+    if (observer) {
+        observer.disconnect()
+    }
+
+    for (const entry of list.getEntries()) {
+        console.log(entry)
+    }
+}
+
+const observer = new PerformanceObserver(entryHandler)
+observer.observe({ type: 'largest-contentful-paint', buffered: true })
+```
+We can get the value of LCP via the above code:
+```ts
+{
+    duration: 0,
+    element: p,
+    entryType: "largest-contentful-paint",
+    id: "",
+    loadTime: 0,
+    name: "",
+    renderTime: 1021.299,
+    size: 37932,
+    startTime: 1021.299,
+    url: "",
+}
+```
+The `startTime` value is the painting time we need. And `element` refers to the element being painted during LCP.
+
+The difference between FCP and LCP is: FCP event occurs when any content is painted, while LCP event occurs when the largest content finishes rendering.
+
+![image.png](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/0e64637ac9d243a58101d8ed01fe886e~tplv-k3u1fbpfcp-watermark.image?)
+
+LCP considers these elements:
+* `<img>` elements
+* `<image>` elements inside `<svg>`
+* `<video>` elements (using poster images)
+* Elements with background images loaded via the [`url()`](https://developer.mozilla.org/docs/Web/CSS/url()) function (not using [CSS gradients](https://developer.mozilla.org/docs/Web/CSS/CSS_Images/Using_CSS_gradients))
+* Block-level elements containing text nodes or other inline-level text elements
