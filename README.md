@@ -80,6 +80,9 @@
 * [git 常用命令介绍](https://github.com/woai3c/Front-end-articles/blob/master/git-commands.md)
 * [手写 git hooks 脚本（pre-commit、commit-msg）](https://github.com/woai3c/Front-end-articles/issues/24)
 
+## 区块链
+* [如何估算和优化 Gas](https://github.com/woai3c/Front-end-articles/issues/50)
+
 ## 其他
 * [强烈推荐的两个神级教学项目: nand2tetris 与 MIT6.828](https://github.com/woai3c/Front-end-articles/blob/master/teaching.md)
 
