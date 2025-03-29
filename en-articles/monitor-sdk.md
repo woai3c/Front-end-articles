@@ -712,8 +712,6 @@ The code logic is as follows:
 
 Additionally, we need to consider another case. When not changing routes, there may also be component changes, in which case we shouldn't calculate rendering time in these components' `mounted()` hooks. Therefore, we need to add a `needCalculateRenderTime` field - set it to true when changing routes to indicate that rendering time can be calculated.
 
-```
-
 ## Error Data Collection
 
 ### Resource Loading Errors
