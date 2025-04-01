@@ -6,7 +6,7 @@
 ### 1. 减少 HTTP 请求
 一个完整的 HTTP 请求需要经历 DNS 查找，TCP 握手，浏览器发出 HTTP 请求，服务器接收请求，服务器处理请求并发回响应，浏览器接收响应等过程。接下来看一个具体的例子帮助理解 HTTP ：
 
-![在这里插入图片描述](https://img-blog.csdnimg.cn/img_convert/4e00fbaebbeea51de35b83820543298d.png)
+![在这里插入图片描述](https://i-blog.csdnimg.cn/blog_migrate/d376d71460c7c7c11db1c85146b041dc.png)
 
 这是一个 HTTP 请求，请求的文件大小为 28.4KB。
 
