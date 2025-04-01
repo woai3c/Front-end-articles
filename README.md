@@ -93,6 +93,7 @@
 * [Make a tiny browser engine from scratch](en-articles/browser-engine.md)
 * [Implementing Synchronous Scrolling in a Dual-Pane Markdown Editor](en-articles/markdown-editor-scroll.md)
 * [The Principle Analysis of Frontend Monitoring SDK](en-articles/monitor-sdk.md)
+* [24 Front-end Performance Optimization Tips](en-articles/frontend-performance.md)
 
 ## License
 MIT
