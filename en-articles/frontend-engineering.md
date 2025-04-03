@@ -1036,6 +1036,7 @@ If you're interested in refactoring, I strongly recommend reading [Refactoring (
 
 References:
 * [Refactoring (2nd Edition)](https://book.douban.com/subject/30468597/)
+
 ## Summary
 I wrote this article mainly to summarize my more than one year of work experience, as I've been primarily researching frontend engineering and how to improve team development efficiency. I hope this article can help beginners with no experience in frontend engineering enter the field through this article.
 
