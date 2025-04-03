@@ -94,6 +94,7 @@
 * [Implementing Synchronous Scrolling in a Dual-Pane Markdown Editor](en-articles/markdown-editor-scroll.md)
 * [The Principle Analysis of Frontend Monitoring SDK](en-articles/monitor-sdk.md)
 * [24 Front-end Performance Optimization Tips](en-articles/frontend-performance.md)
+* [Step-by-Step Guide to Front-end Engineering — A Comprehensive Tutorial](en-articles/frontend-engineering.md)
 
 ## License
 MIT
