@@ -95,6 +95,7 @@
 * [The Principle Analysis of Frontend Monitoring SDK](en-articles/monitor-sdk.md)
 * [24 Front-end Performance Optimization Tips](en-articles/frontend-performance.md)
 * [Step-by-Step Guide to Front-end Engineering — A Comprehensive Tutorial](en-articles/frontend-engineering.md)
+* [Analysis of Key Technical Principles for a Visual Drag-and-Drop Component Library](en-articles/visible-drag.md)
 
 ## License
 MIT
