@@ -96,6 +96,7 @@
 * [24 Front-end Performance Optimization Tips](en-articles/frontend-performance.md)
 * [Step-by-Step Guide to Front-end Engineering — A Comprehensive Tutorial](en-articles/frontend-engineering.md)
 * [Analysis of Key Technical Principles for a Visual Drag-and-Drop Component Library](en-articles/visible-drag.md)
+* [Analysis of Key Technical Principles for a Visual Drag-and-Drop Component Library - 2](en-articles/visible-drag2.md)
 
 ## License
 MIT
