@@ -1,6 +1,6 @@
 # Analysis of Key Technical Principles for a Visual Drag-and-Drop Component Library - 2
 
-This article is a supplement to ["Analysis of Key Technical Principles for a Visual Drag-and-Drop Component Library"](https://github.com/woai3c/Front-end-articles/issues/19). The previous article mainly explained the following functional points:
+This article is a supplement to ["Analysis of Key Technical Principles for a Visual Drag-and-Drop Component Library"](https://github.com/woai3c/Front-end-articles/blob/master/en-articles/visible-drag.md). The previous article mainly explained the following functional points:
 1. Editor
 2. Custom Components
 3. Drag and Drop
