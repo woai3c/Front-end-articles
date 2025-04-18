@@ -6,22 +6,24 @@ Recently, I have been writing unit tests and E2E tests for a NestJS project. Thi
 
 In addition, I have put together a demo project with the relevant unit and E2E tests completed, which may be of interest. The code has been uploaded to Github: [https://github.com/woai3c/nestjs-demo](https://github.com/woai3c/nestjs-demo).
 
+
+
 ## Table of Contents
 
-- [Difference Between Unit Testing and E2E Testing](#difference-between-unit-testing-and-e2e-testing)
-- [Prerequisites](#prerequisites)
-- [Writing Unit Tests](#writing-unit-tests)
-- [The First Test Case](#the-first-test-case)
-- [The Second Test Case](#the-second-test-case)
-- [Unit Test Coverage](#unit-test-coverage)
-- [Writing E2E Tests](#writing-e2e-tests)
-- [Whether to Write Tests](#whether-to-write-tests)
-- [Enhancing System Robustness](#enhancing-system-robustness)
-- [Enhancing Maintainability](#enhancing-maintainability)
-- [Enhancing Development Efficiency](#enhancing-development-efficiency)
-- [When Not to Write Tests?](#when-not-to-write-tests)
-- [Conclusion](#conclusion)
-- [Reference Materials](#reference-materials)
+1. [Prerequisites](#heading-prerequisites)
+2. [Difference Between Unit Testing and E2E Testing](#heading-difference-between-unit-testing-and-e2e-testing)
+3. [Writing Unit Tests](#heading-writing-unit-tests)
+   - [The First Test Case](#heading-the-first-test-case)
+   - [The Second Test Case](#heading-the-second-test-case)
+   - [Unit Test Coverage](#heading-unit-test-coverage)
+4. [Writing E2E Tests](#heading-writing-e2e-tests)
+5. [Whether to Write Tests](#heading-whether-to-write-tests)
+   - [Enhancing System Robustness](#heading-enhancing-system-robustness)
+   - [Enhancing Maintainability](#heading-enhancing-maintainability)
+   - [Enhancing Development Efficiency](#heading-enhancing-development-efficiency)
+6. [When Not to Write Tests?](#heading-when-not-to-write-tests)
+7. [Conclusion](#heading-conclusion)
+8. [Reference Materials](#heading-reference-materials)
 
 ## Prerequisites
 
@@ -104,7 +106,7 @@ The code above is a method `validateUser` in the `auth.service.ts` file, primari
 
 As can be seen, the `validateUser` method includes four processing logics, and we need to write corresponding unit test code for these four points to ensure that the entire `validateUser` function is operating correctly.
 
-## The First Test Case
+### The First Test Case
 
 When we start writing unit tests, we encounter a problem: the `findOne` method needs to interact with the database, and it looks for corresponding users in the database through `username`. However, if every unit test has to interact with the database, the testing would become very cumbersome. Therefore, we can mock fake data to achieve this.
 
@@ -183,7 +185,7 @@ if (!entity) {
 
 Throw a 401 error, which is as expected.
 
-## The Second Test Case
+### The Second Test Case
 
 The second logic in the `validateUser` method is to determine if the user is locked, with the corresponding code as follows:
 
@@ -218,7 +220,7 @@ it('should throw an UnauthorizedException if the account is locked', async () =>
 
 In the test code above, an object `lockedUser` is first defined, which contains the `lockUntil` field we need. Then, it is used as the return value for `findOne`, achieved by `usersService.findOne.mockResolvedValueOnce(lockedUser);`. Thus, when the `validateUser` method is executed, the user data within it is the mocked data, successfully allowing the second test case to pass.
 
-## Unit Test Coverage
+### Unit Test Coverage
 
 Unit test coverage (Code Coverage) is a metric used to describe how much of the application code has been covered or tested by unit tests. It is typically expressed as a percentage, indicating how much of all possible code paths have been covered by test cases.
 
@@ -398,15 +400,15 @@ Writing e2E test code is relatively simple. You don't need to consider mock data
 
 If possible, I generally recommend writing tests. Doing so can enhance the robustness, maintainability, and development efficiency of the system.
 
-## Enhancing System Robustness
+### Enhancing System Robustness
 
 When writing code, we usually focus on the program flow under normal inputs to ensure the core functionality works properly. However, we might often overlook some edge cases, such as abnormal inputs. Writing tests changes this; it forces you to consider how to handle these cases and respond appropriately, thus preventing crashes. It can be said that writing tests indirectly improves system robustness.
 
-## Enhancing Maintainability
+### Enhancing Maintainability
 
 Taking over a new project that includes comprehensive tests can be very pleasant. They act as a guide, helping you quickly understand the various functionalities. Just by looking at the test code, you can easily grasp the expected behavior and boundary conditions of each function without having to go through each line of the function's code.
 
-## Enhancing Development Efficiency
+### Enhancing Development Efficiency
 
 Imagine, a project that hasn't been updated for a while suddenly receives new requirements. After making changes, you might worry about introducing bugs. Without tests, you would need to manually test the entire project again — wasting time and being inefficient. With complete tests, a single command can tell you whether the code changes have impacted existing functionalities. Even if there are errors, they can be quickly located and addressed.
 
