@@ -7,24 +7,6 @@ Recently, I have been writing unit tests and E2E tests for a NestJS project. Thi
 In addition, I have put together a demo project with the relevant unit and E2E tests completed, which may be of interest. The code has been uploaded to Github: [https://github.com/woai3c/nestjs-demo](https://github.com/woai3c/nestjs-demo).
 
 
-
-## Table of Contents
-
-1. [Prerequisites](#heading-prerequisites)
-2. [Difference Between Unit Testing and E2E Testing](#heading-difference-between-unit-testing-and-e2e-testing)
-3. [Writing Unit Tests](#heading-writing-unit-tests)
-   - [The First Test Case](#heading-the-first-test-case)
-   - [The Second Test Case](#heading-the-second-test-case)
-   - [Unit Test Coverage](#heading-unit-test-coverage)
-4. [Writing E2E Tests](#heading-writing-e2e-tests)
-5. [Whether to Write Tests](#heading-whether-to-write-tests)
-   - [Enhancing System Robustness](#heading-enhancing-system-robustness)
-   - [Enhancing Maintainability](#heading-enhancing-maintainability)
-   - [Enhancing Development Efficiency](#heading-enhancing-development-efficiency)
-6. [When Not to Write Tests?](#heading-when-not-to-write-tests)
-7. [Conclusion](#heading-conclusion)
-8. [Reference Materials](#heading-reference-materials)
-
 ## Prerequisites
 
 Before diving into this tutorial, you should have:
