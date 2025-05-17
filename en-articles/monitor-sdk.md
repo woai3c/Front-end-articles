@@ -1,14 +1,109 @@
-## The Principle Analysis of Frontend Monitoring SDK
+# The Principle Analysis of Frontend Monitoring SDK
 
 A complete frontend monitoring platform consists of three parts: data collection and reporting, data processing and storage, and data visualization.
 
 This article focuses on the first component - data collection and reporting. Below is an outline of the topics we'll cover:
 
-![Monitoring Platform Overview](https://user-images.githubusercontent.com/22117876/136796476-33011270-4975-477f-89a4-c19fa019c76f.png)
+```
+                       ┌────────────────────┐
+                       │  Data Collection   │
+                       └──────────┬─────────┘
+                                  │
+         ┌─────────────────┬──────┴──────────────┐
+         │                 │                     │
+┌────────┴────────┐ ┌──────┴──────┐     ┌────────┴────────┐
+│ Error Monitoring │ │ Performance  │     │ Behavior       │
+│                  │ │ Monitoring   │     │ Monitoring     │
+└────────┬─────────┘ └──────┬──────┘     └────────┬────────┘
+         │                  │                     │
+┌────────┴────────┐ ┌──────┴──────────┐  ┌────────┴────────┐
+│                 │ │                 │  │                 │
+│ Resource Loading│ │ Resource Loading│  │     UV, PV      │
+│     Errors      │ │      Time       │  │                 │
+│                 │ │                 │  │  Page Access    │
+│   JS Errors     │ │  API Request    │  │     Depth       │
+│                 │ │     Time        │  │                 │
+│ Promise Errors  │ │                 │  │   Page Stay     │
+│                 │ │   DNS, TCP,     │  │    Duration     │
+│ Custom Errors   │ │ First-byte Time │  │                 │
+│                 │ │                 │  │  Custom Event   │
+│                 │ │   FPS Rate      │  │    Tracking     │
+│                 │ │                 │  │                 │
+│                 │ │ Cache Hit Rate  │  │   User Clicks   │
+│                 │ │                 │  │                 │
+│                 │ │  First Screen   │  │ Page Navigation │
+│                 │ │  Render Time    │  │                 │
+│                 │ │                 │  └─────────────────┘
+│                 │ │  FP, FCP, LCP,  │
+│                 │ │   FID, LCS,     │
+│                 │ │ DOMContentLoaded│
+│                 │ │    onload       │
+└─────────────────┘ └─────────────────┘
+```
 
-![Implementation Details](https://user-images.githubusercontent.com/22117876/136796494-7b75df76-3f34-47ea-92e1-356b2409fa19.png)
+
+```
+                  ┌─────────────────┐
+                  │ Data Reporting  │
+                  └────────┬────────┘
+                           │
+          ┌────────────────┴────────────────┐
+          │                                 │
+┌─────────────────────┐           ┌─────────────────────┐
+│  Reporting Methods  │           │  Reporting Timing   │
+└──────────┬──────────┘           └──────────┬──────────┘
+           │                                 │
+     ┌─────┼─────┐               ┌───────────┼───────────┐
+     │     │     │               │           │           │
+┌────┴───┐ │ ┌───┴────┐ ┌────────┴────────┐ │ ┌─────────┴─────────┐
+│  xhr   │ │ │ image  │ │ requestIdle     │ │ │ Upload when cache │
+└────────┘ │ └────────┘ │ Callback/       │ │ │ limit is reached  │
+           │            │ setTimeout      │ │ └───────────────────┘
+     ┌─────┴─────┐      └─────────────────┘ │
+     │ sendBeacon│                          │
+     └───────────┘                ┌─────────┴──────────┐
+                                  │    beforeunload    │
+                                  └────────────────────┘
+```
 
 Since theoretical knowledge alone can be difficult to grasp, I've created a simple [monitoring SDK](https://github.com/woai3c/monitor-demo) that implements these technical concepts. You can use it to create simple demos and gain a better understanding. Reading this article while experimenting with the SDK will provide the best learning experience.
+
+
+## Table of Contents
+1. [Collect Performance Data](#collect-performance-data)
+   - [FP (First Paint)](#fp)
+   - [FCP (First Contentful Paint)](#fcp)
+   - [LCP (Largest Contentful Paint)](#lcp)
+   - [CLS (Cumulative Layout Shift)](#cls)
+   - [DOMContentLoaded and Load Events](#domcontentloaded-and-load-events)
+   - [First Screen Rendering Time](#first-screen-rendering-time)
+   - [API Request Timing](#api-request-timing)
+   - [Resource Loading Time and Cache Hit Rate](#resource-loading-time-and-cache-hit-rate)
+   - [Browser Back/Forward Cache](#browser-backforward-cache-bfc)
+   - [FPS](#fps)
+   - [Vue Router Change Rendering Time](#vue-router-change-rendering-time)
+2. [Error Data Collection](#error-data-collection)
+   - [Resource Loading Errors](#resource-loading-errors)
+   - [JavaScript Errors](#javascript-errors)
+   - [Promise Errors](#promise-errors)
+   - [Sourcemap](#sourcemap)
+   - [Vue Errors](#vue-errors)
+3. [Behavior Data Collection](#behavior-data-collection)
+   - [PV and UV](#pv-and-uv)
+   - [Page Stay Duration](#page-stay-duration)
+   - [Page Access Depth](#page-access-depth)
+   - [User Clicks](#user-clicks)
+   - [Page Navigation](#page-navigation)
+   - [Vue Router Changes](#vue-router-changes)
+4. [Data Reporting](#data-reporting)
+   - [Reporting Methods](#reporting-methods)
+   - [Reporting Timing](#reporting-timing)
+5. [Summary](#summary)
+6. [References](#references)
+   - [Performance Monitoring](#performance-monitoring)
+   - [Error Monitoring](#error-monitoring)
+   - [Behavior Monitoring](#behavior-monitoring)
+
 
 ## Collect Performance Data
 The Chrome developer team has proposed a series of metrics to monitor page performance:
@@ -52,11 +147,11 @@ The `startTime` value represents the paint timing we need.
 ### FCP
 FCP (First Contentful Paint) - Time from page load start until any part of page content is rendered. The "content" in this metric refers to text, images (including background images), `<svg>` elements, and non-white `<canvas>` elements.
 
-![image.png](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/a4f1c9b61029448dae2b1cfb57b4ef75~tplv-k3u1fbpfcp-watermark.image?)
+![FCP visualization showing content being painted on screen](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/a4f1c9b61029448dae2b1cfb57b4ef75~tplv-k3u1fbpfcp-watermark.image?)
 
 To provide a good user experience, the FCP score should be kept under 1.8 seconds.
 
-![image.png](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/9818c66879b345e3b4845ff3fe01e8c9~tplv-k3u1fbpfcp-watermark.image?)
+![FCP scoring scale: Good (0-1.8s), Needs Improvement (1.8-3s), Poor (3s+)](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/9818c66879b345e3b4845ff3fe01e8c9~tplv-k3u1fbpfcp-watermark.image?)
 
 The measurement code:
 ```ts
@@ -89,7 +184,7 @@ LCP (Largest Contentful Paint) - Time from page load start until the largest tex
 
 A good LCP score should be kept under 2.5 seconds.
 
-![image.png](https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/c090dd8b042c46d2adaba5395ca68f47~tplv-k3u1fbpfcp-watermark.image?)
+![LCP scoring scale: Good (0-2.5s), Needs Improvement (2.5-4s), Poor (4s+)](https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/c090dd8b042c46d2adaba5395ca68f47~tplv-k3u1fbpfcp-watermark.image?)
 
 The measurement code:
 ```ts
@@ -125,7 +220,7 @@ The `startTime` value is the painting time we need. And `element` refers to the 
 
 The difference between FCP and LCP is: FCP event occurs when any content is painted, while LCP event occurs when the largest content finishes rendering.
 
-![image.png](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/0e64637ac9d243a58101d8ed01fe886e~tplv-k3u1fbpfcp-watermark.image?)
+![Comparison of FCP and LCP timing on webpage loading timeline](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/0e64637ac9d243a58101d8ed01fe886e~tplv-k3u1fbpfcp-watermark.image?)
 
 LCP considers these elements:
 * `<img>` elements
@@ -148,13 +243,13 @@ The [impact score](https://github.com/WICG/layout-instability#Impact-Fraction) m
 
 A layout shift occurs when a DOM element changes position between two rendered frames, as shown below:
 
-![Layout Shift Example](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ff07d41c624248a1b66c5761f0482f2c~tplv-k3u1fbpfcp-watermark.image?)
+![Layout shift visualization showing element position change](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ff07d41c624248a1b66c5761f0482f2c~tplv-k3u1fbpfcp-watermark.image?)
 
-![Layout Shift Movement](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/d0d5ab8100c9489a991dd0be8e198af0~tplv-k3u1fbpfcp-watermark.image?)
+![Rectangle movement illustration demonstrating layout shift from top-left to right](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/d0d5ab8100c9489a991dd0be8e198af0~tplv-k3u1fbpfcp-watermark.image?)
 
 In the above diagram, the rectangle moves from the top-left to the right side, counting as one layout shift. In CLS terminology, there's a concept called "session window": one or more individual layout shifts occurring in rapid succession, with less than 1 second between each shift and a maximum window duration of 5 seconds.
 
-![Session Window Example](https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/c6af2ec569644013962645820efb16d3~tplv-k3u1fbpfcp-watermark.image?)
+![Session window concept showing multiple layout shifts grouped within time constraints](https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/c6af2ec569644013962645820efb16d3~tplv-k3u1fbpfcp-watermark.image?)
 
 For example, in the second session window shown above, there are four layout shifts. Each shift must occur less than 1 second after the previous one, and the time between the first and last shifts must not exceed 5 seconds to qualify as a session window. If these conditions aren't met, it's considered a new session window. This specification comes from extensive experimentation and research by the Chrome team, as detailed in [Evolving the CLS metric](https://web.dev/evolving-cls/).
 
@@ -169,7 +264,7 @@ This method adds up all layout shift scores from page load start. However, this 
 #### Average of All Session Windows
 This method calculates based on session windows rather than individual layout shifts, taking the average of all session window scores. However, this approach has limitations.
 
-![Session Window Comparison](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/42e5208d83f349db84cf4a27194a57f2~tplv-k3u1fbpfcp-watermark.image?)
+![Comparison of session windows with different CLS scores showing averaging limitations](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/42e5208d83f349db84cf4a27194a57f2~tplv-k3u1fbpfcp-watermark.image?)
 
 As shown above, if the first session window has a high CLS score and the second has a low score, averaging them masks the actual page behavior. The average doesn't reflect that the page had more shifts early on and fewer later.
 
@@ -348,7 +443,7 @@ function isInScreen(dom) {
 #### Using `requestAnimationFrame()` to Get DOM Rendering Time
 When DOM changes trigger the MutationObserver event, it only means the DOM content can be read, not that it has been painted to the screen.
 
-![image.png](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/67230c5e58ff4c699be7758656e4504f~tplv-k3u1fbpfcp-watermark.image?)
+![Browser rendering pipeline showing DOM content loaded but not yet painted](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/67230c5e58ff4c699be7758656e4504f~tplv-k3u1fbpfcp-watermark.image?)
 
 As shown in the image above, when the MutationObserver event is triggered, we can read that `document.body` already has content, but the left side of the screen hasn't painted anything yet. Therefore, we need to call `requestAnimationFrame()` to get the current time as the DOM rendering time after the browser has successfully painted.
 
@@ -515,7 +610,7 @@ We can monitor `resource` and `navigation` events through `PerformanceObserver`.
 
 When the `resource` event triggers, we can get the corresponding resource list. Each resource object contains the following fields:
 
-![image.png](https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/0e6cb30ae9a4447bbe43bfcff6c6c4a1~tplv-k3u1fbpfcp-watermark.image?)
+![Resource object fields in PerformanceResourceTiming interface](https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/0e6cb30ae9a4447bbe43bfcff6c6c4a1~tplv-k3u1fbpfcp-watermark.image?)
 
 From these fields, we can extract useful information:
 ```js
@@ -828,7 +923,7 @@ bundle.js.map
 
 At this point, the JS file is placed on the static server for user access, while the map file is stored on the server for error message restoration. The `source-map` library can restore error messages from minified code to their original state. For example, if the minified code error location is `line 1, column 47`, the restored location might be `line 4, column 10`. Besides location information, we can also get the original source code.
 
-![image.png](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/b1c6b5eebb7b4ef59d4dd6ad613484eb~tplv-k3u1fbpfcp-watermark.image?)
+![Sourcemap error restoration example showing minified vs original code](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/b1c6b5eebb7b4ef59d4dd6ad613484eb~tplv-k3u1fbpfcp-watermark.image?)
 
 The image above shows an example of code error restoration. Since this part doesn't belong to the SDK's scope, I created another [repository](https://github.com/woai3c/source-map-demo) to handle this. Feel free to check it out if you're interested.
 
