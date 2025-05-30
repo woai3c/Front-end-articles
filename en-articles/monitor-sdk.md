@@ -1,8 +1,10 @@
-# The Principle Analysis of Frontend Monitoring SDK
+# Front-End Monitoring: Building an Effective Data Collection and Reporting SDK
 
-A complete frontend monitoring platform consists of three parts: data collection and reporting, data processing and storage, and data visualization.
+A complete frontend monitoring system is essential for tracking application performance, errors, and user behavior. It consists of three main components: data collection and reporting, data processing and storage, and data visualization.
 
-This article focuses on the first component - data collection and reporting. Below is an outline of the topics we'll cover:
+This article focuses specifically on the first component - data collection and reporting - showing you how to build a monitoring SDK from scratch. By the end of this article, you'll understand how to gather critical metrics about your application's performance, capture errors, track user behavior, and implement efficient reporting mechanisms.
+
+Below is an outline of the topics we'll cover:
 
 ```
                        ┌────────────────────┐
@@ -41,6 +43,7 @@ This article focuses on the first component - data collection and reporting. Bel
 └─────────────────┘ └─────────────────┘
 ```
 
+Once data is collected, it needs to be reported to your backend systems for processing and analysis:
 
 ```
                   ┌─────────────────┐
@@ -65,6 +68,14 @@ This article focuses on the first component - data collection and reporting. Bel
                                   │    beforeunload    │
                                   └────────────────────┘
 ```
+
+## Prerequisites
+
+Before diving into this tutorial, you should have:
+- Basic knowledge of JavaScript and web development
+- Familiarity with browser APIs and event handling
+- Understanding of asynchronous programming concepts
+- Some experience with performance optimization concepts
 
 Since theoretical knowledge alone can be difficult to grasp, I've created a simple [monitoring SDK](https://github.com/woai3c/monitor-demo) that implements these technical concepts. You can use it to create simple demos and gain a better understanding. Reading this article while experimenting with the SDK will provide the best learning experience.
 
@@ -106,7 +117,10 @@ Since theoretical knowledge alone can be difficult to grasp, I've created a simp
 
 
 ## Collect Performance Data
-The Chrome developer team has proposed a series of metrics to monitor page performance:
+
+Monitoring performance is crucial for providing users with a smooth, responsive experience. Slow websites lead to higher bounce rates and reduced conversions. By collecting performance metrics, you can identify bottlenecks, optimize critical rendering paths, and improve overall user satisfaction.
+
+The Chrome developer team has proposed a series of metrics to monitor page performance, each measuring a different aspect of the user experience:
 
 * **FP (First Paint)** - Time from when the page starts loading until the first pixel is painted on the screen (essentially the white screen time)
 * **FCP (First Contentful Paint)** - Time from page load start until any part of page content is rendered
@@ -115,7 +129,11 @@ The Chrome developer team has proposed a series of metrics to monitor page perfo
 
 We can obtain these four performance metrics through [PerformanceObserver](https://developer.mozilla.org/en-US/docs/Web/API/PerformanceObserver) (they can also be retrieved via `performance.getEntriesByName()`, but this method doesn't provide real-time notifications when events occur). PerformanceObserver is a performance monitoring interface used to observe performance measurement events.
 
+Let's examine each of these metrics in detail and see how to implement them in our SDK.
+
 ### FP
+First Paint (FP) marks the point when the browser renders anything visually different from what was on the screen before navigation. This could be a background color change or any visual element that indicates to the user that the page is loading.
+
 Implementation code:
 ```ts
 const entryHandler = (list) => {        
@@ -133,6 +151,8 @@ const observer = new PerformanceObserver(entryHandler)
 observer.observe({ type: 'paint', buffered: true })
 ```
 
+This code creates a new PerformanceObserver that watches for 'paint' type events. When the first-paint event occurs, it logs the entry information and disconnects the observer since we only need to capture this event once per page load. The observer's `observe()` method is configured with `buffered: true` to ensure we can catch paint events that occurred before our code runs.
+
 The FP measurement output:
 ```ts
 {
@@ -142,7 +162,7 @@ The FP measurement output:
     startTime: 359, // FP time
 }
 ```
-The `startTime` value represents the paint timing we need.
+The `startTime` value represents the paint timing we need. This value (359ms in this example) tells us how long it took from the start of navigation until the first visual change appeared on screen. You can use this metric to optimize your critical rendering path and reduce the time users spend looking at a blank screen.
 
 ### FCP
 FCP (First Contentful Paint) - Time from page load start until any part of page content is rendered. The "content" in this metric refers to text, images (including background images), `<svg>` elements, and non-white `<canvas>` elements.
@@ -231,6 +251,14 @@ LCP considers these elements:
 
 ### CLS
 CLS (Cumulative Layout Shift) - Cumulative score of all unexpected layout shifts occurring between page load start and when the [page's lifecycle state](https://developer.chrome.com/docs/web-platform/page-lifecycle-api) becomes hidden.
+
+An "unexpected layout shift" occurs when elements on a page move around without user interaction. Common examples include:
+- A banner or ad suddenly appearing at the top of the page, pushing content down
+- A font loading and changing the size of text
+- An image loading without predefined dimensions, expanding and pushing other content out of the way
+- A button appearing below where a user is about to click, causing them to click the wrong element
+
+These shifts are frustrating for users and lead to accidental clicks, lost reading position, and overall poor user experience. CLS helps quantify this problem so you can identify and fix problematic elements.
 
 The layout shift score is calculated as follows:
 ```
@@ -730,7 +758,7 @@ export default function fps() {
 The code logic is as follows:
 1. First record an initial time, then each time `requestAnimationFrame()` triggers, increment the frame count by 1. After one second passes, we can get the current frame rate by dividing `frame count/elapsed time`.
 
-When three consecutive FPS values below 20 appear, we can determine that the page has become unresponsive. For more details, see [How to Monitor Page Stuttering](https://zhuanlan.zhihu.com/p/39292837).
+When three consecutive FPS values below 20 appear, we can determine that the page has become unresponsive. This technique is based on the observation that smooth animations require at least 20 FPS to appear fluid to users.
 
 ```js
 export function isBlocking(fpsList, below = 20, last = 3) {
@@ -809,7 +837,13 @@ Additionally, we need to consider another case. When not changing routes, there 
 
 ## Error Data Collection
 
+Error monitoring is a critical aspect of frontend monitoring that helps identify issues users encounter while interacting with your application. By tracking and analyzing these errors, you can proactively fix bugs before they affect more users, improving both user experience and application reliability.
+
+In this section, we'll explore how to capture various types of errors including resource loading failures, JavaScript runtime errors, unhandled promises, and framework-specific errors.
+
 ### Resource Loading Errors
+
+Resource loading errors occur when the browser fails to load external resources like images, stylesheets, scripts, and fonts. These errors can significantly impact user experience by causing missing content, broken layouts, or even preventing core functionality from working.
 
 Using `addEventListener()` to monitor the error event can capture resource loading failure errors.
 
@@ -835,7 +869,18 @@ window.addEventListener('error', e => {
 }, true)
 ```
 
+This code listens for the global `error` event with the capture option set to true, which allows it to catch errors from resource elements like `<img>`, `<link>`, and `<script>`. When a resource fails to load, it collects important information including:
+- The URL of the failed resource
+- The element type (img, link, script)
+- The HTML of the element that failed
+- The DOM path to the element
+- The page URL where the error occurred
+
+With this data, you can identify which resources are failing most frequently, prioritize fixes, and implement fallback strategies for critical resources.
+
 ### JavaScript Errors
+
+JavaScript errors occur during script execution and can prevent features from working properly. These include syntax errors, reference errors, type errors, and other runtime exceptions.
 
 Using `window.onerror` can monitor JavaScript errors.
 
@@ -855,7 +900,17 @@ window.onerror = (msg, url, line, column, error) => {
 }
 ```
 
+This handler captures detailed information about JavaScript errors:
+- The error message
+- The file URL where the error occurred
+- The line and column number of the error
+- The full error stack trace
+
+This information is invaluable for debugging and fixing issues, especially in production environments where direct debugging isn't possible. By analyzing these errors, you can identify patterns and prioritize fixes for the most common or impactful issues.
+
 ### Promise Errors
+
+Modern JavaScript applications heavily use Promises for asynchronous operations. When a Promise rejection isn't handled with `.catch()` or a second argument to `.then()`, it results in an unhandled rejection which can cause silent failures.
 
 Using `addEventListener()` to monitor the unhandledrejection event can capture unhandled promise errors.
 
@@ -871,6 +926,13 @@ window.addEventListener('unhandledrejection', e => {
     })
 })
 ```
+
+This code captures unhandled Promise rejections and reports:
+- The rejection reason (usually an error object with a stack trace)
+- The timestamp when the rejection occurred
+- The page URL where the rejection happened
+
+Tracking unhandled Promise rejections is particularly important for asynchronous operations like API calls, where errors might otherwise go unnoticed. By monitoring these rejections, you can ensure that all asynchronous errors are properly handled and resolved.
 
 ### Sourcemap
 
@@ -949,9 +1011,15 @@ Vue.config.errorHandler = (err, vm, info) => {
 
 ## Behavior Data Collection
 
+Understanding how users interact with your application is crucial for optimizing user experience, improving engagement, and driving business goals. Behavior monitoring tracks user actions, navigation patterns, and engagement metrics to provide insights into how your application is actually being used.
+
+In this section, we'll explore how to collect key behavioral metrics that can help you make data-driven decisions to improve your application.
+
 ### PV and UV
 
 PV (Page View) is the number of page views, while UV (Unique Visitor) is the number of unique users visiting. PV counts each page visit, while UV only counts once per user per day.
+
+**Why this matters**: PV and UV metrics help you understand your application's traffic patterns. A high PV-to-UV ratio indicates users are viewing multiple pages, suggesting good engagement. Tracking these metrics over time helps you identify growth trends, seasonal patterns, and the impact of marketing campaigns or feature releases.
 
 For frontend, we just need to report PV each time a page is entered. UV statistics are handled on the server side, mainly analyzing reported data to calculate UV.
 
@@ -968,9 +1036,17 @@ export default function pv() {
 }
 ```
 
+You can use this data to:
+- Track which pages are most popular
+- Identify underperforming pages that need improvement
+- Analyze user flow through your application
+- Measure the effectiveness of new features or content
+
 ### Page Stay Duration
 
 Record an initial time when users enter the page, then subtract the initial time from the current time when users leave the page to get the stay duration. This calculation logic can be placed in the `beforeunload` event.
+
+**Why this matters**: Page stay duration indicates how engaging your content is. Longer durations typically suggest users find the content valuable, while very short durations might indicate confusion, irrelevant content, or usability issues. This metric helps you identify which pages effectively capture user attention and which ones need improvement.
 
 ```js
 export default function pageAccessDuration() {
@@ -986,9 +1062,17 @@ export default function pageAccessDuration() {
 }
 ```
 
+With page stay duration data, you can:
+- Identify engaging vs. problematic content
+- Set benchmarks for content performance
+- Detect potential usability issues (extremely short durations)
+- Measure the effectiveness of content updates or redesigns
+
 ### Page Access Depth
 
 Recording page access depth is very useful. For example, for different activity pages a and b, if page a has an average access depth of 50% and page b has 80%, it indicates that page b is more popular with users. Based on this, we can make targeted improvements to page a.
+
+**Why this matters**: Access depth measures how far users scroll down a page, revealing whether they're viewing all your content or abandoning it partway through. This metric helps identify content engagement patterns and potential issues with content structure or page length.
 
 Additionally, we can use access depth and stay duration to identify e-commerce order fraud. For example, if someone enters the page and immediately scrolls to the bottom, then waits a while before purchasing, while another person slowly scrolls down the page before purchasing. Even though they have the same stay duration, the first person is more likely to be committing fraud.
 
@@ -1064,9 +1148,17 @@ function toPercent(val) {
 }
 ```
 
+With page access depth data, you can:
+- Identify where users lose interest in your content
+- Optimize content placement (put important elements where users actually look)
+- Improve long-form content structure with better hierarchy
+- Detect unusual user behavior patterns that might indicate fraud or bots
+
 ### User Clicks
 
 Using `addEventListener()` to monitor `mousedown` and `touchstart` events, we can collect information about each click area's size, click coordinates' specific position in the page, clicked element's content, and other information.
+
+**Why this matters**: Click tracking reveals what elements users interact with most frequently, helping you understand user interests and optimize UI element placement. It also helps identify usability issues where users might be clicking on non-interactive elements expecting a response.
 
 ```js
 export default function onClick() {
@@ -1106,9 +1198,17 @@ export default function onClick() {
 }
 ```
 
+With this click data, you can:
+- Create heatmaps showing where users click most frequently
+- Identify non-functional elements users try to interact with
+- Optimize button placement and size for better conversion
+- Detect rage clicks (multiple rapid clicks in the same area) indicating user frustration
+
 ### Page Navigation
 
-Using `addEventListener()` to monitor `popstate` and `hashchange` page navigation events. Note that calling `history.pushState()` or `history.replaceState()` won't trigger the `popstate` event. The event only triggers when users perform browser actions, such as clicking the browser's back button (or calling `history.back()` or `history.forward()` methods in JavaScript code). The same applies to `hashchange`.
+Using `addEventListener()` to monitor `popstate` and `hashchange` page navigation events allows you to track how users navigate through your application.
+
+**Why this matters**: Navigation tracking helps you understand user flow patterns - how users move between pages, which navigation paths are most common, and where users might be getting lost or trapped in navigation loops. This data is crucial for optimizing site structure and improving user journey flows.
 
 ```js
 export default function pageChange() {
@@ -1146,9 +1246,17 @@ export default function pageChange() {
 }
 ```
 
+With navigation data, you can:
+- Identify common user paths through your application
+- Detect navigation dead-ends or loops where users get stuck
+- Optimize navigation menus based on actual usage patterns
+- Improve information architecture to better match user behavior
+
 ### Vue Router Changes
 
-Vue can use the `router.beforeEach` hook to monitor route changes.
+For applications built with Vue, you can use the router's hooks to monitor navigation between routes, providing similar insights to general page navigation tracking but specific to Vue's routing system.
+
+**Why this matters**: In single-page applications, traditional page navigation events don't capture all route changes. Framework-specific router monitoring ensures you don't miss important navigation data in modern web applications.
 
 ```js
 export default function onVueRouter(router) {
@@ -1179,7 +1287,23 @@ export default function onVueRouter(router) {
 }
 ```
 
+This data helps you:
+- Track the most frequently accessed routes in your Vue application
+- Understand navigation patterns specific to your application's structure
+- Identify potential optimization opportunities in your routing setup
+- Measure the impact of UX improvements on navigation behavior
+
 ## Data Reporting
+
+Once you've collected performance, error, and behavior data, you need a reliable system to transmit this information to your backend for processing and analysis. Data reporting is the critical bridge between client-side data collection and server-side analytics.
+
+Effective data reporting must balance several concerns:
+1. **Reliability** - Ensuring data is successfully transmitted, especially critical errors
+2. **Performance** - Minimizing impact on the user experience and application performance
+3. **Timing** - Deciding when to send data to avoid interference with user interactions
+4. **Bandwidth** - Managing the amount of data transmitted to reduce network usage
+
+Let's explore the various methods and strategies for implementing efficient data reporting.
 
 ### Reporting Methods
 
@@ -1194,6 +1318,64 @@ My simple SDK uses a combination of the first and second methods for reporting. 
 
 For browsers that don't support sendBeacon, we can use XMLHttpRequest for reporting. An HTTP request consists of sending and receiving two steps. Actually, for reporting, we just need to ensure the data can be sent - we don't need to receive the response. For this reason, I did an experiment where I sent 30kb of data (generally reported data rarely exceeds this size) using XMLHttpRequest in beforeunload, tested with different browsers, and all were able to send successfully. Of course, this also depends on hardware performance and network conditions.
 
+Here's a sample implementation of a reporting function that uses both methods:
+
+```js
+function report(data, isImmediate = false) {
+    if (!config.reportUrl) {
+        console.error('Report URL is not set')
+        return
+    }
+    
+    // Add timestamp and other common properties
+    const reportData = {
+        ...data,
+        timestamp: Date.now(),
+        userAgent: navigator.userAgent,
+        userId: getUserId(),
+        // Add other common properties as needed
+    }
+    
+    // Choose reporting method based on browser support and timing
+    if (isImmediate) {
+        sendData(reportData)
+    } else {
+        // Queue data for batch sending
+        reportQueue.push(reportData)
+        
+        // Send when queue reaches threshold
+        if (reportQueue.length >= config.batchSize) {
+            sendBatchData()
+        }
+    }
+}
+
+function sendData(data) {
+    // Try sendBeacon first
+    if (navigator.sendBeacon) {
+        const blob = new Blob([JSON.stringify(data)], { type: 'application/json' })
+        const success = navigator.sendBeacon(config.reportUrl, blob)
+        
+        if (success) return
+    }
+    
+    // Fall back to XMLHttpRequest
+    const xhr = new XMLHttpRequest()
+    xhr.open('POST', config.reportUrl, true)
+    xhr.setRequestHeader('Content-Type', 'application/json')
+    xhr.send(JSON.stringify(data))
+}
+
+function sendBatchData() {
+    if (reportQueue.length === 0) return
+    
+    const data = [...reportQueue]
+    reportQueue.length = 0
+    
+    sendData({ type: 'batch', data })
+}
+```
+
 ### Reporting Timing
 
 There are three reporting timings:
@@ -1205,9 +1387,118 @@ It's recommended to combine all three methods:
 1. First cache the reported data, and when reaching a certain amount, use `requestIdleCallback/setTimeout` for delayed reporting
 2. Report all unreported data when leaving the page
 
+Here's how you might implement this combined approach:
+
+```js
+// Cache for storing reports until they're sent
+let reportCache = []
+const MAX_CACHE_SIZE = 10
+let timer = null
+
+// Report data with requestIdleCallback when browser is idle
+function lazyReportCache(data) {
+    reportCache.push(data)
+    
+    // If cache reaches threshold, schedule sending
+    if (reportCache.length >= MAX_CACHE_SIZE) {
+        // Use requestIdleCallback if available, otherwise setTimeout
+        const scheduleFn = window.requestIdleCallback || setTimeout
+        
+        if (timer) {
+            cancelScheduledReport()
+        }
+        
+        timer = scheduleFn(() => {
+            // Send cached data in bulk
+            const dataToSend = [...reportCache]
+            reportCache = []
+            report({
+                type: 'batch',
+                data: dataToSend,
+            })
+            timer = null
+        }, { timeout: 2000 }) // For requestIdleCallback, timeout after 2s
+    }
+}
+
+function cancelScheduledReport() {
+    if (window.requestIdleCallback && timer) {
+        window.cancelIdleCallback(timer)
+    } else if (timer) {
+        clearTimeout(timer)
+    }
+    timer = null
+}
+
+// Report any remaining data when user leaves the page
+function setupUnloadReporting() {
+    window.addEventListener('beforeunload', () => {
+        if (reportCache.length > 0) {
+            // Cancel any scheduled reporting
+            cancelScheduledReport()
+            
+            // Send remaining cached data immediately
+            report({
+                type: 'batch',
+                data: reportCache,
+            }, true) // true for immediate sending
+            
+            reportCache = []
+        }
+    })
+}
+```
+
+This implementation:
+1. Collects data in a cache until it reaches a threshold
+2. Uses `requestIdleCallback` (or `setTimeout` as fallback) to send data when the browser is idle
+3. Ensures any remaining data is sent when the user leaves the page
+4. Batches multiple reports together to reduce network requests
+
+By combining these methods, you create a robust reporting system that minimizes performance impact while ensuring data reliability.
+
 ## Summary
 
-Since theoretical knowledge alone can be difficult to understand, I've created a simple [monitoring SDK](https://github.com/woai3c/monitor-demo) that implements the technical concepts discussed in this article. You can use it to create simple demos and gain a better understanding. Reading this article while experimenting with the SDK will provide the best learning experience.
+In this comprehensive guide, we've explored how to build a complete frontend monitoring SDK for collecting and reporting critical application data. Let's recap what we've covered:
+
+1. **Performance Monitoring**
+   - We implemented methods to capture key web vitals like FP, FCP, LCP, and CLS
+   - We tracked page load events, API request timing, and resource loading metrics
+   - We measured first screen rendering time and frame rates to ensure smooth user experiences
+   - We added support for SPA-specific metrics like Vue router change rendering time
+
+2. **Error Monitoring**
+   - We built systems to capture resource loading errors, JavaScript exceptions, and Promise rejections
+   - We explored how to use sourcemaps to make minified production errors readable
+   - We integrated with framework-specific error handling for Vue applications
+
+3. **User Behavior Tracking**
+   - We implemented tracking for page views, stay duration, and scroll depth
+   - We created methods to monitor user clicks and navigation patterns
+   - We built custom tracking for SPA navigation with Vue Router
+
+4. **Data Reporting**
+   - We developed robust reporting mechanisms using sendBeacon and XMLHttpRequest
+   - We implemented intelligent reporting timing strategies to minimize performance impact
+   - We created batching mechanisms to reduce network requests
+
+Building your own monitoring SDK gives you complete control over what data you collect and how you process it. This approach offers several advantages over third-party solutions:
+
+- **Privacy**: You own all the data and can ensure compliance with regulations like GDPR
+- **Performance**: You can optimize the SDK specifically for your application's needs
+- **Customization**: You can add custom metrics unique to your business requirements
+- **Integration**: Your SDK can easily integrate with your existing systems
+
+As you implement your own monitoring solution, remember these best practices:
+
+1. **Respect User Privacy**: Only collect what you need and be transparent about it
+2. **Minimize Performance Impact**: Ensure your monitoring doesn't degrade the user experience
+3. **Balance Detail and Volume**: More data isn't always better if it overwhelms your analysis
+4. **Act on Insights**: The ultimate goal is to improve your application based on the data
+
+Since theoretical knowledge alone can be difficult to grasp, I've created a simple [monitoring SDK](https://github.com/woai3c/monitor-demo) that implements these technical concepts. You can use it to create simple demos and gain a better understanding. Reading this article while experimenting with the SDK will provide the best learning experience.
+
+By following the approaches outlined in this article, you'll be well-equipped to build a comprehensive monitoring system that helps you deliver better user experiences through data-driven decision making.
 
 ## References
 
@@ -1227,7 +1518,7 @@ Since theoretical knowledge alone can be difficult to understand, I've created a
 * [bfcache](https://web.dev/bfcache/)
 * [MutationObserver](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver)
 * [XMLHttpRequest](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest)
-* [How to Monitor Page Stuttering](https://zhuanlan.zhihu.com/p/39292837)
+
 * [sendBeacon](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/sendBeacon)
 
 ### Error Monitoring
