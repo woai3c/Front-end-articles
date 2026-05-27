@@ -86,20 +86,6 @@
 ## 其他
 * [强烈推荐的两个神级教学项目: nand2tetris 与 MIT6.828](https://github.com/woai3c/Front-end-articles/blob/master/teaching.md)
 
-## English Articles
-
-* [How to write unit tests and E2E tests for Nestjs applications](en-articles/nestjs-tests.md)
-* [How to load remote components in Vue 3](en-articles/load-remote-component-in-vue.md)
-* [Make a tiny browser engine from scratch](en-articles/browser-engine.md)
-* [Implementing Synchronous Scrolling in a Dual-Pane Markdown Editor](en-articles/markdown-editor-scroll.md)
-* [The Principle Analysis of Frontend Monitoring SDK](en-articles/monitor-sdk.md)
-* [24 Front-end Performance Optimization Tips](en-articles/frontend-performance.md)
-* [Step-by-Step Guide to Front-end Engineering — A Comprehensive Tutorial](en-articles/frontend-engineering.md)
-* [Analysis of Key Technical Principles for a Visual Drag-and-Drop Component Library](en-articles/visible-drag.md)
-* [Analysis of Key Technical Principles for a Visual Drag-and-Drop Component Library - 2](en-articles/visible-drag2.md)
-* [Analysis of Key Technical Principles for a Visual Drag-and-Drop Component Library - 3](en-articles/visible-drag3.md)
-* [Analysis of Key Technical Principles for a Visual Drag-and-Drop Component Library - 4](en-articles/visible-drag4.md)
-
 ## License
 MIT
 ## 赞助
