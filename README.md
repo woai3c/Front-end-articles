@@ -1,3 +1,7 @@
+## AI Agent 文章
+* [如何从零开始实现一个 AI Agent CLI](https://github.com/woai3c/Front-end-articles/issues/54)
+* [OpenClaw 安装与运行教程](https://github.com/woai3c/Front-end-articles/issues/52)
+
 ## 前端文章
 * [从零开始实现一个玩具版浏览器渲染引擎](https://github.com/woai3c/Front-end-articles/issues/44)
 * [一个 git 仓库下拥有多个项目的 git hooks 配置方案](https://github.com/woai3c/Front-end-articles/issues/43)
