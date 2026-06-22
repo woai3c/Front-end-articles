@@ -1,5 +1,5 @@
 ## AI Agent 文章
-* [AI Agent 工程师入门指南]([AI Agent 工程师入门指南](https://github.com/woai3c/Front-end-articles/issues/55))
+* [AI Agent 工程师入门指南](https://github.com/woai3c/Front-end-articles/issues/55)
 * [如何从零开始实现一个 AI Agent CLI](https://github.com/woai3c/Front-end-articles/issues/54)
 * [OpenClaw 安装与运行教程](https://github.com/woai3c/Front-end-articles/issues/52)
 
