@@ -1,4 +1,5 @@
 ## AI Agent 文章
+* [让 AI Agent 系统自己发现 bug、自己提修复 PR：自我进化的 Harness](https://github.com/woai3c/Front-end-articles/issues/56)
 * [AI Agent 工程师入门指南](https://github.com/woai3c/Front-end-articles/issues/55)
 * [如何从零开始实现一个 AI Agent CLI](https://github.com/woai3c/Front-end-articles/issues/54)
 * [OpenClaw 安装与运行教程](https://github.com/woai3c/Front-end-articles/issues/52)
