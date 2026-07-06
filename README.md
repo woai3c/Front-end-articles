@@ -1,4 +1,5 @@
 ## AI Agent 文章
+* [工具塞满上下文窗口怎么办？深度拆解 AI Agent Tool Search 按需加载实现原理](https://github.com/woai3c/Front-end-articles/issues/57)
 * [让 AI Agent 系统自己发现 bug、自己提修复 PR：自我进化的 Harness](https://github.com/woai3c/Front-end-articles/issues/56)
 * [AI Agent 工程师入门指南](https://github.com/woai3c/Front-end-articles/issues/55)
 * [如何从零开始实现一个 AI Agent CLI](https://github.com/woai3c/Front-end-articles/issues/54)
